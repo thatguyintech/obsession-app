@@ -36,6 +36,14 @@ export interface Moment {
   printedPage?: number;
 }
 
+export interface SceneTocEntry {
+  momentIndex: number;
+  momentId: string;
+  sceneHeadingId: string;
+  title: string;
+  printedPage?: number;
+}
+
 /** @deprecated Legacy beat navigation — kept in JSON for debugging */
 export interface Beat {
   id: string;

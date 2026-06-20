@@ -1,4 +1,4 @@
-import type { ReaderState, ScreenplayData, SearchResult, Moment } from "../types";
+import type { ReaderState, SceneTocEntry, ScreenplayData, SearchResult, Moment } from "../types";
 import { generateMoments } from "../../lib/moments";
 
 export const STORAGE_KEY = "obsession-reader-state";
@@ -79,6 +79,23 @@ export function saveReaderState(state: ReaderState): void {
       lastReadAt: new Date().toISOString(),
     }),
   );
+}
+
+export function buildSceneTableOfContents(data: ScreenplayData): SceneTocEntry[] {
+  const elementMap = new Map(data.elements.map((element) => [element.id, element]));
+
+  return data.moments
+    .filter((moment) => moment.sceneHeadingId)
+    .map((moment) => {
+      const heading = elementMap.get(moment.sceneHeadingId!);
+      return {
+        momentIndex: moment.index,
+        momentId: moment.id,
+        sceneHeadingId: moment.sceneHeadingId!,
+        title: heading?.text ?? "Unknown scene",
+        printedPage: moment.printedPage ?? heading?.printedPage,
+      };
+    });
 }
 
 export function findMomentForElement(data: ScreenplayData, elementId: string): Moment | undefined {

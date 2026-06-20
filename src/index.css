@@ -69,6 +69,15 @@ body {
     color: #737373;
   }
 
+  .text-toc-title {
+    font-family: theme("fontFamily.screenplay");
+    font-size: clamp(0.8125rem, 2.5vw, 0.9375rem);
+    letter-spacing: 0.06em;
+    line-height: 1.45;
+    text-transform: uppercase;
+    color: #d4d4d4;
+  }
+
   .scene-divider {
     @apply mb-8 border-t border-neutral-800 pt-5;
   }

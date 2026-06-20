@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
-import type { ScreenplayElement } from "../types";
+import type { SceneTocEntry, ScreenplayElement } from "../types";
 import { isContinuousSceneHeading, reflowLines } from "../lib/display";
+import { SceneTableOfContents } from "./SceneTableOfContents";
 import type { DialogueTrack } from "../types";
 
 interface ElementViewProps {
   element: ScreenplayElement;
   sceneHeadingId?: string;
   highlight?: boolean;
+  sceneToc?: SceneTocEntry[];
+  onGoToScene?: (momentIndex: number) => void;
 }
 
 function TrackBlock({ track }: { track: DialogueTrack }) {
@@ -40,7 +43,13 @@ function ElementWrapper({
   );
 }
 
-export function ElementView({ element, sceneHeadingId, highlight }: ElementViewProps) {
+export function ElementView({
+  element,
+  sceneHeadingId,
+  highlight,
+  sceneToc,
+  onGoToScene,
+}: ElementViewProps) {
   if (element.type === "title_card") {
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
@@ -50,6 +59,9 @@ export function ElementView({ element, sceneHeadingId, highlight }: ElementViewP
             {element.title}
           </h1>
           <p className="mt-6 text-lg text-neutral-300">{element.author}</p>
+          {sceneToc && sceneToc.length > 0 && onGoToScene ? (
+            <SceneTableOfContents entries={sceneToc} onSelect={onGoToScene} compact />
+          ) : null}
         </div>
       </ElementWrapper>
     );

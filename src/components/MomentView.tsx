@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import type { Moment, ScreenplayData } from "../types";
+import type { Moment, SceneTocEntry, ScreenplayData } from "../types";
 import { ElementView } from "./ElementView";
 
 interface MomentViewProps {
@@ -7,6 +7,8 @@ interface MomentViewProps {
   data: ScreenplayData;
   scrollY: number;
   scrollToElementId?: string | null;
+  sceneToc?: SceneTocEntry[];
+  onGoToScene?: (momentIndex: number) => void;
   onScroll: (scrollY: number) => void;
 }
 
@@ -15,6 +17,8 @@ export function MomentView({
   data,
   scrollY,
   scrollToElementId,
+  sceneToc,
+  onGoToScene,
   onScroll,
 }: MomentViewProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -55,6 +59,8 @@ export function MomentView({
               element={element}
               sceneHeadingId={moment.sceneHeadingId}
               highlight={scrollToElementId === element.id}
+              sceneToc={element.type === "title_card" ? sceneToc : undefined}
+              onGoToScene={element.type === "title_card" ? onGoToScene : undefined}
             />
           );
         })}

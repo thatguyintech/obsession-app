@@ -1,10 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ScreenplayData, SearchResult } from "../types";
 import { MomentView } from "./MomentView";
-import { loadReaderState, saveReaderState, searchScreenplay } from "../lib/screenplay";
+import { SceneTocOverlay } from "./SceneTableOfContents";
+import {
+  buildSceneTableOfContents,
+  loadReaderState,
+  saveReaderState,
+  searchScreenplay,
+} from "../lib/screenplay";
 
 interface ReaderProps {
   data: ScreenplayData;
+}
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable;
 }
 
 export function Reader({ data }: ReaderProps) {
@@ -13,11 +25,14 @@ export function Reader({ data }: ReaderProps) {
   const [scrollY, setScrollY] = useState(initial.scrollY);
   const [scrollToElementId, setScrollToElementId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false);
   const [query, setQuery] = useState("");
   const scrollSaveTimer = useRef<number | null>(null);
 
   const moment = data.moments[momentIndex];
   const progress = ((momentIndex + 1) / data.moments.length) * 100;
+  const sceneToc = useMemo(() => buildSceneTableOfContents(data), [data]);
+  const lastMomentIndex = data.moments.length - 1;
 
   const results = useMemo(
     () => (searchOpen ? searchScreenplay(data, query).slice(0, 20) : []),
@@ -29,6 +44,14 @@ export function Reader({ data }: ReaderProps) {
     setScrollY(0);
     setScrollToElementId(elementId ?? null);
   }, []);
+
+  const goToStart = useCallback(() => {
+    goToMoment(0);
+  }, [goToMoment]);
+
+  const goToEnd = useCallback(() => {
+    goToMoment(lastMomentIndex);
+  }, [goToMoment, lastMomentIndex]);
 
   const handleScroll = useCallback((nextScrollY: number) => {
     if (scrollSaveTimer.current) {
@@ -58,30 +81,53 @@ export function Reader({ data }: ReaderProps) {
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (searchOpen) {
+      if (isTypingTarget(event.target)) return;
+
+      if (searchOpen || tocOpen) {
         if (event.key === "Escape") {
           setSearchOpen(false);
+          setTocOpen(false);
         }
         return;
       }
 
       if (event.key === "ArrowRight" || event.key === "ArrowDown") {
         event.preventDefault();
-        goToMoment(Math.min(momentIndex + 1, data.moments.length - 1));
+        goToMoment(Math.min(momentIndex + 1, lastMomentIndex));
       }
       if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
         event.preventDefault();
         goToMoment(Math.max(momentIndex - 1, 0));
       }
+      if (event.key === "j" || event.key === "J") {
+        event.preventDefault();
+        goToStart();
+      }
+      if (event.key === "k" || event.key === "K") {
+        event.preventDefault();
+        goToEnd();
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        goToStart();
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        goToEnd();
+      }
       if (event.key === "/") {
         event.preventDefault();
         setSearchOpen(true);
+      }
+      if (event.key === "t" || event.key === "T") {
+        event.preventDefault();
+        setTocOpen(true);
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [data.moments.length, goToMoment, momentIndex, searchOpen]);
+  }, [goToEnd, goToMoment, goToStart, lastMomentIndex, momentIndex, searchOpen, tocOpen]);
 
   if (!moment) {
     return <div className="flex h-full items-center justify-center">No moments found.</div>;
@@ -93,15 +139,24 @@ export function Reader({ data }: ReaderProps) {
         <div className="h-full bg-white transition-all duration-200" style={{ width: `${progress}%` }} />
       </div>
 
-      <header className="absolute inset-x-0 top-3 z-20 flex items-center justify-between px-4 text-xs text-neutral-500">
-        <button
-          type="button"
-          className="rounded px-2 py-1 hover:bg-neutral-900 hover:text-neutral-300"
-          onClick={() => setSearchOpen(true)}
-        >
-          Search /
-        </button>
-        <span>
+      <header className="absolute inset-x-0 top-3 z-20 flex items-center justify-between gap-2 px-4 text-xs text-neutral-500">
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            className="rounded px-2 py-1 hover:bg-neutral-900 hover:text-neutral-300"
+            onClick={() => setSearchOpen(true)}
+          >
+            Search /
+          </button>
+          <button
+            type="button"
+            className="rounded px-2 py-1 hover:bg-neutral-900 hover:text-neutral-300"
+            onClick={() => setTocOpen(true)}
+          >
+            Scenes T
+          </button>
+        </div>
+        <span className="shrink-0 text-right">
           {momentIndex + 1} / {data.moments.length}
           {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
         </span>
@@ -113,6 +168,8 @@ export function Reader({ data }: ReaderProps) {
           data={data}
           scrollY={scrollY}
           scrollToElementId={scrollToElementId}
+          sceneToc={sceneToc}
+          onGoToScene={goToMoment}
           onScroll={handleScroll}
         />
       </main>
@@ -127,7 +184,7 @@ export function Reader({ data }: ReaderProps) {
         type="button"
         aria-label="Next moment"
         className="absolute inset-y-0 right-0 z-10 w-1/4 cursor-w-resize bg-transparent"
-        onClick={() => goToMoment(Math.min(momentIndex + 1, data.moments.length - 1))}
+        onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
       />
 
       {searchOpen ? (
@@ -179,6 +236,14 @@ export function Reader({ data }: ReaderProps) {
             </div>
           </div>
         </div>
+      ) : null}
+
+      {tocOpen ? (
+        <SceneTocOverlay
+          entries={sceneToc}
+          onSelect={goToMoment}
+          onClose={() => setTocOpen(false)}
+        />
       ) : null}
     </div>
   );

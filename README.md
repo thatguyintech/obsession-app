@@ -20,8 +20,11 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 
 - Tap **left / right** edges to go to prev/next **moment**
 - **Scroll vertically** within a moment
-- **← →** or **↑ ↓** arrow keys — prev/next moment
-- **/** to search, **Esc** to close search
+- **← →** or **↑ ↓** — prev/next moment
+- **J** — jump to start · **K** — jump to end
+- **Home** / **End** — start / end (also works on laptop)
+- **/** — search · **T** — scene list · **Esc** — close overlay
+- Scene list also appears on the title screen at the start
 - Progress saves automatically in `localStorage` (moment + scroll position)
 
 ## Stack
