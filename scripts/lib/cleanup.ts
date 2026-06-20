@@ -59,7 +59,51 @@ const TEXT_REPLACEMENTS: Array<[string, string]> = [
   ["can ,", "can,"],
   ["she 's", "she's"],
   ["telling me she 's", "telling me she's"],
+  ["filter s", "filters"],
+  ["mom and pop", "mom-and-pop"],
+  ["petals. approaches,", "petals. Bear approaches,"],
+  ["She sit s.", "She sits."],
 ];
+
+function shouldMergeActions(previous: string, next: string): boolean {
+  const prev = previous.trim();
+  const nextText = next.trim();
+  if (!prev || !nextText) return false;
+
+  if (/^[a-z"'""'(]/.test(nextText)) return true;
+  if (/[,;:–-]$/.test(prev)) return true;
+  if (prev.length <= 14 && /^[A-Z][A-Za-z]{0,10}\.?$/.test(prev)) return true;
+  if (!/[.!?]["'""']?$/.test(prev) && nextText.length < 140) return true;
+
+  return false;
+}
+
+function joinActionText(previous: string, next: string): string {
+  return `${previous.trimEnd()} ${next.trimStart()}`;
+}
+
+function mergeSplitActions(elements: ScreenplayElementDraft[]): ScreenplayElementDraft[] {
+  const merged: ScreenplayElementDraft[] = [];
+
+  for (const element of elements) {
+    const previous = merged[merged.length - 1];
+
+    if (
+      element.type === "action" &&
+      previous?.type === "action" &&
+      previous.text &&
+      element.text &&
+      shouldMergeActions(previous.text, element.text)
+    ) {
+      previous.text = joinActionText(previous.text, element.text);
+      continue;
+    }
+
+    merged.push(element);
+  }
+
+  return merged;
+}
 
 function normalizeParenthetical(cue: string): string {
   return cue
@@ -170,8 +214,9 @@ function cleanupElement(element: ScreenplayElementDraft): ScreenplayElementDraft
 }
 
 export function cleanupElements(elements: ScreenplayElementDraft[]): ScreenplayElementDraft[] {
-  const merged = mergeOrphanDialogue(elements);
-  return merged.map(cleanupElement);
+  const mergedDialogue = mergeOrphanDialogue(elements);
+  const mergedActions = mergeSplitActions(mergedDialogue);
+  return mergedActions.map(cleanupElement);
 }
 
 export function rebuildSearchText(element: ScreenplayElementDraft): string {

@@ -208,6 +208,30 @@ function parseDialogue(
   ];
 }
 
+function isActionColumn(x0: number): boolean {
+  return x0 < 180;
+}
+
+function isInlineActionFragment(line: Line): boolean {
+  const text = line.text.trim();
+  if (isSceneHeading(text) || isPageHeader(text)) {
+    return false;
+  }
+  if (isActionColumn(line.x0)) {
+    return true;
+  }
+  if (line.x0 < 200) {
+    return true;
+  }
+  if (line.x0 > 350 && /^[A-Z][a-z]+$/.test(text)) {
+    return true;
+  }
+  if (line.x0 >= 250 && line.x0 <= 400 && !isCharacterCue(text, line.x0)) {
+    return true;
+  }
+  return false;
+}
+
 function parseAction(lines: Line[], start: number, pageWidth: number): [ScreenplayElementDraft, number] {
   const chunks = [lines[start].text];
   let index = start + 1;
@@ -220,16 +244,27 @@ function parseAction(lines: Line[], start: number, pageWidth: number): [Screenpl
     }
 
     const row = linesAtY(lines, index);
-    if (
-      row.some((other) => lineColumn(other, pageWidth) === "left") &&
-      row.some((other) => lineColumn(other, pageWidth) === "right")
-    ) {
+    const hasLeft = row.some((other) => lineColumn(other, pageWidth) === "left");
+    const hasRight = row.some((other) => lineColumn(other, pageWidth) === "right");
+
+    if (hasLeft && hasRight) {
+      const rowParts = row
+        .filter((other) => isInlineActionFragment(other))
+        .filter((other) => lines.indexOf(other) >= index)
+        .sort((a, b) => a.x0 - b.x0);
+      if (rowParts.length > 0) {
+        chunks.push(...rowParts.map((part) => part.text));
+        const consumed = Math.max(...rowParts.map((part) => lines.indexOf(part)));
+        index = consumed + 1;
+        continue;
+      }
       break;
     }
+
     if (isSceneHeading(line.text)) break;
-    if (isCharacterCue(line.text, line.x0)) break;
-    if (line.x0 >= 120) break;
-    if (line.y0 - lines[index - 1].y0 > 24) break;
+    if (isCharacterCue(line.text, line.x0) && !isInlineActionFragment(line)) break;
+    if (line.x0 >= 200 && !isInlineActionFragment(line)) break;
+    if (line.y0 - lines[index - 1].y0 > 28) break;
 
     chunks.push(line.text);
     index += 1;
@@ -298,7 +333,7 @@ export function classifyPage(
       continue;
     }
 
-    if (line.x0 < 120) {
+    if (line.x0 < 120 || isInlineActionFragment(line)) {
       const [action, actionNext] = parseAction(filtered, index, pageWidth);
       action.pdfPage = pdfPage;
       if (printedPage !== null) action.printedPage = printedPage;
