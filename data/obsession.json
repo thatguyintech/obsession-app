@@ -7,7 +7,7 @@
     "beatCount": 1419,
     "momentCount": 60,
     "extractedAt": "2026-06-20",
-    "version": 5
+    "version": 6
   },
   "elements": [
     {
@@ -128,11 +128,11 @@
       "type": "dialogue",
       "character": "NICKY (V.O.)",
       "lines": [
-        "Hey! You are so lucky you weren’t scheduled today. We literally just got out. Carter was in his mood allday. We had to kick people out... But Ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” So you’ll see what I mean. Oh fuck! fuck!"
+        "Hey! You are so lucky you weren’t scheduled today. We literally just got out. Carter was in his mood all day. We had to kick people out... But Ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” So you’ll see what I mean. Oh fuck! fuck!"
       ],
       "pdfPage": 3,
       "id": "el-015",
-      "searchText": "nicky (v.o.) hey! you are so lucky you weren’t scheduled today. we literally just got out. carter was in his mood allday. we had to kick people out... but ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” so you’ll see what i mean. oh fuck! fuck!"
+      "searchText": "nicky (v.o.) hey! you are so lucky you weren’t scheduled today. we literally just got out. carter was in his mood all day. we had to kick people out... but ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” so you’ll see what i mean. oh fuck! fuck!"
     },
     {
       "type": "action",
@@ -13772,7 +13772,7 @@
       "type": "dialogue",
       "character": "NICKY (V.O.)",
       "lines": [
-        "Hey! You are so lucky you weren’t scheduled today. We literally just got out. Carter was in his mood allday. We had to kick people out... But Ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” So you’ll see what I mean. Oh fuck! fuck!"
+        "Hey! You are so lucky you weren’t scheduled today. We literally just got out. Carter was in his mood all day. We had to kick people out... But Ian thinks it’s gonna be even worse tomorrow because “ all the high school students that had orientation today will be showing up.” So you’ll see what I mean. Oh fuck! fuck!"
       ],
       "pdfPage": 3
     },
