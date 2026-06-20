@@ -6,12 +6,12 @@ See [docs/PLAN.md](docs/PLAN.md) for architecture, data model, and build plan.
 
 ```bash
 # 1. Extract screenplay JSON from PDF (once)
-npm install
-npm run extract
-npm run validate
+pnpm install
+pnpm extract
+pnpm validate
 
 # 2. Run the reader
-npm run dev
+pnpm dev
 ```
 
 Open the URL Vite prints (usually `http://localhost:5173`).
@@ -32,4 +32,4 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 - **Vite + React + TypeScript** — lightweight SPA
 - **Tailwind CSS v3** — small purged CSS bundle
 - **TanStack Router** — routing (single route for now; no TanStack Query — static JSON loaded once)
-- **TypeScript + pdfjs-dist** — one-time PDF extraction (`npm run extract`)
+- **TypeScript + pdfjs-dist** — one-time PDF extraction (`pnpm extract`)

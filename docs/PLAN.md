@@ -228,7 +228,7 @@ Some pages (e.g. printed p.12 — gun scene) look dual-column on screen but PDF 
 
 ## Extraction Pipeline
 
-**Tool:** TypeScript + `pdfjs-dist`, run via `npm run extract`.
+**Tool:** TypeScript + `pdfjs-dist`, run via `pnpm extract`.
 
 ### Step 1 — Raw extract → `data/obsession.raw.json`
 
@@ -255,7 +255,7 @@ Group `elements[]` by moment rules above. Assign stable `moment-*` IDs.
 
 ### Step 5 — Validate
 
-Automated checks (`npm run validate`):
+Automated checks (`pnpm validate`):
 
 - [ ] Page count = 99
 - [ ] All beats/moments reference valid `elementId`s
@@ -341,8 +341,8 @@ obsession-app/
 
 ### Done
 
-1. ✅ Extract — `npm run extract` → raw + structured JSON + moments
-2. ✅ Validate — `npm run validate`
+1. ✅ Extract — `pnpm extract` → raw + structured JSON + moments
+2. ✅ Validate — `pnpm validate`
 3. ✅ App shell — Vite + React + Tailwind + TanStack Router
 4. ✅ Moment navigation + in-moment scroll + localStorage progress
 5. ✅ Search → jump to moment (+ scroll to element)
@@ -402,7 +402,7 @@ obsession-app/
 
 ## Tech Notes
 
-- **Extraction:** TypeScript + `pdfjs-dist` (`npm run extract`)
+- **Extraction:** TypeScript + `pdfjs-dist` (`pnpm extract`)
 - **App:** Vite + React + TypeScript + Tailwind CSS v3 + TanStack Router
 - **Skipped for weight:** TanStack Query (static JSON fetched once), TanStack Start, server/auth
 - **Data size:** JSON from `/public/data/obsession.json` (~800KB, gzip-friendly)
@@ -415,7 +415,7 @@ obsession-app/
 When picking up a new session:
 
 1. Read this file (`docs/PLAN.md`)
-2. Check `data/obsession.json` exists — if not, `npm run extract`
+2. Check `data/obsession.json` exists — if not, `pnpm extract`
 3. App reads `data/obsession.json` only, never the PDF
 4. **Target nav:** moments + scroll (see Implementation Status)
 5. User progress: `localStorage` key `obsession-reader-state` (`currentMomentId`, `scrollY`)
