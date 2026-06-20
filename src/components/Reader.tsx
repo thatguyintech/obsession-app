@@ -27,12 +27,15 @@ export function Reader({ data }: ReaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [chromeVisible, setChromeVisible] = useState(true);
   const scrollSaveTimer = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
 
   const moment = data.moments[momentIndex];
   const progress = ((momentIndex + 1) / data.moments.length) * 100;
   const sceneToc = useMemo(() => buildSceneTableOfContents(data), [data]);
   const lastMomentIndex = data.moments.length - 1;
+  const overlayOpen = searchOpen || tocOpen;
 
   const results = useMemo(
     () => (searchOpen ? searchScreenplay(data, query).slice(0, 20) : []),
@@ -43,6 +46,8 @@ export function Reader({ data }: ReaderProps) {
     setMomentIndex(index);
     setScrollY(0);
     setScrollToElementId(elementId ?? null);
+    setChromeVisible(true);
+    lastScrollY.current = 0;
   }, []);
 
   const goToStart = useCallback(() => {
@@ -54,6 +59,14 @@ export function Reader({ data }: ReaderProps) {
   }, [goToMoment, lastMomentIndex]);
 
   const handleScroll = useCallback((nextScrollY: number) => {
+    const delta = nextScrollY - lastScrollY.current;
+    if (nextScrollY > 48 && delta > 10) {
+      setChromeVisible(false);
+    } else if (delta < -10) {
+      setChromeVisible(true);
+    }
+    lastScrollY.current = nextScrollY;
+
     if (scrollSaveTimer.current) {
       window.clearTimeout(scrollSaveTimer.current);
     }
@@ -118,10 +131,12 @@ export function Reader({ data }: ReaderProps) {
       if (event.key === "/") {
         event.preventDefault();
         setSearchOpen(true);
+        setChromeVisible(true);
       }
       if (event.key === "t" || event.key === "T") {
         event.preventDefault();
         setTocOpen(true);
+        setChromeVisible(true);
       }
     }
 
@@ -133,37 +148,47 @@ export function Reader({ data }: ReaderProps) {
     return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
   }
 
+  const showChrome = overlayOpen || chromeVisible;
+
   return (
     <div className="relative h-full min-w-0 overflow-hidden bg-[var(--bg-page)]">
-      <div className="progress-track absolute inset-x-0 top-0 z-20">
-        <div
-          className="progress-fill h-full transition-all duration-200"
-          style={{ width: `${progress}%` }}
-        />
+      <div
+        className={`reader-chrome-shell ${showChrome ? "is-visible" : "is-hidden"}`}
+        aria-hidden={!showChrome}
+      >
+        <div className="reader-chrome-bar">
+          <div className="progress-track">
+            <div
+              className="progress-fill h-full transition-all duration-200"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          <header className="reader-chrome flex min-w-0 items-center justify-between gap-2 px-4 py-2.5 text-xs">
+            <div className="flex min-w-0 shrink items-center gap-1">
+              <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
+                Search /
+              </button>
+              <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
+                Scenes T
+              </button>
+            </div>
+            <span className="shrink-0 text-right text-stone-600">
+              {momentIndex + 1} / {data.moments.length}
+              {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
+            </span>
+          </header>
+        </div>
       </div>
 
-      <header className="reader-chrome absolute inset-x-0 top-3 z-20 flex min-w-0 items-center justify-between gap-2 px-4 text-xs">
-        <div className="flex min-w-0 shrink items-center gap-1">
-          <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
-            Search /
-          </button>
-          <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
-            Scenes T
-          </button>
-        </div>
-        <span className="shrink-0 text-right text-stone-600">
-          {momentIndex + 1} / {data.moments.length}
-          {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
-        </span>
-      </header>
-
-      <main className="relative h-full min-w-0 overflow-hidden pt-8 pb-10">
+      <main className="relative h-full min-w-0 overflow-hidden pb-10">
         <MomentView
           moment={moment}
           data={data}
           scrollY={scrollY}
           scrollToElementId={scrollToElementId}
           sceneToc={sceneToc}
+          chromeVisible={showChrome}
           onGoToScene={goToMoment}
           onScroll={handleScroll}
         />
@@ -181,6 +206,12 @@ export function Reader({ data }: ReaderProps) {
         className="absolute inset-y-0 right-0 z-10 w-1/4 cursor-w-resize bg-transparent"
         onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
       />
+      <button
+        type="button"
+        aria-label="Toggle controls"
+        className="absolute inset-y-0 left-1/4 z-10 w-1/2 cursor-default bg-transparent"
+        onClick={() => setChromeVisible((visible) => !visible)}
+      />
 
       {searchOpen ? (
         <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-16">
@@ -191,7 +222,7 @@ export function Reader({ data }: ReaderProps) {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search screenplay..."
-                className="w-full bg-transparent text-base text-stone-900 outline-none placeholder:text-stone-400"
+                className="w-full bg-transparent font-reading text-base text-stone-900 outline-none placeholder:text-stone-400"
               />
             </div>
             <div className="max-h-[60vh] overflow-y-auto">
@@ -211,11 +242,11 @@ export function Reader({ data }: ReaderProps) {
                       setQuery("");
                     }}
                   >
-                    <p className="text-xs tracking-wide text-stone-500 uppercase">
+                    <p className="font-label text-xs tracking-wide text-stone-500 uppercase">
                       {result.type.replace("_", " ")}
                       {result.printedPage ? ` · p.${result.printedPage}` : ""}
                     </p>
-                    <p className="mt-1 line-clamp-2 text-sm text-stone-800">{result.snippet}</p>
+                    <p className="mt-1 line-clamp-2 font-reading text-sm text-stone-800">{result.snippet}</p>
                   </button>
                 ))
               )}

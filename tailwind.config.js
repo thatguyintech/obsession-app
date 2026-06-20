@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        screenplay: ['"Courier New"', "Courier", "monospace"],
-        prose: ["Georgia", "Times New Roman", "serif"],
+        reading: ['"Source Serif 4"', "Literata", "Georgia", "serif"],
+        label: ['"Source Sans 3"', "Inter", "system-ui", "sans-serif"],
       },
     },
   },
