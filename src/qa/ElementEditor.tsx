@@ -4,6 +4,7 @@ interface ElementEditorProps {
   element: ScreenplayElement;
   onChange: (element: ScreenplayElement) => void;
   onRevert: () => void;
+  onDelete: () => void;
   onClose: () => void;
 }
 
@@ -123,7 +124,7 @@ function updateDualTrack(
   return { ...element, [side]: tracks };
 }
 
-export function ElementEditor({ element, onChange, onRevert, onClose }: ElementEditorProps) {
+export function ElementEditor({ element, onChange, onRevert, onDelete, onClose }: ElementEditorProps) {
   return (
     <div className="border-t border-stone-200 bg-white px-4 py-3">
       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -132,6 +133,13 @@ export function ElementEditor({ element, onChange, onRevert, onClose }: ElementE
           <span className="font-normal text-stone-500">({element.type.replace("_", " ")})</span>
         </h3>
         <div className="ml-auto flex gap-2">
+          <button
+            type="button"
+            className="reader-chrome-button text-sm text-red-800 hover:bg-red-50"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
           <button type="button" className="reader-chrome-button text-sm" onClick={onRevert}>
             Revert
           </button>

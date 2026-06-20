@@ -162,6 +162,27 @@ export function QaPage() {
     setSaveMessage(null);
   }
 
+  function deleteElement(elementId: string) {
+    const element = data?.elements.find((item) => item.id === elementId);
+    if (!element) return;
+
+    const typeLabel = element.type.replace("_", " ");
+    const confirmed = window.confirm(
+      `Delete ${elementId} (${typeLabel})?\n\nThe element will be removed when you Save. Copy any text you need into another element first.`,
+    );
+    if (!confirmed) return;
+
+    setData((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        elements: current.elements.filter((item) => item.id !== elementId),
+      };
+    });
+    setSelectedId(null);
+    setSaveMessage(null);
+  }
+
   async function handleSave() {
     if (!data || saving) return;
 
@@ -351,6 +372,7 @@ export function QaPage() {
           element={selectedElement}
           onChange={updateElement}
           onRevert={() => revertElement(selectedElement.id)}
+          onDelete={() => deleteElement(selectedElement.id)}
           onClose={() => setSelectedId(null)}
         />
       ) : null}

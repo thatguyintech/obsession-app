@@ -139,13 +139,23 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 - [ ] CLI output hints: `Open /qa?page=N` for WARN pages
 - [ ] Optional: link from reader dev footer to `/qa` (dev only)
 
-### Phase E — Structural fixes (v1.5)
+### Phase E — Structural fixes
 
-- [ ] Change element type (e.g. action → dialogue)
-- [ ] Merge adjacent elements
-- [ ] Split element (later)
+- [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
+- [ ] Change element type (QA-006)
+- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — manual QA fixes first; re-extract only with care
 
-Needed for classifier boundary bugs like el-015/016 without re-running full extract.
+**Delete workflow (el-015 / el-016 pattern):** paste misclassified text into the correct element → Delete the orphan → Save. Save regenerates beats/moments; element IDs may gap (el-015, el-017, …).
+
+---
+
+## Backlog (QA / extract)
+
+| ID | Status | Ticket |
+|----|--------|--------|
+| **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
+| **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
+| **EXTRACT-001** | Todo | **Dialogue wrap at left margin** — `parseDialogue` breaks when wrapped line hits `x0 < 120`, tail misclassified as action. Fix classifier for future extracts; do not re-run full extract until QA hand-fixes are merged or backed up |
 
 ---
 
@@ -154,8 +164,8 @@ Needed for classifier boundary bugs like el-015/016 without re-running full extr
 ```bash
 pnpm qa                          # terminal report → note WARN pages
 pnpm dev                         # open /qa?page=16
-# compare PDF | extracted | raw — click cards to link-highlight
-# edit → Save
+# compare PDF | extracted — click cards to link-highlight
+# edit → merge text manually → Delete orphan element → Save
 pnpm validate
 git commit -m "fix: correct dialogue on page 3" -- data/ public/data/
 ```
