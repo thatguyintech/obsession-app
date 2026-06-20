@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ScreenplayData, SearchResult } from "../types";
-import { MomentView, type MomentViewHandle } from "./MomentView";
+import { MomentView } from "./MomentView";
 import { SceneTocOverlay } from "./SceneTableOfContents";
 import {
   buildSceneTableOfContents,
@@ -28,7 +28,7 @@ export function Reader({ data }: ReaderProps) {
   const [tocOpen, setTocOpen] = useState(false);
   const [query, setQuery] = useState("");
   const scrollSaveTimer = useRef<number | null>(null);
-  const momentViewRef = useRef<MomentViewHandle>(null);
+  const scrollRef = useRef<HTMLElement>(null);
 
   const moment = data.moments[momentIndex];
   const progress = ((momentIndex + 1) / data.moments.length) * 100;
@@ -102,11 +102,11 @@ export function Reader({ data }: ReaderProps) {
       }
       if (event.key === "ArrowDown") {
         event.preventDefault();
-        momentViewRef.current?.scrollBy(Math.round(window.innerHeight * 0.65));
+        scrollRef.current?.scrollBy({ top: Math.round(window.innerHeight * 0.65), behavior: "smooth" });
       }
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        momentViewRef.current?.scrollBy(-Math.round(window.innerHeight * 0.65));
+        scrollRef.current?.scrollBy({ top: -Math.round(window.innerHeight * 0.65), behavior: "smooth" });
       }
       if (event.key === "j" || event.key === "J") {
         event.preventDefault();
@@ -170,16 +170,19 @@ export function Reader({ data }: ReaderProps) {
         </div>
       </div>
 
-      <main className="reader-main relative min-w-0 overflow-hidden pb-10">
+      <main
+        ref={scrollRef}
+        className="reader-main"
+        onScroll={(event) => handleScroll(event.currentTarget.scrollTop)}
+      >
         <MomentView
-          ref={momentViewRef}
           moment={moment}
           data={data}
+          scrollRootRef={scrollRef}
           scrollY={scrollY}
           scrollToElementId={scrollToElementId}
           sceneToc={sceneToc}
           onGoToScene={goToMoment}
-          onScroll={handleScroll}
         />
       </main>
 

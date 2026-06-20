@@ -43,6 +43,17 @@ body {
   .reader-main {
     height: 100%;
     padding-top: var(--reader-chrome-height);
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #d6d3d1 transparent;
+  }
+
+  .reader-column [data-element-id] {
+    scroll-margin-top: calc(var(--reader-chrome-height) + 0.75rem);
   }
 
   .reader-chrome {
@@ -159,14 +170,6 @@ body {
   .scroll-target-highlight {
     @apply -mx-1 rounded-md px-1;
     background: rgb(154 52 18 / 0.06);
-  }
-
-  .moment-scroll {
-    min-width: 0;
-    overflow-x: hidden;
-    touch-action: pan-y;
-    scrollbar-width: thin;
-    scrollbar-color: #d6d3d1 transparent;
   }
 
   .progress-track {
