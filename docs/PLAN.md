@@ -64,7 +64,7 @@ Used for search, fidelity, and building moments. **Preserves raw `lines[]` array
 | `title_card` | Cover page (manual entry for page 1) |
 | `scene_heading` | `INT.` / `EXT.` lines |
 | `action` | Stage direction / prose |
-| `dialogue` | Character name + optional parenthetical + `lines[]` |
+| `dialogue` | Character name + ordered `segments[]` (see SCHEMA-001; legacy: optional `parenthetical` + `lines[]`) |
 | `dual_dialogue` | Two parallel conversation tracks |
 
 **Dialogue element example:**
@@ -368,6 +368,85 @@ obsession-app/
 | **READ-004** | Reader + QA editor / action styling | **Paragraph breaks in action blocks** — PDF often has two separate action paragraphs (blank line between). JSON stores one `action.text` string; reader and QA preview collapse to a single block. **Goal:** treat `\n\n` (double newline) as a paragraph break in display — mirror screenplay spacing. Example: `el-003` on page 2 — house/exterior description, then a gap, then Bear fixating on the romance film. QA editor already allows typing two newlines; need render path (reader `ElementView`, QA extracted pane) to split and style as separate `<p>` blocks. Open questions: also support in extract? Split into two elements vs inline `\n\n` in one? Dialogue/action only or scene headings too? |
 | **QA-006** | QA tool | **Change element type** — convert action ↔ dialogue ↔ scene_heading in the editor without merge/delete. See [QA-TOOL.md](./QA-TOOL.md). |
 | **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
+| **SCHEMA-001** | Data model + reader + QA + extract | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Replaces the single `parenthetical` + `lines[]` shape for mid-speech asides. Full spec below. |
+
+### SCHEMA-001 — Dialogue segments (spec)
+
+**Problem:** Dialogue today is `character` + optional `parenthetical` + `lines[]`. The reader renders **Who → one aside → speech**. Screenplay dialogue can interleave: speech → `(some movement)` → more speech in the **same** cue (page 3 Nicky voicemail after `Oh fuck! fuck!`). Classifier drops or mis-buckets the paren; even with QA edits there is no first-class place to store it.
+
+**Example (target JSON after migration):**
+
+```json
+{
+  "id": "el-015",
+  "type": "dialogue",
+  "character": "NICKY (V.O.)",
+  "segments": [
+    { "kind": "speech", "text": "Hey! You are so lucky you weren't scheduled today. ... Oh fuck! fuck!" },
+    { "kind": "parenthetical", "text": "some movement" },
+    { "kind": "speech", "text": "God damn it." }
+  ],
+  "pdfPage": 3,
+  "searchText": "..."
+}
+```
+
+`el-017` stays action-only: `Bear's eyes widen. He calls Nicky back immediately.`
+
+**Types (TypeScript):**
+
+```ts
+type DialogueSegmentKind = "speech" | "parenthetical";
+
+interface DialogueSegment {
+  kind: DialogueSegmentKind;
+  text: string; // parenthetical text WITHOUT wrapping parens (matches legacy parenthetical field)
+}
+
+interface DialogueTrack {
+  character: string;
+  segments: DialogueSegment[];
+  // legacy during migration — see below
+}
+
+// dialogue element: character + segments[]
+// dual_dialogue: left/right tracks each use segments[]
+```
+
+**Reader display:** For each segment in order — `speech` → dialogue body (`text-dialogue`); `parenthetical` → aside (`text-parenthetical`, render as `(text)`). Character name once at top. Same four-lane hierarchy as today, but repeatable within one block.
+
+**Migration (one-time script + bump `meta.version`):**
+
+| Legacy | → `segments` |
+|--------|----------------|
+| `lines: ["a", "b"]`, no `parenthetical` | `[{ kind: speech, text: "a" }, { kind: speech, text: "b" }]` |
+| `parenthetical: "laughter"`, `lines: ["Yeah"]` | `[{ kind: parenthetical, text: "laughter" }, { kind: speech, text: "Yeah" }]` |
+| Reflowed single-line dialogue (QA merges) | `[{ kind: speech, text: "..." }]` — keep as one speech segment unless editor splits |
+
+- **Canonical after migration:** `segments` required on dialogue / dual tracks; drop `parenthetical` + `lines` from JSON once migrated (or accept both in read path temporarily, write path emits `segments` only).
+- **Do not** re-run full `pnpm extract` until EXTRACT-001 emits `segments` — migrate existing hand-fixed JSON first.
+
+**Touch points (implementation order):**
+
+1. `src/types.ts`, `scripts/lib/types.ts` — add types
+2. `scripts/migrate-dialogue-segments.ts` (or similar) — convert `data/obsession.json`, run validate
+3. `scripts/lib/cleanup.ts` — `rebuildSearchText`, reflow helpers
+4. `scripts/lib/classifier.ts` — `parseDialogue` builds `segments[]`; `denormalizeBeat`
+5. `lib/qa-compare.ts` — `extractElementText` flattens segments for word compare
+6. `src/components/ElementView.tsx` — render segments
+7. `src/qa/ElementEditor.tsx` — segment list editor (add/remove/reorder speech vs paren rows)
+8. `scripts/qa-save.ts` — already rebuilds on save; ensure segment-aware
+9. `scripts/validate.ts` — require `segments`, forbid empty, validate kinds
+
+**Extract (pairs with EXTRACT-001):** While inside an active dialogue track, lines matching `(…)` append `{ kind: parenthetical }` and continue parsing; do not hand off to `parseAction` until true action column / new character cue.
+
+**Non-goals for v1:**
+
+- Inline emphasis within a speech segment (READ-001) — separate
+- Action paragraph `\n\n` (READ-004) — stays on `action.text`
+- Nesting segments beyond speech/parenthetical
+
+**QA workflow after ship:** Fix page 3 by editing el-015 segments in QA tool → trim el-017 action → Save.
 
 ---
 

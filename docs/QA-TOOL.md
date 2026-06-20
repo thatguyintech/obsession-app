@@ -142,6 +142,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 ### Phase E — Structural fixes
 
 - [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
+- [ ] Dialogue segments schema (SCHEMA-001) — speech/parenthetical blocks in one element
 - [ ] Change element type (QA-006)
 - [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — manual QA fixes first; re-extract only with care
 
@@ -156,6 +157,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 | **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
 | **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
 | **EXTRACT-001** | Todo | **Dialogue wrap at left margin** — `parseDialogue` breaks when wrapped line hits `x0 < 120`, tail misclassified as action. Fix classifier for future extracts; do not re-run full extract until QA hand-fixes are merged or backed up |
+| **SCHEMA-001** | Todo | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]` replaces single `parenthetical` + `lines[]` for mid-speech asides. Example: page 3 `(some movement)` + `God damn it.` inside Nicky voicemail. Full spec in [PLAN.md](./PLAN.md#schema-001--dialogue-segments-spec). Implement migration before EXTRACT-001 re-extract. |
 
 ---
 
