@@ -8,6 +8,7 @@
     "extract": "tsx scripts/extract.ts",
     "apply-cleanup": "tsx scripts/apply-cleanup.ts",
     "validate": "tsx scripts/validate.ts",
+    "qa": "tsx scripts/qa.ts",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
