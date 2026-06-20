@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ScreenplayData, SearchResult } from "../types";
-import { MomentView } from "./MomentView";
+import { MomentView, type MomentViewHandle } from "./MomentView";
 import { SceneTocOverlay } from "./SceneTableOfContents";
 import {
   buildSceneTableOfContents,
@@ -30,6 +30,7 @@ export function Reader({ data }: ReaderProps) {
   const [chromeVisible, setChromeVisible] = useState(true);
   const scrollSaveTimer = useRef<number | null>(null);
   const lastScrollY = useRef(0);
+  const momentViewRef = useRef<MomentViewHandle>(null);
 
   const moment = data.moments[momentIndex];
   const progress = ((momentIndex + 1) / data.moments.length) * 100;
@@ -104,13 +105,21 @@ export function Reader({ data }: ReaderProps) {
         return;
       }
 
-      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      if (event.key === "ArrowRight") {
         event.preventDefault();
         goToMoment(Math.min(momentIndex + 1, lastMomentIndex));
       }
-      if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      if (event.key === "ArrowLeft") {
         event.preventDefault();
         goToMoment(Math.max(momentIndex - 1, 0));
+      }
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        momentViewRef.current?.scrollBy(Math.round(window.innerHeight * 0.65));
+      }
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        momentViewRef.current?.scrollBy(-Math.round(window.innerHeight * 0.65));
       }
       if (event.key === "j" || event.key === "J") {
         event.preventDefault();
@@ -183,6 +192,7 @@ export function Reader({ data }: ReaderProps) {
 
       <main className="relative h-full min-w-0 overflow-hidden pb-10">
         <MomentView
+          ref={momentViewRef}
           moment={moment}
           data={data}
           scrollY={scrollY}
@@ -197,20 +207,14 @@ export function Reader({ data }: ReaderProps) {
       <button
         type="button"
         aria-label="Previous moment"
-        className="absolute inset-y-0 left-0 z-10 w-1/4 cursor-w-resize bg-transparent"
+        className="absolute inset-y-0 left-0 z-10 w-14 bg-transparent md:w-16"
         onClick={() => goToMoment(Math.max(momentIndex - 1, 0))}
       />
       <button
         type="button"
         aria-label="Next moment"
-        className="absolute inset-y-0 right-0 z-10 w-1/4 cursor-w-resize bg-transparent"
+        className="absolute inset-y-0 right-0 z-10 w-14 bg-transparent md:w-16"
         onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
-      />
-      <button
-        type="button"
-        aria-label="Toggle controls"
-        className="absolute inset-y-0 left-1/4 z-10 w-1/2 cursor-default bg-transparent"
-        onClick={() => setChromeVisible((visible) => !visible)}
       />
 
       {searchOpen ? (

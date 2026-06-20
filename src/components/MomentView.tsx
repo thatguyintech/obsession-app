@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from "react";
 import type { Moment, SceneTocEntry, ScreenplayData } from "../types";
 import { ElementView } from "./ElementView";
 
@@ -13,19 +13,32 @@ interface MomentViewProps {
   onScroll: (scrollY: number) => void;
 }
 
-export function MomentView({
-  moment,
-  data,
-  scrollY,
-  scrollToElementId,
-  sceneToc,
-  chromeVisible = true,
-  onGoToScene,
-  onScroll,
-}: MomentViewProps) {
+export interface MomentViewHandle {
+  scrollBy: (delta: number) => void;
+}
+
+export const MomentView = forwardRef<MomentViewHandle, MomentViewProps>(function MomentView(
+  {
+    moment,
+    data,
+    scrollY,
+    scrollToElementId,
+    sceneToc,
+    chromeVisible = true,
+    onGoToScene,
+    onScroll,
+  },
+  ref,
+) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const previousMomentId = useRef<string | null>(null);
   const elementMap = new Map(data.elements.map((element) => [element.id, element]));
+
+  useImperativeHandle(ref, () => ({
+    scrollBy(delta: number) {
+      scrollRef.current?.scrollBy({ top: delta, behavior: "smooth" });
+    },
+  }));
 
   useLayoutEffect(() => {
     const node = scrollRef.current;
@@ -53,7 +66,7 @@ export function MomentView({
     >
       <div
         ref={scrollRef}
-        className="moment-scroll mx-auto w-full max-w-prose flex-1 overflow-y-auto overscroll-contain px-5 text-left md:px-10"
+        className="moment-scroll mx-auto w-full max-w-prose flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 text-left md:px-10"
         onScroll={(event) => onScroll(event.currentTarget.scrollTop)}
       >
         {moment.elementIds.map((elementId) => {
@@ -73,4 +86,4 @@ export function MomentView({
       </div>
     </div>
   );
-}
+});
