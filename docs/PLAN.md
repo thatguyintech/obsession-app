@@ -1,6 +1,6 @@
 # Obsession Reader — Project Plan
 
-> Mobile-friendly, story-style reader for the *Obsession* screenplay by Curry Barker.
+> Mobile-friendly reader for the *Obsession* screenplay by Curry Barker.
 > This document captures architecture and build decisions so work can continue across sessions.
 
 ---
@@ -9,7 +9,7 @@
 
 Extract the screenplay PDF **once** into structured JSON, then build the app entirely against that data. The PDF is an input artifact only — not needed at runtime.
 
-**Prototype UX:** Instagram Story–like navigation — one beat (chunk) per screen, tap left/right (or arrow keys) to advance, reading progress persisted in the browser via `localStorage` (no auth).
+**Target UX:** Book-like, left-aligned reading. **Moments** (scenes) are the unit of progress — tap left/right to move between moments. Within a moment, **vertical scroll** through contiguous dialogue, action, and dual dialogue. No PDF rendering at runtime.
 
 ---
 
@@ -36,26 +36,26 @@ obsession-2026.pdf
 scripts/extract.ts
        │
        ├── data/obsession.raw.json    ← line-level extract (regeneratable backup)
-       └── data/obsession.json        ← app schema (elements + beats)
+       └── data/obsession.json        ← elements + beats + moments
                 │
                 ▼
            Web app reads JSON only
                 │
                 ▼
-           localStorage (user progress)
+           localStorage (moment progress + optional scroll position)
 ```
 
-**No database or cache for screenplay data.** JSON loaded once into memory at startup (~500KB–2MB). Search runs client-side over elements.
+**No database or cache for screenplay data.** JSON loaded once into memory at startup (~800KB–2MB). Search runs client-side over elements.
 
 ---
 
 ## Data Model
 
-Two layers in a single file (`data/obsession.json`):
+Three layers in `data/obsession.json`:
 
-### 1. `elements[]` — semantic screenplay structure
+### 1. `elements[]` — semantic screenplay structure (source of truth)
 
-Used for search, scene logic, and faithful representation of the script.
+Used for search, fidelity, and building moments. **Preserves raw `lines[]` arrays** as extracted from the PDF — one entry per wrapped script line.
 
 **Element types:**
 
@@ -63,8 +63,8 @@ Used for search, scene logic, and faithful representation of the script.
 |------|-------------|
 | `title_card` | Cover page (manual entry for page 1) |
 | `scene_heading` | `INT.` / `EXT.` lines |
-| `action` | Full-width prose / stage direction |
-| `dialogue` | Character name + optional parenthetical + lines |
+| `action` | Stage direction / prose |
+| `dialogue` | Character name + optional parenthetical + `lines[]` |
 | `dual_dialogue` | Two parallel conversation tracks |
 
 **Dialogue element example:**
@@ -79,7 +79,8 @@ Used for search, scene logic, and faithful representation of the script.
     "Maybe she realized I wasn't in the back carving birch wood and weaving wool."
   ],
   "pdfPage": 13,
-  "printedPage": 12
+  "printedPage": 12,
+  "searchText": "..."
 }
 ```
 
@@ -110,38 +111,91 @@ Used for search, scene logic, and faithful representation of the script.
 
 Each element has a stable string ID (`el-001`, `el-002`, …).
 
-### 2. `beats[]` — navigation units
+### 2. `moments[]` — navigation / progress units (primary UX)
 
-What the user taps through. One beat ≈ one screen.
-
-**V1 rule: 1 element = 1 beat** (simplest; tune grouping later).
+A **moment** is a scrollable block of contiguous story content. This is what the user taps through and what progress tracks.
 
 ```json
 {
-  "id": "beat-087",
-  "elementId": "el-087",
-  "index": 86,
-  "type": "dual_dialogue"
+  "id": "moment-012",
+  "index": 11,
+  "elementIds": ["el-045", "el-046", "el-047", "el-048"],
+  "sceneHeadingId": "el-045",
+  "printedPage": 16
 }
 ```
 
-Beats may denormalize content from their element for simpler rendering, or resolve `elementId` at runtime — either is fine at this scale.
+**Moment grouping rules:**
 
-**Future beat splitting (not P0):** Long action blocks split at sentence boundaries into sub-beats sharing an `elementId`:
+| Starts a new moment | Stays in current moment |
+|---------------------|-------------------------|
+| `title_card` | — |
+| `scene_heading` with a **large time/location jump** (new `INT.` / `EXT.` slug, `- LATER`, `- MOMENTS LATER`, `- DAY` → `- NIGHT`, etc.) | `scene_heading` ending in `- CONTINUOUS` (visual divider only; same scroll block) |
+| First element after cover | All following action, dialogue, dual_dialogue until the next moment break |
 
-```json
-{
-  "id": "beat-006a",
-  "elementId": "el-006",
-  "part": 1,
-  "type": "action",
-  "text": "In the center of the room, a DEAD CAT lies where the coffee table should be."
-}
-```
+**Within a moment (vertical scroll, top to bottom):**
+
+- `scene_heading` (styled divider when `- CONTINUOUS`, or opener when starting a moment)
+- `action` blocks
+- `dialogue` blocks (reflowed for display — see Display layer below)
+- `dual_dialogue` blocks (two columns, side-by-side, left-aligned in each column)
+
+**Not a concern for v1:** arbitrarily long scenes — no max-height split yet.
+
+Moments can be generated at extract time or computed client-side from elements; extract-time is preferred for stable IDs and search → moment mapping.
+
+### 3. `beats[]` — legacy / internal (current prototype)
+
+The live prototype still navigates **beats** (1 element = 1 tap). Beats remain in JSON for now but are **not the target navigation model**. They may be removed or kept only for debugging once moments ship.
 
 ---
 
-## Dual Dialogue
+## Display Layer (UI responsibility)
+
+**Principle:** Data stays faithful; display reads comfortably.
+
+### Line reflow
+
+Do **not** render one `<p>` per raw script line. The UI joins `lines[]` into flowing paragraphs:
+
+- Dialogue: `lines.join(" ")` → single paragraph per speech (unless we later detect intentional blank-line breaks)
+- Action: already a single `text` field; render as one paragraph
+- Dual dialogue: reflow each track's `lines[]` independently
+
+Raw lines remain in JSON for search fidelity and future reuse.
+
+### Typography
+
+Mobile-first, comfortable for extended reading. Use `clamp()` so desktop doesn't grow unbounded.
+
+| Role | Mobile base | Style | Notes |
+|------|-------------|-------|-------|
+| **Dialogue body** | 20px | Regular weight, high contrast (white) | `clamp(1.25rem, …)` for desktop |
+| **Character name** | 16px | Bold, uppercase | Above each speech |
+| **Parenthetical** | 14px | Italic, muted color | Reads as aside — e.g. `(knowing look at Bear)` |
+| **Action / stage direction** | 18px | **Different typeface** + muted color | Must read clearly as *not dialogue* (e.g. serif vs monospace dialogue) |
+| **Scene heading** | TBD | Small caps / letter-spacing, distinct from action | Fourth visual lane |
+
+Also: **line-height ~1.6–1.75**, **left-aligned**, **max-width ~35–40em** (`max-w-prose` or similar).
+
+### Layout
+
+- **General content:** Left-aligned, book-like (not centered screenplay layout)
+- **Dual dialogue:** Always **two columns, side-by-side** on mobile and desktop; each column **left-aligned**. Lives inside the moment scroll — not a separate tap target. Font size may be slightly smaller than single dialogue if needed (sanity-check on device later).
+
+### Visual hierarchy (four lanes)
+
+| Lane | Example | Treatment |
+|------|---------|-----------|
+| **Who** | `IAN` | 16px bold uppercase |
+| **Aside** | `(knowing look at Bear)` | 14px italic, muted |
+| **Speech** | `There—` / reflowed paragraph | 20px regular |
+| **Stage direction** | `Sarah playfully grabs Bear's arm.` | 18px serif (or other distinct face), muted |
+| **Scene** | `INT. BEAR'S HOUSE - …` | Own distinct styling |
+
+---
+
+## Dual Dialogue (extraction)
 
 Two patterns exist in this PDF:
 
@@ -149,9 +203,9 @@ Two patterns exist in this PDF:
 
 Final Draft preserved left/right columns at the line level. Detect by comparing line `x` positions against page midpoint.
 
-- ~8 pages have true side-by-side dual dialogue
+- ~12 elements in current extract
 - Examples: printed p.16 (BEAR / TRIVIA GUY), printed p.37 (NICKY / CARTER)
-- Extract as `dual_dialogue` element → single beat with split UI
+- Extract as `dual_dialogue` element
 
 ### Type B — Stacked sequentially (visual dual, flat coordinates)
 
@@ -159,12 +213,14 @@ Some pages (e.g. printed p.12 — gun scene) look dual-column on screen but PDF 
 
 - Text extraction is accurate; simultaneity is lost
 - **V1:** Keep as alternating `dialogue` elements in reading order
-- **Later:** Optional post-pass heuristic to re-pair rapid alternations into `dual_dialogue`
+- **Later:** Optional post-pass to re-pair rapid alternations into `dual_dialogue`
 
-**Dual dialogue beat UI:**
-- Portrait: stacked with character labels
-- Landscape: side-by-side columns
-- Always one tap to advance past the whole moment
+### Dual dialogue UI (target)
+
+- Inside moment scroll
+- Two columns, side-by-side, left-aligned always
+- Reflowed text per column
+- Not its own moment or tap boundary
 
 ---
 
@@ -174,18 +230,9 @@ Some pages (e.g. printed p.12 — gun scene) look dual-column on screen but PDF 
 
 ### Step 1 — Raw extract → `data/obsession.raw.json`
 
-Line-level data with positions:
+Line-level data with positions (regeneratable backup).
 
-```json
-{
-  "page": 2,
-  "lines": [
-    { "x0": 108, "y0": 71, "x1": 325, "y1": 83, "text": "INT. BEAR'S HOUSE - LIVING ROOM - NIGHT" }
-  ]
-}
-```
-
-### Step 2 — Classify → `data/obsession.json`
+### Step 2 — Classify → `elements[]` in `data/obsession.json`
 
 Rules (position + pattern based):
 
@@ -196,16 +243,20 @@ Rules (position + pattern based):
 5. Left-margin prose → `action`
 6. Page 1 → manual `title_card`
 
-### Step 3 — Generate beats
+### Step 3 — Generate `beats[]` (legacy)
 
-For each element (in order): create one beat with `elementId`, sequential `index`, matching `type`.
+One beat per element — used by current prototype only.
 
-### Step 4 — Validate
+### Step 4 — Generate `moments[]` (target)
 
-Automated checks (`scripts/validate.py`):
+Group `elements[]` by moment rules above. Assign stable `moment-*` IDs.
+
+### Step 5 — Validate
+
+Automated checks (`npm run validate`):
 
 - [ ] Page count = 99
-- [ ] All beats have valid `elementId` references
+- [ ] All beats/moments reference valid `elementId`s
 - [ ] Spot-check pages: printed 1, 12, 16, 37, 85
 - [ ] Search smoke tests: `"tiny silver revolver"`, `"Got into some pills"`, `"BRICK"`
 - [ ] Character list looks sane (BEAR, NICKY, IAN, SARAH, …)
@@ -213,67 +264,72 @@ Automated checks (`scripts/validate.py`):
 
 ---
 
-## App UX (Prototype)
+## App UX
 
-### Navigation
+### Navigation (target)
 
-- **Primary:** Tap left/right halves of screen
-- **Keyboard:** ← → or ↑ ↓ arrow keys
-- One beat per screen; no PDF rendering
+| Input | Behavior |
+|-------|----------|
+| Tap left / right (or ← / →) | Previous / next **moment** |
+| Vertical scroll | Within current moment |
+| `/` | Search (unchanged) |
+| `Esc` | Close search |
 
-### Beat rendering by type
+Progress displays **moment index** (e.g. `12 / 87`), not beat count. Printed page shown when available.
 
-| Type | Layout |
-|------|--------|
-| `title_card` | Centered title / author |
-| `scene_heading` | Title card — centered, distinct styling |
-| `action` | Full-width prose |
-| `dialogue` | Centered character name, optional parenthetical, dialogue block |
-| `dual_dialogue` | Two tracks (side-by-side or stacked) |
+### Navigation (current prototype)
+
+Still on **beats** — one element per tap, no moment scroll. To be migrated.
 
 ### User state — `localStorage`
 
 Key: `obsession-reader-state`
 
+**Target shape:**
+
 ```json
 {
   "screenplayVersion": 1,
-  "currentBeatId": "beat-087",
-  "currentBeatIndex": 86,
+  "currentMomentId": "moment-012",
+  "currentMomentIndex": 11,
+  "scrollY": 0,
   "lastReadAt": "2026-06-19T12:00:00Z"
 }
 ```
 
-- **`currentBeatId`** is primary (stable across re-extracts)
-- **`currentBeatIndex`** is a cache for fast lookup
+- **`currentMomentId`** is primary (stable across re-extracts)
+- **`scrollY`** optional — restore scroll position within a moment
 - No auth; progress persists between browser sessions
-- User state is separate from screenplay JSON — never mixed in
+- User state is separate from screenplay JSON
+
+**Current prototype** still uses `currentBeatId` / `currentBeatIndex` — migrate when moments ship.
 
 ### Search
 
 Client-side, in-memory, over `elements[]`:
 
-- Build searchable text per element (character names + dialogue + action text)
-- Results map to `beatId` for "jump to scene"
+- Search uses raw `searchText` (faithful to extracted content)
+- Results map to **`momentId`** (+ optional scroll-to-element within moment)
 - No separate search database needed at this scale
 
 ---
 
-## Repo Layout (target)
+## Repo Layout
 
 ```
 obsession-app/
 ├── docs/
-│   └── PLAN.md                 ← this file
+│   └── PLAN.md
 ├── data/
-│   ├── obsession.raw.json      ← line-level extract
-│   └── obsession.json          ← app schema (committed to git)
+│   ├── obsession.raw.json
+│   └── obsession.json          ← elements + beats + moments
 ├── scripts/
-│   ├── extract.ts              ← PDF → raw → structured
-│   ├── validate.ts             ← sanity checks
-│   └── lib/                    ← extraction helpers
+│   ├── extract.ts
+│   ├── validate.ts
+│   └── lib/
 ├── src/                        ← web app (reads data/obsession.json only)
-├── obsession-2026.pdf          ← source PDF (optional in git)
+├── public/data/obsession.json  ← copy served to app
+├── obsession-2026.pdf
 └── README.md
 ```
 
@@ -281,29 +337,36 @@ obsession-app/
 
 ## Build Order
 
-1. **Extract** — `npm run extract` → `data/obsession.raw.json` + `data/obsession.json`
-2. **Validate** — `npm run validate` + manual spot-check
-3. **App shell** — load JSON, render one beat, left/right navigation
-4. **Progress** — `localStorage` read/write on beat change
-5. **Search** — client-side element search → jump to beat
-6. **Polish** — scene heading styling, dual dialogue layout, mobile viewport
+### Done
+
+1. ✅ Extract — `npm run extract` → raw + structured JSON
+2. ✅ Validate — `npm run validate`
+3. ✅ App shell — Vite + React + Tailwind + TanStack Router
+4. ✅ Beat navigation + localStorage + search (prototype)
+5. ✅ Left-aligned layout; dual dialogue side-by-side
+
+### Next (planned — not started)
+
+1. **Display reflow** — join `lines[]` in UI; typography pass (sizes, action serif, parenthetical italic)
+2. **Moments in data** — generate `moments[]` at extract (or client derive); grouping rules above
+3. **Moment navigation** — replace beat tap with moment tap + in-moment scroll
+4. **Progress migration** — `currentMomentId` + optional `scrollY` in localStorage
+5. **Search → moment** — jump to moment containing hit
+6. **Dual in scroll** — tune column font size on mobile after real-device check
 
 ---
 
 ## Explicitly NOT P0
 
-Do not build or schema for these yet:
-
 - Auth / accounts / server
 - SQLite / IndexedDB for screenplay data
-- Stylized fonts per beat
-- Sound effects
-- Images from the movie
-- Separate asset manifest
-- Smart beat grouping / action splitting
+- Sound effects, movie stills, per-beat assets
+- Stylized fonts beyond the action/dialogue/heading hierarchy above
 - Re-pairing stacked dual dialogue (Type B)
+- Splitting long scenes / moments
+- Max-height "continue" breaks within a moment
 
-**Do** use stable IDs (`el-*`, `beat-*`) and a `type` enum so these can be added later without restructuring.
+**Do** use stable IDs (`el-*`, `moment-*`) and a `type` enum so future features attach cleanly.
 
 ---
 
@@ -311,24 +374,27 @@ Do not build or schema for these yet:
 
 | Issue | Mitigation |
 |-------|------------|
-| Page 1 has no text | Hardcode or manually add `title_card` element |
-| Long action blocks overflow screen | Allow scroll within beat for v1; split beats later |
-| Back-to-back scene headings feel choppy | Acceptable for v1; merge heading+action later if needed |
-| Stacked dual dialogue (Type B) | Alternating dialogue beats; re-pair in v2 if needed |
-| PDF page ≠ printed page | Store both; show printed page in UI footer |
+| Page 1 has no text | Hardcode `title_card` element |
+| PDF line breaks → whitespace if rendered literally | UI reflow (`lines.join(" ")`) |
+| Stacked dual dialogue (Type B) | Alternating dialogue in scroll; re-pair later |
+| `- CONTINUOUS` scene headings | Same moment; styled as in-scroll divider |
+| PDF page ≠ printed page | Store both; show printed page in chrome |
+| Dual columns tight on small phones | Sanity-check font size after moment scroll ships |
 
 ---
 
-## Sanity Check Reference (PDF pages 1–3)
+## Implementation Status
 
-Validated against actual PDF content. Opening sequence (PDF p.2–3) produces ~17 beats:
-
-- 1 title card (cover)
-- 4 scene headings
-- 12 action beats
-- No dialogue in opening — all action/heading types work fine
-- Beat 6 (dead cat paragraph) is the densest — candidate for future split
-- Beat 17 ("Bear's eyes widen. He calls Nicky back immediately.") is a natural pause point
+| Area | Status |
+|------|--------|
+| PDF → JSON extract | ✅ Shipped (TypeScript + pdfjs-dist) |
+| Beat-based reader | ✅ Shipped (prototype) |
+| Left-aligned layout | ✅ Shipped |
+| Dual side-by-side | ✅ Shipped |
+| Line reflow in UI | 📋 Planned |
+| Typography system | 📋 Planned |
+| Moments + scroll | 📋 Planned |
+| Moment-based progress | 📋 Planned |
 
 ---
 
@@ -337,7 +403,7 @@ Validated against actual PDF content. Opening sequence (PDF p.2–3) produces ~1
 - **Extraction:** TypeScript + `pdfjs-dist` (`npm run extract`)
 - **App:** Vite + React + TypeScript + Tailwind CSS v3 + TanStack Router
 - **Skipped for weight:** TanStack Query (static JSON fetched once), TanStack Start, server/auth
-- **Data size:** JSON loaded from `/public/data/obsession.json` (~1–2MB, gzip-friendly)
+- **Data size:** JSON from `/public/data/obsession.json` (~800KB, gzip-friendly)
 - **Postgres convention:** N/A for app; if a server is added later, use double-quoted column names in SQL
 
 ---
@@ -347,7 +413,9 @@ Validated against actual PDF content. Opening sequence (PDF p.2–3) produces ~1
 When picking up a new session:
 
 1. Read this file (`docs/PLAN.md`)
-2. Check if `data/obsession.json` exists — if not, run extraction first
-3. App should only import from `data/obsession.json`, never the PDF
-4. User progress lives in `localStorage`, key `obsession-reader-state`
-5. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` for v1
+2. Check `data/obsession.json` exists — if not, `npm run extract`
+3. App reads `data/obsession.json` only, never the PDF
+4. **Target nav:** moments + scroll — **current prototype:** beats (see Implementation Status)
+5. User progress: `localStorage` key `obsession-reader-state`
+6. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` for v1
+7. Display reflow is a UI concern — do not re-extract to fix line breaks
