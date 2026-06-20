@@ -26,6 +26,7 @@ export function Reader({ data }: ReaderProps) {
   const [scrollToElementId, setScrollToElementId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
+  const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [query, setQuery] = useState("");
   const scrollSaveTimer = useRef<number | null>(null);
   const scrollRef = useRef<HTMLElement>(null);
@@ -49,6 +50,22 @@ export function Reader({ data }: ReaderProps) {
   const goToStart = useCallback(() => {
     goToMoment(0);
   }, [goToMoment]);
+
+  const restart = useCallback(() => {
+    setMomentIndex(0);
+    setScrollY(0);
+    setScrollToElementId(null);
+    setRestartConfirmOpen(false);
+    scrollRef.current?.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  const requestRestart = useCallback(() => {
+    if (momentIndex === 0) {
+      restart();
+      return;
+    }
+    setRestartConfirmOpen(true);
+  }, [momentIndex, restart]);
 
   const goToEnd = useCallback(() => {
     goToMoment(lastMomentIndex);
@@ -84,10 +101,15 @@ export function Reader({ data }: ReaderProps) {
     function onKeyDown(event: KeyboardEvent) {
       if (isTypingTarget(event.target)) return;
 
-      if (searchOpen || tocOpen) {
+      if (searchOpen || tocOpen || restartConfirmOpen) {
         if (event.key === "Escape") {
           setSearchOpen(false);
           setTocOpen(false);
+          setRestartConfirmOpen(false);
+        }
+        if (restartConfirmOpen && event.key === "Enter") {
+          event.preventDefault();
+          restart();
         }
         return;
       }
@@ -107,6 +129,10 @@ export function Reader({ data }: ReaderProps) {
       if (event.key === "ArrowUp") {
         event.preventDefault();
         scrollRef.current?.scrollBy({ top: -Math.round(window.innerHeight * 0.65), behavior: "smooth" });
+      }
+      if (event.key === "r" || event.key === "R") {
+        event.preventDefault();
+        requestRestart();
       }
       if (event.key === "j" || event.key === "J") {
         event.preventDefault();
@@ -136,7 +162,7 @@ export function Reader({ data }: ReaderProps) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [goToEnd, goToMoment, goToStart, lastMomentIndex, momentIndex, searchOpen, tocOpen]);
+  }, [goToEnd, goToMoment, goToStart, lastMomentIndex, momentIndex, requestRestart, restart, restartConfirmOpen, searchOpen, tocOpen]);
 
   if (!moment) {
     return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
@@ -160,6 +186,9 @@ export function Reader({ data }: ReaderProps) {
               </button>
               <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
                 Scenes T
+              </button>
+              <button type="button" className="reader-chrome-button" onClick={requestRestart}>
+                Restart R
               </button>
             </div>
             <span className="shrink-0 text-right text-stone-600">
@@ -198,6 +227,30 @@ export function Reader({ data }: ReaderProps) {
         className="absolute bottom-0 right-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent md:w-16"
         onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
       />
+
+      {restartConfirmOpen ? (
+        <div className="overlay-backdrop absolute inset-0 z-30 flex items-center justify-center p-4">
+          <div className="overlay-panel w-full max-w-sm rounded-xl p-5">
+            <p className="font-label text-xs tracking-wide text-stone-500 uppercase">Restart?</p>
+            <p className="mt-2 font-reading text-sm leading-relaxed text-stone-800">
+              Go back to the very beginning? You&apos;re on moment {momentIndex + 1} of {data.moments.length}
+              {moment.printedPage ? ` (p.${moment.printedPage})` : ""}.
+            </p>
+            <div className="mt-5 flex justify-end gap-2">
+              <button
+                type="button"
+                className="reader-chrome-button text-sm"
+                onClick={() => setRestartConfirmOpen(false)}
+              >
+                Cancel
+              </button>
+              <button type="button" className="reader-chrome-button text-sm text-stone-900" onClick={restart}>
+                Restart
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {searchOpen ? (
         <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-[calc(var(--reader-chrome-height)+1rem)]">
