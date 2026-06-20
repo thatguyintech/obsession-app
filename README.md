@@ -16,6 +16,17 @@ pnpm dev
 
 Open the URL Vite prints (usually `http://localhost:5173`).
 
+## Dev tooling
+
+Maintainer-only QA (not in prod build):
+
+```bash
+pnpm qa              # CLI page-by-page report
+pnpm dev             # then open /qa?page=N
+```
+
+See [docs/QA-TOOL.md](docs/QA-TOOL.md) for the visual reviewer (PDF vs JSON, edit, save, linked highlighting).
+
 ## Controls
 
 - Tap **left / right** edges to go to prev/next **moment**

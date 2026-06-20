@@ -1,5 +1,5 @@
 import { createRootRoute, createRoute, createRouter, Outlet } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import { Reader } from "./components/Reader";
 import { loadScreenplay } from "./lib/screenplay";
 import type { ScreenplayData } from "./types";
@@ -51,7 +51,45 @@ const indexRoute = createRoute({
   component: ReaderPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute]);
+const routeTree = import.meta.env.DEV
+  ? (() => {
+      function QaPageLoader() {
+        const [Page, setPage] = useState<ComponentType | null>(null);
+
+        useEffect(() => {
+          void import("./qa/QaPage").then((module) => setPage(() => module.QaPage));
+        }, []);
+
+        if (!Page) {
+          return (
+            <div className="flex h-full items-center justify-center text-stone-500">
+              Loading QA tool…
+            </div>
+          );
+        }
+
+        return <Page />;
+      }
+
+      const qaRoute = createRoute({
+        getParentRoute: () => rootRoute,
+        path: "/qa",
+        validateSearch: (search: Record<string, unknown>): { page?: number } => {
+          const rawPage = search.page;
+          const page =
+            typeof rawPage === "number"
+              ? rawPage
+              : typeof rawPage === "string"
+                ? Number.parseInt(rawPage, 10)
+                : undefined;
+          return Number.isFinite(page) ? { page } : {};
+        },
+        component: QaPageLoader,
+      });
+
+      return rootRoute.addChildren([indexRoute, qaRoute]);
+    })()
+  : rootRoute.addChildren([indexRoute]);
 
 export const router = createRouter({ routeTree });
 

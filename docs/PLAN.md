@@ -358,6 +358,16 @@ obsession-app/
 
 ---
 
+## Backlog (tickets — think about later, not scheduled)
+
+| ID | Area | Ticket |
+|----|------|--------|
+| **READ-001** | Reader styling / extract | **Preserve inline emphasis in action (and dialogue?)** — PDF uses underline + italic on specific words for reading tone. Example: `el-029` — *"Bear's head tilts up in frustration at the mention of **Ian**"* — in the PDF, *Ian* is underlined and italicized; you almost want to say the name sarcastically in your head. Current JSON + UI flatten to plain text, so that nuance is lost. Open questions when we pick this up: does pdf.js expose font/style spans? Do we store inline marks in JSON or infer at render time? Scope across the script TBD. |
+| **READ-002** | Extract / reader display | **Capture transition directions** (e.g. `SMASH CUT TO:`) — currently dropped between elements. Example: after `el-031` (Nicky V.O. *"Ok! I'll see-"*), raw has `SMASH CUT TO:` right-aligned before `el-032` scene heading; structured JSON jumps straight to the heading. **MVP idea:** extract + store transition text; display an all-caps stylized line grouped with the following scene heading (visually paired, not orphaned). Open questions: new element type vs field on `scene_heading`? Same treatment for `CUT TO:`, `FADE IN:`, etc.? How many instances in the script? |
+| **READ-003** | Reader typography | **Scene heading visual hierarchy** — prod reader inverts PDF priority: scene headings are smaller + more faded (`text-scene-heading` ~11px label, 50% opacity) while action is larger serif (~15–16px, 65% opacity). PDF has bold all-caps sluglines that grab attention first; action follows in regular weight. **Preference:** move toward PDF hierarchy — scene heading bold/prominent, action secondary. Example moment: `INT. BEAR'S HOUSE - KITCHEN - CONTINUOUS` + following action block. Open questions: same treatment for `- CONTINUOUS` dividers vs new-scene openers? Mono vs sans for slugs? Revisit `scene-marker` band styling too? |
+
+---
+
 ## Explicitly NOT P0
 
 - Auth / accounts / server

@@ -179,4 +179,38 @@ body {
   .progress-fill {
     background: var(--accent);
   }
+
+  .qa-pane-title {
+    @apply mb-2 font-label text-xs tracking-wide text-stone-500 uppercase;
+  }
+
+  .qa-pdf-highlight {
+    @apply absolute rounded-sm;
+    background: rgb(251 191 36 / 0.18);
+  }
+
+  .qa-raw-highlight {
+    background: rgb(251 191 36 / 0.22);
+    box-shadow: inset 0 0 0 1px rgb(251 191 36 / 0.45);
+  }
+
+  .qa-grid {
+    @apply grid grid-cols-1;
+  }
+
+  @media (min-width: 1024px) {
+    .qa-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .qa-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .qa-grid > :last-child {
+      grid-column: 1 / -1;
+    }
+  }
 }
