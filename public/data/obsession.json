@@ -7,7 +7,7 @@
     "beatCount": 1420,
     "momentCount": 60,
     "extractedAt": "2026-06-20",
-    "version": 3
+    "version": 4
   },
   "elements": [
     {
@@ -28,10 +28,10 @@
     },
     {
       "type": "action",
-      "text": "A small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" BEAR, 25, slouches on the couch, a depressed existence. He's decent-looking but lacks self-confidence. He fixates on a pivotal scene from a classic romance film on a small TV, it echoes adding an eerie ambiance to the room.",
+      "text": "A small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" BEAR, 25, slouches on the couch, a depressed existence. He's decent-looking but lacks self-confidence.\n\nHe fixates on a pivotal scene from a classic romance film on a small TV, it echoes adding an eerie ambiance to the room.",
       "pdfPage": 2,
       "id": "el-003",
-      "searchText": "a small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" bear, 25, slouches on the couch, a depressed existence. he's decent-looking but lacks self-confidence. he fixates on a pivotal scene from a classic romance film on a small tv, it echoes adding an eerie ambiance to the room."
+      "searchText": "a small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" bear, 25, slouches on the couch, a depressed existence. he's decent-looking but lacks self-confidence.\n\nhe fixates on a pivotal scene from a classic romance film on a small tv, it echoes adding an eerie ambiance to the room."
     },
     {
       "type": "dialogue",
@@ -13669,7 +13669,7 @@
       "elementId": "el-003",
       "index": 2,
       "type": "action",
-      "text": "A small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" BEAR, 25, slouches on the couch, a depressed existence. He's decent-looking but lacks self-confidence. He fixates on a pivotal scene from a classic romance film on a small TV, it echoes adding an eerie ambiance to the room.",
+      "text": "A small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" BEAR, 25, slouches on the couch, a depressed existence. He's decent-looking but lacks self-confidence.\n\nHe fixates on a pivotal scene from a classic romance film on a small TV, it echoes adding an eerie ambiance to the room.",
       "pdfPage": 2
     },
     {
