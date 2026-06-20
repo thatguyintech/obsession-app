@@ -27,16 +27,15 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │ Dev QA · page nav · OK/WARN badge · Save · prev/next review │
-├──────────────┬──────────────────────┬───────────────────────┤
-│ PDF (canvas) │ Extracted elements   │ Raw lines (.raw.json) │
-│  + highlight │ (obsession.json)     │  + highlight          │
-│              │ click → select/edit  │                       │
-└──────────────┴──────────────────────┴───────────────────────┘
+├──────────────────────────┬──────────────────────────────────┤
+│ PDF (canvas)             │ Extracted elements               │
+│  + highlight on select   │ (obsession.json) · click to edit │
+└──────────────────────────┴──────────────────────────────────┘
 ```
 
 **Deep link:** `/qa?page=16` jumps to a flagged page.
 
-**Linked highlighting:** Click an extracted card → amber fill on matching raw lines + PDF region. Mapping uses fuzzy word match against raw line text + bboxes from `obsession.raw.json`. PDF overlay uses percentage positioning so highlights track CSS-scaled canvas (`max-w-full`).
+**Linked highlighting:** Click an extracted card → amber fill on the matching PDF region. Mapping uses fuzzy word match against raw line text + bboxes from `obsession.raw.json` (loaded in memory for scoring; not shown in UI). PDF overlay uses percentage positioning so highlights track CSS-scaled canvas (`max-w-full`).
 
 **Key files:**
 
@@ -49,7 +48,6 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 | `src/qa/QaPage.tsx` | Main UI |
 | `src/qa/PdfPane.tsx` | PDF render + highlight overlay |
 | `src/qa/ExtractedPane.tsx` | Element list (click to select) |
-| `src/qa/RawPane.tsx` | Raw lines + highlight |
 | `src/qa/ElementEditor.tsx` | Edit panel by element type |
 | `vite.config.ts` | Dev middleware: `/__qa/source.pdf`, `/__qa/raw.json`, `POST /__qa/save` |
 | `src/router.tsx` | `/qa` route registered only when `import.meta.env.DEV` |
@@ -114,7 +112,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 
 ### Phase C½ — Linked highlighting ✅
 
-- [x] Click extracted card → highlight raw lines + PDF region
+- [x] Click extracted card → highlight PDF region
 - [x] Fuzzy match element text → contiguous raw lines (`lib/qa-element-lines.ts`)
 - [x] PDF overlay aligned to scaled canvas (percentage positioning)
 

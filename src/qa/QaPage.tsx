@@ -13,7 +13,6 @@ import type { ScreenplayData, ScreenplayElement } from "../types";
 import { ElementEditor } from "./ElementEditor";
 import { ExtractedPane } from "./ExtractedPane";
 import { PdfPane } from "./PdfPane";
-import { RawPane } from "./RawPane";
 
 interface QaSearch {
   page?: number;
@@ -345,7 +344,6 @@ export function QaPage() {
           selectedId={selectedId}
           onSelect={setSelectedId}
         />
-        <RawPane page={currentRawPage} highlightedIndices={elementHighlight.lineIndices} />
       </div>
 
       {selectedElement ? (
