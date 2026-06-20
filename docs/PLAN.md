@@ -33,7 +33,7 @@ Extract the screenplay PDF **once** into structured JSON, then build the app ent
 obsession-2026.pdf
        │
        ▼  (one-time extract)
-scripts/extract.py
+scripts/extract.ts
        │
        ├── data/obsession.raw.json    ← line-level extract (regeneratable backup)
        └── data/obsession.json        ← app schema (elements + beats)
@@ -170,7 +170,7 @@ Some pages (e.g. printed p.12 — gun scene) look dual-column on screen but PDF 
 
 ## Extraction Pipeline
 
-**Tool:** PyMuPDF (`fitz`) in a Python venv (`.venv` at repo root).
+**Tool:** TypeScript + `pdfjs-dist`, run via `npm run extract`.
 
 ### Step 1 — Raw extract → `data/obsession.raw.json`
 
@@ -269,11 +269,11 @@ obsession-app/
 │   ├── obsession.raw.json      ← line-level extract
 │   └── obsession.json          ← app schema (committed to git)
 ├── scripts/
-│   ├── extract.py              ← PDF → raw → structured
-│   └── validate.py             ← sanity checks
+│   ├── extract.ts              ← PDF → raw → structured
+│   ├── validate.ts             ← sanity checks
+│   └── lib/                    ← extraction helpers
 ├── src/                        ← web app (reads data/obsession.json only)
 ├── obsession-2026.pdf          ← source PDF (optional in git)
-├── .venv/                      ← Python venv for extraction scripts
 └── README.md
 ```
 
@@ -281,8 +281,8 @@ obsession-app/
 
 ## Build Order
 
-1. **Extract** — `scripts/extract.py` → `data/obsession.raw.json` + `data/obsession.json`
-2. **Validate** — `scripts/validate.py` + manual spot-check
+1. **Extract** — `npm run extract` → `data/obsession.raw.json` + `data/obsession.json`
+2. **Validate** — `npm run validate` + manual spot-check
 3. **App shell** — load JSON, render one beat, left/right navigation
 4. **Progress** — `localStorage` read/write on beat change
 5. **Search** — client-side element search → jump to beat
@@ -334,9 +334,10 @@ Validated against actual PDF content. Opening sequence (PDF p.2–3) produces ~1
 
 ## Tech Notes
 
-- **Extraction:** Python 3 + PyMuPDF in `.venv`
-- **App:** Web (mobile-first); exact stack TBD
-- **Data size:** ~500KB–2MB JSON — load entirely into memory
+- **Extraction:** TypeScript + `pdfjs-dist` (`npm run extract`)
+- **App:** Vite + React + TypeScript + Tailwind CSS v3 + TanStack Router
+- **Skipped for weight:** TanStack Query (static JSON fetched once), TanStack Start, server/auth
+- **Data size:** JSON loaded from `/public/data/obsession.json` (~1–2MB, gzip-friendly)
 - **Postgres convention:** N/A for app; if a server is added later, use double-quoted column names in SQL
 
 ---
