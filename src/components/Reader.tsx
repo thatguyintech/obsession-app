@@ -182,13 +182,13 @@ export function Reader({ data }: ReaderProps) {
           <header className="reader-chrome flex min-w-0 items-center justify-between gap-2 px-4 py-2.5 text-xs">
             <div className="flex min-w-0 shrink items-center gap-1">
               <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
-                Search /
+                Search ( / )
               </button>
               <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
-                Scenes T
+                Scenes (T)
               </button>
               <button type="button" className="reader-chrome-button" onClick={requestRestart}>
-                Restart R
+                Restart (R)
               </button>
             </div>
             <span className="shrink-0 text-right text-stone-600">
