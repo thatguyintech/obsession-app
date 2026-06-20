@@ -84,14 +84,12 @@ export function SceneTableOfContents({
       {hideTitle ? null : (
         <h2 className="mb-4 text-sm font-bold tracking-[0.2em] text-stone-500 uppercase">Scenes</h2>
       )}
-      <div className={compact ? "max-h-[50vh] overflow-y-auto pr-1" : undefined}>
-        <SceneList
-          entries={entries}
-          onSelect={onSelect}
-          activeMomentIndex={activeMomentIndex}
-          emptyMessage="No scenes found."
-        />
-      </div>
+      <SceneList
+        entries={entries}
+        onSelect={onSelect}
+        activeMomentIndex={activeMomentIndex}
+        emptyMessage="No scenes found."
+      />
     </nav>
   );
 }
