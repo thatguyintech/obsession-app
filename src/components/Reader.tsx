@@ -81,7 +81,7 @@ export function Reader({ data }: ReaderProps) {
         </span>
       </header>
 
-      <main className="relative h-full pt-8 pb-10">
+      <main className="relative h-full overflow-hidden pt-8 pb-10">
         <BeatView beat={beat} />
       </main>
 
