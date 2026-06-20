@@ -89,7 +89,7 @@ export function buildSceneTableOfContents(data: ScreenplayData): SceneTocEntry[]
     .map((moment) => {
       const heading = elementMap.get(moment.sceneHeadingId!);
       return {
-        momentNumber: moment.index + 1,
+        momentNumber: moment.index,
         momentIndex: moment.index,
         momentId: moment.id,
         sceneHeadingId: moment.sceneHeadingId!,

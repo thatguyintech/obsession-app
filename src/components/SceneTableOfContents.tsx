@@ -113,7 +113,7 @@ export function SceneTocOverlay({
 
   const emptyMessage = query.trim()
     ? /^\d+$/.test(query.trim())
-      ? `No moment ${query.trim()}.`
+      ? `No scene ${query.trim()}.`
       : "No matching scenes."
     : "No scenes found.";
 
@@ -145,7 +145,7 @@ export function SceneTocOverlay({
             autoFocus
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Go to moment… 12 or kitchen"
+            placeholder="Go to scene… 12 or kitchen"
             className="w-full bg-transparent font-reading text-base text-stone-900 outline-none placeholder:text-stone-400"
           />
         </form>

@@ -32,9 +32,9 @@ export function Reader({ data }: ReaderProps) {
   const scrollRef = useRef<HTMLElement>(null);
 
   const moment = data.moments[momentIndex];
-  const progress = ((momentIndex + 1) / data.moments.length) * 100;
-  const sceneToc = useMemo(() => buildSceneTableOfContents(data), [data]);
   const lastMomentIndex = data.moments.length - 1;
+  const progress = lastMomentIndex > 0 ? (momentIndex / lastMomentIndex) * 100 : 0;
+  const sceneToc = useMemo(() => buildSceneTableOfContents(data), [data]);
 
   const results = useMemo(
     () => (searchOpen ? searchScreenplay(data, query).slice(0, 20) : []),
@@ -192,7 +192,7 @@ export function Reader({ data }: ReaderProps) {
               </button>
             </div>
             <span className="shrink-0 text-right text-stone-600">
-              {momentIndex + 1} / {data.moments.length}
+              {momentIndex} / {lastMomentIndex}
               {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
             </span>
           </header>
@@ -233,7 +233,7 @@ export function Reader({ data }: ReaderProps) {
           <div className="overlay-panel w-full max-w-sm rounded-xl p-5">
             <p className="font-label text-xs tracking-wide text-stone-500 uppercase">Restart?</p>
             <p className="mt-2 font-reading text-sm leading-relaxed text-stone-800">
-              Go back to the very beginning? You&apos;re on moment {momentIndex + 1} of {data.moments.length}
+              Go back to the very beginning? You&apos;re on {momentIndex} of {lastMomentIndex}
               {moment.printedPage ? ` (p.${moment.printedPage})` : ""}.
             </p>
             <div className="mt-5 flex justify-end gap-2">
