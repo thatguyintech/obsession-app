@@ -24,7 +24,7 @@ function ReaderPage() {
 
   if (error) {
     return (
-      <div className="flex h-full items-center justify-center px-6 text-center text-neutral-400">
+      <div className="flex h-full items-center justify-center px-6 text-center text-stone-500">
         {error}
       </div>
     );
@@ -32,7 +32,7 @@ function ReaderPage() {
 
   if (!data) {
     return (
-      <div className="flex h-full items-center justify-center text-neutral-500">
+      <div className="flex h-full items-center justify-center text-stone-500">
         Loading screenplay...
       </div>
     );

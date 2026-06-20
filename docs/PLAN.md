@@ -164,19 +164,21 @@ Do **not** render one `<p>` per raw script line. The UI joins `lines[]` into flo
 
 Raw lines remain in JSON for search fidelity and future reuse.
 
-### Typography
+### Typography & theme (light mode)
 
-Mobile-first, comfortable for extended reading. Use `clamp()` so desktop doesn't grow unbounded.
+Mobile-first, comfortable for extended reading. Warm paper background (`#faf8f5`), near-black dialogue ink.
 
-| Role | Mobile base | Style | Notes |
-|------|-------------|-------|-------|
-| **Dialogue body** | 20px | Regular weight, high contrast (white) | `clamp(1.25rem, …)` for desktop |
-| **Character name** | 16px | Bold, uppercase | Above each speech |
-| **Parenthetical** | 14px | Italic, muted color | Reads as aside — e.g. `(knowing look at Bear)` |
-| **Action / stage direction** | 18px | **Different typeface** + muted color | Must read clearly as *not dialogue* (e.g. serif vs monospace dialogue) |
-| **Scene heading** | TBD | Small caps / letter-spacing, distinct from action | Fourth visual lane |
+| Role | Treatment |
+|------|-----------|
+| **Dialogue body** | 20px mono, near-black |
+| **Character name** | 16px bold caps, **per-character accent color** |
+| **Dialogue block** | 3px left border + subtle tint in character color |
+| **Parenthetical** | 14px italic, stone gray |
+| **Action** | 18px serif, gray-brown, left rule |
+| **Scene opener** | Tinted band, slate caps, letter-spaced |
+| **Scene `- CONTINUOUS`** | Divider line, small muted caps |
 
-Also: **line-height ~1.6–1.75**, **left-aligned**, **max-width ~35–40em** (`max-w-prose` or similar).
+Per-character colors defined in `src/lib/character-colors.ts` (core cast mapped; minor characters hashed to extended palette).
 
 ### Layout
 
@@ -390,7 +392,8 @@ obsession-app/
 | PDF → JSON extract | ✅ Shipped (TypeScript + pdfjs-dist) |
 | Moments + scroll navigation | ✅ Shipped |
 | Line reflow in UI | ✅ Shipped |
-| Typography system | ✅ Shipped |
+| Typography / light theme | ✅ Shipped |
+| Per-character colors | ✅ Shipped |
 | Moment-based progress | ✅ Shipped |
 | Dual side-by-side in scroll | ✅ Shipped |
 | Beat-based reader | 🗄️ Legacy (beats still in JSON) |

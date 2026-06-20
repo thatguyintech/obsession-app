@@ -13,7 +13,7 @@ export function SceneTableOfContents({
 }: SceneTableOfContentsProps) {
   return (
     <nav aria-label="Scene list" className={compact ? "mt-10" : ""}>
-      <h2 className="mb-4 text-sm font-bold tracking-[0.2em] text-neutral-500 uppercase">
+      <h2 className="mb-4 text-sm font-bold tracking-[0.2em] text-stone-500 uppercase">
         Scenes
       </h2>
       <ul className={`space-y-2 ${compact ? "max-h-[50vh] overflow-y-auto pr-1" : ""}`}>
@@ -21,14 +21,14 @@ export function SceneTableOfContents({
           <li key={entry.momentId}>
             <button
               type="button"
-              className="group w-full text-left"
+              className="group w-full rounded-md px-2 py-1.5 text-left transition-colors hover:bg-stone-100"
               onClick={() => onSelect(entry.momentIndex)}
             >
-              <span className="text-toc-title block leading-snug transition-colors group-hover:text-white">
+              <span className="text-toc-title block leading-snug transition-colors group-hover:text-stone-900">
                 {entry.title}
               </span>
               {entry.printedPage ? (
-                <span className="mt-0.5 block text-xs text-neutral-600">p. {entry.printedPage}</span>
+                <span className="mt-0.5 block text-xs text-stone-500">p. {entry.printedPage}</span>
               ) : null}
             </button>
           </li>
@@ -46,19 +46,15 @@ interface SceneTocOverlayProps {
 
 export function SceneTocOverlay({ entries, onSelect, onClose }: SceneTocOverlayProps) {
   return (
-    <div className="absolute inset-0 z-30 flex items-end bg-black/70 p-4 md:items-start md:pt-16">
-      <div className="max-h-[85vh] w-full overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 shadow-2xl md:max-w-lg">
-        <div className="flex items-center justify-between border-b border-neutral-800 px-4 py-3">
-          <h2 className="text-sm font-bold tracking-[0.15em] text-neutral-400 uppercase">Scenes</h2>
-          <button
-            type="button"
-            className="text-sm text-neutral-400 hover:text-white"
-            onClick={onClose}
-          >
+    <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-16">
+      <div className="overlay-panel max-h-[85vh] w-full overflow-hidden rounded-xl md:max-w-lg">
+        <div className="flex items-center justify-between border-b border-stone-200 px-4 py-3">
+          <h2 className="text-sm font-bold tracking-[0.15em] text-stone-500 uppercase">Scenes</h2>
+          <button type="button" className="reader-chrome-button text-sm" onClick={onClose}>
             Close
           </button>
         </div>
-        <div className="max-h-[70vh] overflow-y-auto px-4 py-3">
+        <div className="max-h-[70vh] overflow-y-auto px-2 py-3">
           <SceneTableOfContents
             entries={entries}
             onSelect={(index) => {

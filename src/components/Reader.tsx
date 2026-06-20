@@ -130,33 +130,28 @@ export function Reader({ data }: ReaderProps) {
   }, [goToEnd, goToMoment, goToStart, lastMomentIndex, momentIndex, searchOpen, tocOpen]);
 
   if (!moment) {
-    return <div className="flex h-full items-center justify-center">No moments found.</div>;
+    return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
   }
 
   return (
-    <div className="relative h-full overflow-hidden bg-neutral-950">
-      <div className="absolute inset-x-0 top-0 z-20 h-1 bg-neutral-800">
-        <div className="h-full bg-white transition-all duration-200" style={{ width: `${progress}%` }} />
+    <div className="relative h-full overflow-hidden bg-[var(--bg-page)]">
+      <div className="progress-track absolute inset-x-0 top-0 z-20">
+        <div
+          className="progress-fill h-full transition-all duration-200"
+          style={{ width: `${progress}%` }}
+        />
       </div>
 
-      <header className="absolute inset-x-0 top-3 z-20 flex items-center justify-between gap-2 px-4 text-xs text-neutral-500">
+      <header className="reader-chrome absolute inset-x-0 top-3 z-20 flex items-center justify-between gap-2 px-4 text-xs">
         <div className="flex items-center gap-1">
-          <button
-            type="button"
-            className="rounded px-2 py-1 hover:bg-neutral-900 hover:text-neutral-300"
-            onClick={() => setSearchOpen(true)}
-          >
+          <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
             Search /
           </button>
-          <button
-            type="button"
-            className="rounded px-2 py-1 hover:bg-neutral-900 hover:text-neutral-300"
-            onClick={() => setTocOpen(true)}
-          >
+          <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
             Scenes T
           </button>
         </div>
-        <span className="shrink-0 text-right">
+        <span className="shrink-0 text-right text-stone-600">
           {momentIndex + 1} / {data.moments.length}
           {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
         </span>
@@ -188,20 +183,20 @@ export function Reader({ data }: ReaderProps) {
       />
 
       {searchOpen ? (
-        <div className="absolute inset-0 z-30 flex items-end bg-black/70 p-4 md:items-start md:pt-16">
-          <div className="max-h-[80vh] w-full overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 shadow-2xl">
-            <div className="border-b border-neutral-800 p-4">
+        <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-16">
+          <div className="overlay-panel max-h-[80vh] w-full overflow-hidden rounded-xl">
+            <div className="border-b border-stone-200 p-4">
               <input
                 autoFocus
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search screenplay..."
-                className="w-full bg-transparent text-base outline-none placeholder:text-neutral-600"
+                className="w-full bg-transparent text-base text-stone-900 outline-none placeholder:text-stone-400"
               />
             </div>
             <div className="max-h-[60vh] overflow-y-auto">
               {results.length === 0 ? (
-                <p className="p-4 text-sm text-neutral-500">
+                <p className="p-4 text-sm text-stone-500">
                   {query ? "No matches." : "Type to search dialogue, action, and scene headings."}
                 </p>
               ) : (
@@ -209,26 +204,26 @@ export function Reader({ data }: ReaderProps) {
                   <button
                     key={result.elementId}
                     type="button"
-                    className="block w-full border-b border-neutral-900 px-4 py-3 text-left hover:bg-neutral-900"
+                    className="block w-full border-b border-stone-100 px-4 py-3 text-left hover:bg-stone-50"
                     onClick={() => {
                       goToMoment(result.momentIndex, result.elementId);
                       setSearchOpen(false);
                       setQuery("");
                     }}
                   >
-                    <p className="text-xs tracking-wide text-neutral-500 uppercase">
+                    <p className="text-xs tracking-wide text-stone-500 uppercase">
                       {result.type.replace("_", " ")}
                       {result.printedPage ? ` · p.${result.printedPage}` : ""}
                     </p>
-                    <p className="mt-1 line-clamp-2 text-sm text-neutral-200">{result.snippet}</p>
+                    <p className="mt-1 line-clamp-2 text-sm text-stone-800">{result.snippet}</p>
                   </button>
                 ))
               )}
             </div>
-            <div className="border-t border-neutral-800 p-3 text-right">
+            <div className="border-t border-stone-200 p-3 text-right">
               <button
                 type="button"
-                className="text-sm text-neutral-400 hover:text-white"
+                className="reader-chrome-button text-sm"
                 onClick={() => setSearchOpen(false)}
               >
                 Close
