@@ -306,6 +306,7 @@ export function Reader({ data }: ReaderProps) {
       {tocOpen ? (
         <SceneTocOverlay
           entries={sceneToc}
+          activeMomentIndex={momentIndex}
           onSelect={goToMoment}
           onClose={() => setTocOpen(false)}
         />

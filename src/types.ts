@@ -37,6 +37,7 @@ export interface Moment {
 }
 
 export interface SceneTocEntry {
+  momentNumber: number;
   momentIndex: number;
   momentId: string;
   sceneHeadingId: string;

@@ -89,6 +89,7 @@ export function buildSceneTableOfContents(data: ScreenplayData): SceneTocEntry[]
     .map((moment) => {
       const heading = elementMap.get(moment.sceneHeadingId!);
       return {
+        momentNumber: moment.index + 1,
         momentIndex: moment.index,
         momentId: moment.id,
         sceneHeadingId: moment.sceneHeadingId!,
@@ -96,6 +97,34 @@ export function buildSceneTableOfContents(data: ScreenplayData): SceneTocEntry[]
         printedPage: moment.printedPage ?? heading?.printedPage,
       };
     });
+}
+
+export function filterScenes(entries: SceneTocEntry[], query: string): SceneTocEntry[] {
+  const trimmed = query.trim();
+  if (!trimmed) return entries;
+
+  if (/^\d+$/.test(trimmed)) {
+    return entries.filter((entry) => String(entry.momentNumber).startsWith(trimmed));
+  }
+
+  const normalized = trimmed.toLowerCase();
+  return entries.filter((entry) => entry.title.toLowerCase().includes(normalized));
+}
+
+export function resolveSceneJump(entries: SceneTocEntry[], query: string): SceneTocEntry | null {
+  const trimmed = query.trim();
+  if (!trimmed) return null;
+
+  if (/^\d+$/.test(trimmed)) {
+    const exact = entries.find((entry) => entry.momentNumber === Number(trimmed));
+    if (exact) return exact;
+
+    const filtered = filterScenes(entries, trimmed);
+    return filtered.length === 1 ? filtered[0]! : null;
+  }
+
+  const filtered = filterScenes(entries, trimmed);
+  return filtered.length === 1 ? filtered[0]! : null;
 }
 
 export function findMomentForElement(data: ScreenplayData, elementId: string): Moment | undefined {
