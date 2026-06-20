@@ -28,6 +28,15 @@ export interface ScreenplayElement {
   searchText?: string;
 }
 
+export interface Moment {
+  id: string;
+  index: number;
+  elementIds: string[];
+  sceneHeadingId?: string;
+  printedPage?: number;
+}
+
+/** @deprecated Legacy beat navigation — kept in JSON for debugging */
 export interface Beat {
   id: string;
   elementId: string;
@@ -52,6 +61,7 @@ export interface ScreenplayMeta {
   pageCount: number;
   elementCount: number;
   beatCount: number;
+  momentCount: number;
   extractedAt: string;
   version: number;
 }
@@ -59,20 +69,22 @@ export interface ScreenplayMeta {
 export interface ScreenplayData {
   meta: ScreenplayMeta;
   elements: ScreenplayElement[];
+  moments: Moment[];
   beats: Beat[];
 }
 
 export interface ReaderState {
   screenplayVersion: number;
-  currentBeatId: string;
-  currentBeatIndex: number;
+  currentMomentId: string;
+  currentMomentIndex: number;
+  scrollY: number;
   lastReadAt: string;
 }
 
 export interface SearchResult {
   elementId: string;
-  beatId: string;
-  beatIndex: number;
+  momentId: string;
+  momentIndex: number;
   type: ElementType;
   snippet: string;
   printedPage?: number;

@@ -339,20 +339,20 @@ obsession-app/
 
 ### Done
 
-1. ✅ Extract — `npm run extract` → raw + structured JSON
+1. ✅ Extract — `npm run extract` → raw + structured JSON + moments
 2. ✅ Validate — `npm run validate`
 3. ✅ App shell — Vite + React + Tailwind + TanStack Router
-4. ✅ Beat navigation + localStorage + search (prototype)
-5. ✅ Left-aligned layout; dual dialogue side-by-side
+4. ✅ Moment navigation + in-moment scroll + localStorage progress
+5. ✅ Search → jump to moment (+ scroll to element)
+6. ✅ Left-aligned layout; dual dialogue side-by-side in scroll
+7. ✅ Display reflow — joined dialogue lines in UI
+8. ✅ Typography — dialogue 20px, character 16px, parenthetical 14px italic, action 18px serif
 
-### Next (planned — not started)
+### Later
 
-1. **Display reflow** — join `lines[]` in UI; typography pass (sizes, action serif, parenthetical italic)
-2. **Moments in data** — generate `moments[]` at extract (or client derive); grouping rules above
-3. **Moment navigation** — replace beat tap with moment tap + in-moment scroll
-4. **Progress migration** — `currentMomentId` + optional `scrollY` in localStorage
-5. **Search → moment** — jump to moment containing hit
-6. **Dual in scroll** — tune column font size on mobile after real-device check
+1. **Dual font tuning** — sanity-check column size on small phones
+2. **Re-pair stacked dual dialogue** (Type B) in extract
+3. **Split long scenes** — only if needed after reading through
 
 ---
 
@@ -388,13 +388,12 @@ obsession-app/
 | Area | Status |
 |------|--------|
 | PDF → JSON extract | ✅ Shipped (TypeScript + pdfjs-dist) |
-| Beat-based reader | ✅ Shipped (prototype) |
-| Left-aligned layout | ✅ Shipped |
-| Dual side-by-side | ✅ Shipped |
-| Line reflow in UI | 📋 Planned |
-| Typography system | 📋 Planned |
-| Moments + scroll | 📋 Planned |
-| Moment-based progress | 📋 Planned |
+| Moments + scroll navigation | ✅ Shipped |
+| Line reflow in UI | ✅ Shipped |
+| Typography system | ✅ Shipped |
+| Moment-based progress | ✅ Shipped |
+| Dual side-by-side in scroll | ✅ Shipped |
+| Beat-based reader | 🗄️ Legacy (beats still in JSON) |
 
 ---
 
@@ -415,7 +414,7 @@ When picking up a new session:
 1. Read this file (`docs/PLAN.md`)
 2. Check `data/obsession.json` exists — if not, `npm run extract`
 3. App reads `data/obsession.json` only, never the PDF
-4. **Target nav:** moments + scroll — **current prototype:** beats (see Implementation Status)
-5. User progress: `localStorage` key `obsession-reader-state`
+4. **Target nav:** moments + scroll (see Implementation Status)
+5. User progress: `localStorage` key `obsession-reader-state` (`currentMomentId`, `scrollY`)
 6. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` for v1
 7. Display reflow is a UI concern — do not re-extract to fix line breaks

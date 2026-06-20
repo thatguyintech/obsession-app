@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import type { Beat, ScreenplayData, SearchResult } from "../types";
-import { BeatView } from "./BeatView";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ScreenplayData, SearchResult } from "../types";
+import { MomentView } from "./MomentView";
 import { loadReaderState, saveReaderState, searchScreenplay } from "../lib/screenplay";
 
 interface ReaderProps {
@@ -8,27 +8,53 @@ interface ReaderProps {
 }
 
 export function Reader({ data }: ReaderProps) {
-  const [beatIndex, setBeatIndex] = useState(() => loadReaderState(data).currentBeatIndex);
+  const initial = loadReaderState(data);
+  const [momentIndex, setMomentIndex] = useState(initial.currentMomentIndex);
+  const [scrollY, setScrollY] = useState(initial.scrollY);
+  const [scrollToElementId, setScrollToElementId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const scrollSaveTimer = useRef<number | null>(null);
 
-  const beat = data.beats[beatIndex] as Beat | undefined;
-  const progress = ((beatIndex + 1) / data.beats.length) * 100;
+  const moment = data.moments[momentIndex];
+  const progress = ((momentIndex + 1) / data.moments.length) * 100;
 
   const results = useMemo(
     () => (searchOpen ? searchScreenplay(data, query).slice(0, 20) : []),
     [data, query, searchOpen],
   );
 
+  const goToMoment = useCallback((index: number, elementId?: string) => {
+    setMomentIndex(index);
+    setScrollY(0);
+    setScrollToElementId(elementId ?? null);
+  }, []);
+
+  const handleScroll = useCallback((nextScrollY: number) => {
+    if (scrollSaveTimer.current) {
+      window.clearTimeout(scrollSaveTimer.current);
+    }
+    scrollSaveTimer.current = window.setTimeout(() => {
+      setScrollY(nextScrollY);
+    }, 150);
+  }, []);
+
   useEffect(() => {
-    if (!beat) return;
+    if (!moment) return;
     saveReaderState({
       screenplayVersion: data.meta.version,
-      currentBeatId: beat.id,
-      currentBeatIndex: beat.index,
+      currentMomentId: moment.id,
+      currentMomentIndex: moment.index,
+      scrollY,
       lastReadAt: new Date().toISOString(),
     });
-  }, [beat, data.meta.version]);
+  }, [moment, scrollY, data.meta.version]);
+
+  useEffect(() => {
+    if (!scrollToElementId) return;
+    const timer = window.setTimeout(() => setScrollToElementId(null), 1200);
+    return () => window.clearTimeout(timer);
+  }, [scrollToElementId, momentIndex]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -41,11 +67,11 @@ export function Reader({ data }: ReaderProps) {
 
       if (event.key === "ArrowRight" || event.key === "ArrowDown") {
         event.preventDefault();
-        setBeatIndex((current: number) => Math.min(current + 1, data.beats.length - 1));
+        goToMoment(Math.min(momentIndex + 1, data.moments.length - 1));
       }
       if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
         event.preventDefault();
-        setBeatIndex((current: number) => Math.max(current - 1, 0));
+        goToMoment(Math.max(momentIndex - 1, 0));
       }
       if (event.key === "/") {
         event.preventDefault();
@@ -55,10 +81,10 @@ export function Reader({ data }: ReaderProps) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [data.beats.length, searchOpen]);
+  }, [data.moments.length, goToMoment, momentIndex, searchOpen]);
 
-  if (!beat) {
-    return <div className="flex h-full items-center justify-center">No beats found.</div>;
+  if (!moment) {
+    return <div className="flex h-full items-center justify-center">No moments found.</div>;
   }
 
   return (
@@ -76,26 +102,32 @@ export function Reader({ data }: ReaderProps) {
           Search /
         </button>
         <span>
-          {beatIndex + 1} / {data.beats.length}
-          {beat.printedPage ? ` · p.${beat.printedPage}` : ""}
+          {momentIndex + 1} / {data.moments.length}
+          {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
         </span>
       </header>
 
       <main className="relative h-full overflow-hidden pt-8 pb-10">
-        <BeatView beat={beat} />
+        <MomentView
+          moment={moment}
+          data={data}
+          scrollY={scrollY}
+          scrollToElementId={scrollToElementId}
+          onScroll={handleScroll}
+        />
       </main>
 
       <button
         type="button"
-        aria-label="Previous beat"
-        className="absolute inset-y-0 left-0 z-10 w-1/3 cursor-w-resize bg-transparent"
-        onClick={() => setBeatIndex((current: number) => Math.max(current - 1, 0))}
+        aria-label="Previous moment"
+        className="absolute inset-y-0 left-0 z-10 w-1/4 cursor-w-resize bg-transparent"
+        onClick={() => goToMoment(Math.max(momentIndex - 1, 0))}
       />
       <button
         type="button"
-        aria-label="Next beat"
-        className="absolute inset-y-0 right-0 z-10 w-1/3 cursor-e-resize bg-transparent"
-        onClick={() => setBeatIndex((current: number) => Math.min(current + 1, data.beats.length - 1))}
+        aria-label="Next moment"
+        className="absolute inset-y-0 right-0 z-10 w-1/4 cursor-w-resize bg-transparent"
+        onClick={() => goToMoment(Math.min(momentIndex + 1, data.moments.length - 1))}
       />
 
       {searchOpen ? (
@@ -122,7 +154,7 @@ export function Reader({ data }: ReaderProps) {
                     type="button"
                     className="block w-full border-b border-neutral-900 px-4 py-3 text-left hover:bg-neutral-900"
                     onClick={() => {
-                      setBeatIndex(result.beatIndex);
+                      goToMoment(result.momentIndex, result.elementId);
                       setSearchOpen(false);
                       setQuery("");
                     }}

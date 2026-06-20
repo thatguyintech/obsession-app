@@ -30,16 +30,16 @@ interface Element {
   searchText?: string;
 }
 
-interface Beat {
+interface Moment {
   id: string;
-  elementId: string;
-  type: string;
+  index: number;
+  elementIds: string[];
 }
 
 interface Payload {
-  meta: { pageCount: number };
+  meta: { pageCount: number; momentCount?: number; version?: number };
   elements: Element[];
-  beats: Beat[];
+  moments: Moment[];
 }
 
 let payload: Payload;
@@ -49,10 +49,14 @@ try {
   fail(`Missing ${DATA_PATH}. Run npm run extract first.`);
 }
 
-const { elements, beats, meta } = payload;
+const { elements, moments, meta } = payload;
 
 if (meta.pageCount !== 99) {
   fail(`Expected 99 pdf pages, got ${meta.pageCount}`);
+}
+
+if (!moments?.length) {
+  fail("Missing moments array");
 }
 
 const elementIds = new Set(elements.map((element) => element.id));
@@ -60,14 +64,16 @@ if (elementIds.size !== elements.length) {
   fail("Duplicate element ids detected");
 }
 
-for (const beat of beats) {
-  if (!elementIds.has(beat.elementId)) {
-    fail(`Beat ${beat.id} references missing element ${beat.elementId}`);
+for (const moment of moments) {
+  for (const elementId of moment.elementIds) {
+    if (!elementIds.has(elementId)) {
+      fail(`Moment ${moment.id} references missing element ${elementId}`);
+    }
   }
 }
 
-if (beats[0]?.type !== "title_card") {
-  fail("First beat should be title_card");
+if (moments[0]?.elementIds[0] !== elements[0]?.id) {
+  fail("First moment should start with title_card element");
 }
 
 const sceneHeadingCount = elements.filter((element) => element.type === "scene_heading").length;
@@ -103,6 +109,6 @@ for (const term of SEARCH_TERMS) {
 const dualCount = elements.filter((element) => element.type === "dual_dialogue").length;
 console.log("OK");
 console.log(`  elements: ${elements.length}`);
-console.log(`  beats: ${beats.length}`);
+console.log(`  moments: ${moments.length}`);
 console.log(`  dual_dialogue elements: ${dualCount}`);
 console.log(`  scene headings: ${sceneHeadingCount}`);

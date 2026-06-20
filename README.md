@@ -18,10 +18,11 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 
 ## Controls
 
-- Tap **left / right** thirds of the screen to go back / forward
-- **← →** or **↑ ↓** arrow keys
+- Tap **left / right** edges to go to prev/next **moment**
+- **Scroll vertically** within a moment
+- **← →** or **↑ ↓** arrow keys — prev/next moment
 - **/** to search, **Esc** to close search
-- Progress saves automatically in `localStorage`
+- Progress saves automatically in `localStorage` (moment + scroll position)
 
 ## Stack
 

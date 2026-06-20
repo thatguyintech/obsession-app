@@ -1,12 +1,27 @@
-import type { ReaderState, ScreenplayData, SearchResult } from "../types";
+import type { ReaderState, ScreenplayData, SearchResult, Moment } from "../types";
+import { generateMoments } from "../../lib/moments";
 
 export const STORAGE_KEY = "obsession-reader-state";
+
+export function ensureMoments(data: ScreenplayData): ScreenplayData {
+  if (data.moments?.length) {
+    return data;
+  }
+
+  const moments = generateMoments(data.elements) as Moment[];
+  return {
+    ...data,
+    meta: { ...data.meta, momentCount: moments.length },
+    moments,
+  };
+}
 
 export function loadReaderState(data: ScreenplayData): ReaderState {
   const fallback: ReaderState = {
     screenplayVersion: data.meta.version,
-    currentBeatId: data.beats[0]?.id ?? "beat-001",
-    currentBeatIndex: 0,
+    currentMomentId: data.moments[0]?.id ?? "moment-001",
+    currentMomentIndex: 0,
+    scrollY: 0,
     lastReadAt: new Date().toISOString(),
   };
 
@@ -14,18 +29,43 @@ export function loadReaderState(data: ScreenplayData): ReaderState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return fallback;
 
-    const parsed = JSON.parse(raw) as ReaderState;
-    if (parsed.screenplayVersion !== data.meta.version) return fallback;
-
-    const beat = data.beats.find((item) => item.id === parsed.currentBeatId);
-    if (!beat) return fallback;
-
-    return {
-      screenplayVersion: data.meta.version,
-      currentBeatId: beat.id,
-      currentBeatIndex: beat.index,
-      lastReadAt: parsed.lastReadAt,
+    const parsed = JSON.parse(raw) as Partial<ReaderState> & {
+      currentBeatId?: string;
     };
+
+    if (parsed.screenplayVersion !== data.meta.version) {
+      return fallback;
+    }
+
+    if (parsed.currentMomentId) {
+      const moment = data.moments.find((item) => item.id === parsed.currentMomentId);
+      if (!moment) return fallback;
+      return {
+        screenplayVersion: data.meta.version,
+        currentMomentId: moment.id,
+        currentMomentIndex: moment.index,
+        scrollY: parsed.scrollY ?? 0,
+        lastReadAt: parsed.lastReadAt ?? new Date().toISOString(),
+      };
+    }
+
+    if (parsed.currentBeatId) {
+      const beat = data.beats.find((item) => item.id === parsed.currentBeatId);
+      if (beat) {
+        const moment = data.moments.find((item) => item.elementIds.includes(beat.elementId));
+        if (moment) {
+          return {
+            screenplayVersion: data.meta.version,
+            currentMomentId: moment.id,
+            currentMomentIndex: moment.index,
+            scrollY: 0,
+            lastReadAt: parsed.lastReadAt ?? new Date().toISOString(),
+          };
+        }
+      }
+    }
+
+    return fallback;
   } catch {
     return fallback;
   }
@@ -41,26 +81,28 @@ export function saveReaderState(state: ReaderState): void {
   );
 }
 
+export function findMomentForElement(data: ScreenplayData, elementId: string): Moment | undefined {
+  return data.moments.find((moment) => moment.elementIds.includes(elementId));
+}
+
 export function searchScreenplay(data: ScreenplayData, query: string): SearchResult[] {
   const normalized = query.trim().toLowerCase();
   if (!normalized) return [];
 
-  const beatByElement = new Map(data.beats.map((beat) => [beat.elementId, beat]));
-
   return data.elements
     .filter((element) => element.searchText?.includes(normalized))
     .map((element) => {
-      const beat = beatByElement.get(element.id);
+      const moment = findMomentForElement(data, element.id);
       return {
         elementId: element.id,
-        beatId: beat?.id ?? "",
-        beatIndex: beat?.index ?? 0,
+        momentId: moment?.id ?? "",
+        momentIndex: moment?.index ?? 0,
         type: element.type,
         snippet: buildSnippet(element),
         printedPage: element.printedPage,
       };
     })
-    .filter((result) => result.beatId);
+    .filter((result) => result.momentId);
 }
 
 function buildSnippet(element: ScreenplayData["elements"][number]): string {
@@ -83,5 +125,6 @@ export async function loadScreenplay(): Promise<ScreenplayData> {
   if (!response.ok) {
     throw new Error("Failed to load screenplay data");
   }
-  return response.json() as Promise<ScreenplayData>;
+  const data = (await response.json()) as ScreenplayData;
+  return ensureMoments(data);
 }

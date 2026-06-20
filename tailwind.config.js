@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         screenplay: ['"Courier New"', "Courier", "monospace"],
+        prose: ["Georgia", "Times New Roman", "serif"],
       },
     },
   },

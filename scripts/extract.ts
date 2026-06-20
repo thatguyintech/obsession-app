@@ -9,10 +9,11 @@ import {
   denormalizeBeat,
   parsePrintedPage,
 } from "./lib/classifier.js";
+import { generateMoments } from "./lib/moments.js";
 import { groupTextItemsIntoLines } from "./lib/pdf-lines.js";
 import type { RawPage, ScreenplayElementDraft } from "./lib/types.js";
 
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const PDF_PATH = join(ROOT, "obsession-2026.pdf");
@@ -28,11 +29,13 @@ interface ExtractResult {
     pageCount: number;
     elementCount: number;
     beatCount: number;
+    momentCount: number;
     extractedAt: string;
     version: number;
   };
   elements: ScreenplayElementDraft[];
   beats: Record<string, unknown>[];
+  moments: ReturnType<typeof generateMoments>;
 }
 
 async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] }> {
@@ -90,6 +93,8 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
     ...denormalizeBeat(element),
   }));
 
+  const moments = generateMoments(elements);
+
   return {
     payload: {
       meta: {
@@ -98,11 +103,13 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
         pageCount: rawPages.length,
         elementCount: elements.length,
         beatCount: beats.length,
+        momentCount: moments.length,
         extractedAt: new Date().toISOString().slice(0, 10),
         version: SCHEMA_VERSION,
       },
       elements,
       beats,
+      moments,
     },
     rawPages,
   };
@@ -121,5 +128,5 @@ console.log(`Wrote ${RAW_PATH}`);
 console.log(`Wrote ${OUT_PATH}`);
 console.log(`Wrote ${join(PUBLIC_DATA_DIR, "obsession.json")}`);
 console.log(
-  `${payload.meta.elementCount} elements, ${payload.meta.beatCount} beats, ${payload.meta.pageCount} pdf pages`,
+  `${payload.meta.elementCount} elements, ${payload.meta.momentCount} moments, ${payload.meta.pageCount} pdf pages`,
 );
