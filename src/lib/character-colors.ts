@@ -31,8 +31,8 @@ export function normalizeCharacterName(raw: string): string {
 
   if (name === "NIC KY") return "NICKY";
   if (name === "I AN") return "IAN";
-  if (name.includes("/")) {
-    return name.split("/")[0].trim();
+  if (name.includes("/") || name.includes("&")) {
+    return name.split(/[/&]/)[0].trim();
   }
 
   return name;

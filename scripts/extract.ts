@@ -9,6 +9,7 @@ import {
   denormalizeBeat,
   parsePrintedPage,
 } from "./lib/classifier.js";
+import { applyCleanup } from "./lib/cleanup.js";
 import { generateMoments } from "./lib/moments.js";
 import { groupTextItemsIntoLines } from "./lib/pdf-lines.js";
 import type { RawPage, ScreenplayElementDraft } from "./lib/types.js";
@@ -86,14 +87,16 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
     }
   }
 
-  const beats = elements.map((element, index) => ({
+  const cleanedElements = applyCleanup(elements);
+
+  const beats = cleanedElements.map((element, index) => ({
     id: `beat-${String(index + 1).padStart(3, "0")}`,
     elementId: element.id,
     index,
     ...denormalizeBeat(element),
   }));
 
-  const moments = generateMoments(elements);
+  const moments = generateMoments(cleanedElements);
 
   return {
     payload: {
@@ -101,13 +104,13 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
         title: "Obsession",
         author: "Curry Barker",
         pageCount: rawPages.length,
-        elementCount: elements.length,
+        elementCount: cleanedElements.length,
         beatCount: beats.length,
         momentCount: moments.length,
         extractedAt: new Date().toISOString().slice(0, 10),
         version: SCHEMA_VERSION,
       },
-      elements,
+      elements: cleanedElements,
       beats,
       moments,
     },
