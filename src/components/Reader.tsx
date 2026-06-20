@@ -134,7 +134,7 @@ export function Reader({ data }: ReaderProps) {
   }
 
   return (
-    <div className="relative h-full overflow-hidden bg-[var(--bg-page)]">
+    <div className="relative h-full min-w-0 overflow-hidden bg-[var(--bg-page)]">
       <div className="progress-track absolute inset-x-0 top-0 z-20">
         <div
           className="progress-fill h-full transition-all duration-200"
@@ -142,8 +142,8 @@ export function Reader({ data }: ReaderProps) {
         />
       </div>
 
-      <header className="reader-chrome absolute inset-x-0 top-3 z-20 flex items-center justify-between gap-2 px-4 text-xs">
-        <div className="flex items-center gap-1">
+      <header className="reader-chrome absolute inset-x-0 top-3 z-20 flex min-w-0 items-center justify-between gap-2 px-4 text-xs">
+        <div className="flex min-w-0 shrink items-center gap-1">
           <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
             Search /
           </button>
@@ -157,7 +157,7 @@ export function Reader({ data }: ReaderProps) {
         </span>
       </header>
 
-      <main className="relative h-full overflow-hidden pt-8 pb-10">
+      <main className="relative h-full min-w-0 overflow-hidden pt-8 pb-10">
         <MomentView
           moment={moment}
           data={data}

@@ -20,7 +20,7 @@ function TrackBlock({ track }: { track: DialogueTrack }) {
   return (
     <div className="dual-column-rule min-w-0 text-left" style={{ borderLeftColor: color }}>
       <div className="dialogue-block mb-0 border-l-[3px] py-0 pl-3" style={tone}>
-        <p className="text-character mb-1" style={{ color }}>
+        <p className="text-character mb-1 break-words" style={{ color }}>
           {track.character}
         </p>
         {track.parenthetical ? (
@@ -66,7 +66,7 @@ function DialogueBlock({
 
   return (
     <div className="dialogue-block" style={blockStyle}>
-      <p className="text-character mb-1" style={{ color }}>
+      <p className="text-character mb-1 break-words" style={{ color }}>
         {character}
       </p>
       {parenthetical ? (
@@ -149,7 +149,7 @@ export function ElementView({
   if (element.type === "dual_dialogue") {
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
-        <div className="mb-8 grid grid-cols-2 gap-3 md:gap-6">
+        <div className="mb-8 grid grid-cols-1 gap-4 min-[28rem]:grid-cols-2 md:gap-6">
           <div className="min-w-0 space-y-4">
             {element.left?.map((track) => (
               <TrackBlock key={`left-${track.character}-${track.lines[0]}`} track={track} />

@@ -6,7 +6,7 @@ import type { ScreenplayData } from "./types";
 
 function RootLayout() {
   return (
-    <div className="h-full">
+    <div className="h-full min-w-0 overflow-x-hidden">
       <Outlet />
     </div>
   );

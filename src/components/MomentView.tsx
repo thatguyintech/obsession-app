@@ -44,10 +44,10 @@ export function MomentView({
   }, [moment.id, scrollY, scrollToElementId]);
 
   return (
-    <div className="flex h-full flex-col px-5 pb-10 pt-14 md:px-10 md:pt-16">
+    <div className="flex h-full min-w-0 flex-col pb-10 pt-14 md:pt-16">
       <div
         ref={scrollRef}
-        className="moment-scroll mx-auto w-full max-w-prose flex-1 overflow-y-auto overscroll-contain text-left"
+        className="moment-scroll mx-auto w-full max-w-prose flex-1 overflow-y-auto overscroll-contain px-5 text-left md:px-10"
         onScroll={(event) => onScroll(event.currentTarget.scrollTop)}
       >
         {moment.elementIds.map((elementId) => {
