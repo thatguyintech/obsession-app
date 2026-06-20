@@ -8,7 +8,6 @@ interface MomentViewProps {
   scrollY: number;
   scrollToElementId?: string | null;
   sceneToc?: SceneTocEntry[];
-  chromeVisible?: boolean;
   onGoToScene?: (momentIndex: number) => void;
   onScroll: (scrollY: number) => void;
 }
@@ -24,7 +23,6 @@ export const MomentView = forwardRef<MomentViewHandle, MomentViewProps>(function
     scrollY,
     scrollToElementId,
     sceneToc,
-    chromeVisible = true,
     onGoToScene,
     onScroll,
   },
@@ -59,11 +57,7 @@ export const MomentView = forwardRef<MomentViewHandle, MomentViewProps>(function
   }, [moment.id, scrollY, scrollToElementId]);
 
   return (
-    <div
-      className={`flex h-full min-w-0 flex-col pb-10 transition-[padding] duration-300 ${
-        chromeVisible ? "pt-[4.25rem] md:pt-[4.75rem]" : "pt-4 md:pt-6"
-      }`}
-    >
+    <div className="flex h-full min-w-0 flex-col pb-10">
       <div
         ref={scrollRef}
         className="moment-scroll mx-auto w-full max-w-prose flex-1 touch-pan-y overflow-y-auto overscroll-contain px-5 text-left md:px-10"

@@ -10,6 +10,7 @@
   --text-muted: #78716c;
   --border: #e7e5e4;
   --accent: #9a3412;
+  --reader-chrome-height: 2.75rem;
 }
 
 html,
@@ -31,20 +32,17 @@ body {
 
 @layer components {
   .reader-chrome-shell {
-    @apply pointer-events-none absolute inset-x-0 top-0 z-20 transition-[transform,opacity] duration-300 ease-out;
-  }
-
-  .reader-chrome-shell.is-visible {
-    @apply translate-y-0 opacity-100;
-  }
-
-  .reader-chrome-shell.is-hidden {
-    @apply -translate-y-full opacity-0;
+    @apply fixed inset-x-0 top-0 z-20;
   }
 
   .reader-chrome-bar {
-    @apply pointer-events-auto backdrop-blur-md;
-    background: rgb(250 248 245 / 0.82);
+    @apply pointer-events-auto border-b border-stone-200/70 backdrop-blur-md;
+    background: rgb(250 248 245 / 0.92);
+  }
+
+  .reader-main {
+    height: 100%;
+    padding-top: var(--reader-chrome-height);
   }
 
   .reader-chrome {

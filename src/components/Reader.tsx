@@ -27,16 +27,13 @@ export function Reader({ data }: ReaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [chromeVisible, setChromeVisible] = useState(true);
   const scrollSaveTimer = useRef<number | null>(null);
-  const lastScrollY = useRef(0);
   const momentViewRef = useRef<MomentViewHandle>(null);
 
   const moment = data.moments[momentIndex];
   const progress = ((momentIndex + 1) / data.moments.length) * 100;
   const sceneToc = useMemo(() => buildSceneTableOfContents(data), [data]);
   const lastMomentIndex = data.moments.length - 1;
-  const overlayOpen = searchOpen || tocOpen;
 
   const results = useMemo(
     () => (searchOpen ? searchScreenplay(data, query).slice(0, 20) : []),
@@ -47,8 +44,6 @@ export function Reader({ data }: ReaderProps) {
     setMomentIndex(index);
     setScrollY(0);
     setScrollToElementId(elementId ?? null);
-    setChromeVisible(true);
-    lastScrollY.current = 0;
   }, []);
 
   const goToStart = useCallback(() => {
@@ -60,14 +55,6 @@ export function Reader({ data }: ReaderProps) {
   }, [goToMoment, lastMomentIndex]);
 
   const handleScroll = useCallback((nextScrollY: number) => {
-    const delta = nextScrollY - lastScrollY.current;
-    if (nextScrollY > 48 && delta > 10) {
-      setChromeVisible(false);
-    } else if (delta < -10) {
-      setChromeVisible(true);
-    }
-    lastScrollY.current = nextScrollY;
-
     if (scrollSaveTimer.current) {
       window.clearTimeout(scrollSaveTimer.current);
     }
@@ -140,12 +127,10 @@ export function Reader({ data }: ReaderProps) {
       if (event.key === "/") {
         event.preventDefault();
         setSearchOpen(true);
-        setChromeVisible(true);
       }
       if (event.key === "t" || event.key === "T") {
         event.preventDefault();
         setTocOpen(true);
-        setChromeVisible(true);
       }
     }
 
@@ -157,14 +142,9 @@ export function Reader({ data }: ReaderProps) {
     return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
   }
 
-  const showChrome = overlayOpen || chromeVisible;
-
   return (
     <div className="relative h-full min-w-0 overflow-hidden bg-[var(--bg-page)]">
-      <div
-        className={`reader-chrome-shell ${showChrome ? "is-visible" : "is-hidden"}`}
-        aria-hidden={!showChrome}
-      >
+      <div className="reader-chrome-shell">
         <div className="reader-chrome-bar">
           <div className="progress-track">
             <div
@@ -190,7 +170,7 @@ export function Reader({ data }: ReaderProps) {
         </div>
       </div>
 
-      <main className="relative h-full min-w-0 overflow-hidden pb-10">
+      <main className="reader-main relative min-w-0 overflow-hidden pb-10">
         <MomentView
           ref={momentViewRef}
           moment={moment}
@@ -198,7 +178,6 @@ export function Reader({ data }: ReaderProps) {
           scrollY={scrollY}
           scrollToElementId={scrollToElementId}
           sceneToc={sceneToc}
-          chromeVisible={showChrome}
           onGoToScene={goToMoment}
           onScroll={handleScroll}
         />
@@ -207,18 +186,18 @@ export function Reader({ data }: ReaderProps) {
       <button
         type="button"
         aria-label="Previous moment"
-        className="absolute inset-y-0 left-0 z-10 w-14 bg-transparent md:w-16"
+        className="absolute bottom-0 left-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent md:w-16"
         onClick={() => goToMoment(Math.max(momentIndex - 1, 0))}
       />
       <button
         type="button"
         aria-label="Next moment"
-        className="absolute inset-y-0 right-0 z-10 w-14 bg-transparent md:w-16"
+        className="absolute bottom-0 right-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent md:w-16"
         onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
       />
 
       {searchOpen ? (
-        <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-16">
+        <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-[calc(var(--reader-chrome-height)+1rem)]">
           <div className="overlay-panel max-h-[80vh] w-full overflow-hidden rounded-xl">
             <div className="border-b border-stone-200 p-4">
               <input

@@ -46,7 +46,7 @@ interface SceneTocOverlayProps {
 
 export function SceneTocOverlay({ entries, onSelect, onClose }: SceneTocOverlayProps) {
   return (
-    <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-16">
+    <div className="overlay-backdrop absolute inset-0 z-30 flex items-end p-4 md:items-start md:pt-[calc(var(--reader-chrome-height)+1rem)]">
       <div className="overlay-panel max-h-[85vh] w-full overflow-hidden rounded-xl md:max-w-lg">
         <div className="flex items-center justify-between border-b border-stone-200 px-4 py-3">
           <h2 className="text-sm font-bold tracking-[0.15em] text-stone-500 uppercase">Scenes</h2>
