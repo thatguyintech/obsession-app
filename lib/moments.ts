@@ -32,8 +32,17 @@ export function startsNewMoment(element: MomentElement): boolean {
 export function generateMoments(elements: MomentElement[]): MomentDraft[] {
   const moments: MomentDraft[] = [];
   let current: MomentDraft | null = null;
+  let pendingTransitionId: string | null = null;
 
   for (const element of elements) {
+    if (element.type === "transition") {
+      pendingTransitionId = element.id ?? null;
+      continue;
+    }
+
+    const prefixIds = pendingTransitionId ? [pendingTransitionId] : [];
+    pendingTransitionId = null;
+
     if (startsNewMoment(element)) {
       if (current) {
         moments.push(current);
@@ -42,7 +51,7 @@ export function generateMoments(elements: MomentElement[]): MomentDraft[] {
       current = {
         id: `moment-${String(moments.length + 1).padStart(3, "0")}`,
         index: moments.length,
-        elementIds: [element.id!],
+        elementIds: [...prefixIds, element.id!],
         ...(element.type === "scene_heading" ? { sceneHeadingId: element.id } : {}),
         ...(element.printedPage !== undefined ? { printedPage: element.printedPage } : {}),
       };
@@ -57,7 +66,7 @@ export function generateMoments(elements: MomentElement[]): MomentDraft[] {
       };
     }
 
-    current.elementIds.push(element.id!);
+    current.elementIds.push(...prefixIds, element.id!);
     if (element.printedPage !== undefined && current.printedPage === undefined) {
       current.printedPage = element.printedPage;
     }

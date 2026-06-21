@@ -7,6 +7,7 @@ export interface DialogueSegment {
 
 export type ElementType =
   | "title_card"
+  | "transition"
   | "scene_heading"
   | "action"
   | "dialogue"

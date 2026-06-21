@@ -1,6 +1,7 @@
 import type { ColumnSide, DialogueTrack, Line, ScreenplayElementDraft } from "./types.js";
 import type { DialogueSegment } from "../../lib/dialogue-segments.js";
 import { ensureTrackSegments, segmentsSearchParts } from "../../lib/dialogue-segments.js";
+import { isTransitionLine } from "../../lib/transitions.js";
 
 const HEADER_RE = /^March 9th\s+(\d+)\.?\s*$/;
 
@@ -303,6 +304,17 @@ export function classifyPage(
       }
     }
 
+    if (isTransitionLine(line)) {
+      elements.push({
+        type: "transition",
+        text: line.text.trim(),
+        pdfPage,
+        ...(printedPage !== null ? { printedPage } : {}),
+      });
+      index += 1;
+      continue;
+    }
+
     if (isSceneHeading(line.text)) {
       let text = line.text;
       let nextIndex = index + 1;
@@ -358,6 +370,7 @@ export function buildSearchText(element: ScreenplayElementDraft): string {
     case "title_card":
       parts.push(element.title ?? "", element.author ?? "", element.subtitle ?? "");
       break;
+    case "transition":
     case "scene_heading":
     case "action":
       parts.push(element.text ?? "");
@@ -386,6 +399,7 @@ export function denormalizeBeat(element: ScreenplayElementDraft): Record<string,
       if (element.author) beat.author = element.author;
       if (element.subtitle) beat.subtitle = element.subtitle;
       break;
+    case "transition":
     case "scene_heading":
       beat.text = element.text;
       break;

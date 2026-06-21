@@ -68,9 +68,9 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 | Wrong spacing (`a"poor`) | ❌ | 👁️ manual |
 | Misclassification (dialogue → action) | ❌ | 👁️ type badge + highlight |
 | All words present, wrong element type | ❌ | 👁️ manual |
-| Dropped transitions (`SMASH CUT TO:`) | ❌ | 👁️ raw pane (no element) |
+| Dropped transitions (`SMASH CUT TO:`) | ✅ (READ-002) | 👁️ transition element + highlight |
 
-**Known example:** Page 3, `el-015` / `el-016` — Nicky voicemail split; dialogue tail misclassified as action. Word score can still be OK. Highlight on `el-015` covers only the dialogue portion, not the misclassified action tail.
+**Known pattern (fixed on page 3):** Classifier split Nicky voicemail — dialogue tail landed in a separate action element while word score stayed OK. Fix: merge text into correct element (segments for mid-speech asides), delete orphan, Save. Page 3 el-015/el-017 ✅ at v11.
 
 ---
 
@@ -119,7 +119,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 **Highlight caveats:**
 
 - Match is fuzzy (75% element word coverage); fails if edited text drifts far from raw
-- Orphan raw lines (e.g. `SMASH CUT TO:`) have no element — no highlight until READ-002
+- Orphan raw lines without a matching element are rare after READ-002 (transitions captured)
 - Long-term improvement: store `rawLineStart`/`rawLineEnd` at extract time
 
 **Editor fields (v1):**
@@ -127,7 +127,8 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 | Type | Fields |
 |------|--------|
 | `action` | `text` |
-| `scene_heading` | `text` |
+| `scene_heading` | `text`, optional **Transition** field (creates/updates preceding `transition` element) |
+| `transition` | `text` (also editable directly when selected) |
 | `dialogue` | `character`, `segments[]` (`speech` \| `parenthetical`) |
 | `dual_dialogue` | per-track `character`, `segments[]` |
 | `title_card` | `title`, `author`, `subtitle` (rare) |
@@ -143,12 +144,13 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 
 - [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
 - [x] Dialogue segments schema (SCHEMA-001) — types, migration, reader, QA segment editor
+- [x] Transition element type (READ-002) — classifier, migrate script, reader, QA scene-heading field
 - [ ] Change element type (QA-006) — Tier 2
-- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — Tier 3; after SCHEMA-001 migration
+- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — Tier 3; segments migration committed
 
 See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for full stack.
 
-**Delete workflow (el-015 / el-016 pattern):** paste misclassified text into the correct element → Delete the orphan → Save. Save regenerates beats/moments; element IDs may gap (el-015, el-017, …).
+**Delete workflow:** paste misclassified text into the correct element → Delete the orphan → Save. Save regenerates beats/moments; element IDs may gap (e.g. el-015, el-017 on page 3).
 
 ---
 
@@ -160,6 +162,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 | **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
 | **EXTRACT-001** | Todo | **Dialogue wrap at left margin** — `parseDialogue` breaks when wrapped line hits `x0 < 120`, tail misclassified as action. Fix classifier for future extracts; do not re-run full extract until QA hand-fixes are merged or backed up |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
+| **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |
 
 ---
 

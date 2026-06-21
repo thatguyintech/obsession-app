@@ -96,6 +96,7 @@ export function extractElementText(element: QaElementLike): string {
   switch (element.type) {
     case "title_card":
       return [element.title, element.author, element.subtitle].filter(Boolean).join(" ");
+    case "transition":
     case "scene_heading":
     case "action":
       return element.text ?? "";

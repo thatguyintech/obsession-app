@@ -62,6 +62,7 @@ Used for search, fidelity, and building moments. **Preserves raw `lines[]` array
 | Type | Description |
 |------|-------------|
 | `title_card` | Cover page (manual entry for page 1) |
+| `transition` | Cut direction (`SMASH CUT TO:`, `CUT TO:`, etc.) before a scene heading |
 | `scene_heading` | `INT.` / `EXT.` lines |
 | `action` | Stage direction / prose |
 | `dialogue` | Character name + ordered `segments[]` (see SCHEMA-001; legacy: optional `parenthetical` + `lines[]`) |
@@ -366,9 +367,11 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Why now |
 |---|-----|---------|
-| 1 | **SCHEMA-001** | ✅ Shipped — `segments[]` schema, migration, reader, QA editor. **Remaining:** fix page 3 el-015/`el-017` content in QA; EXTRACT-001 for classifier. |
-| 2 | **READ-004** (display) | `el-003` already has `\n\n` in JSON; reader still collapses to one block. Small, independent win — split `action.text` on `\n\n` in `ElementView`. |
-| 3 | *(ops)* | WARN page review — use delete + edit; SCHEMA-001 unlocks page 3 properly |
+| 1 | **READ-004** (display) | `el-003` already has `\n\n` in JSON; reader still collapses to one block. Small win — split `action.text` on `\n\n` in `ElementView`. |
+| 2 | *(ops)* | WARN page review — 9 pages left (16, 35, 49, 63, 64, 70, 87, 90, 93). |
+| — | **READ-002** | ✅ Done — `transition` element type, classifier, migrate script, reader + QA editor. |
+| — | **READ-003** | ✅ Done — scene heading hierarchy (bold/prominent slugs, quieter action). |
+| — | **SCHEMA-001** | ✅ Done — segments schema, page 3 data (v11). |
 
 ### Tier 2 — QA velocity & reader polish
 
@@ -382,7 +385,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Gate |
 |---|-----|------|
-| 7 | **EXTRACT-001** | Pair with SCHEMA-001 classifier output. **Gate:** hand-fixed JSON migrated + committed; backup strategy; no blind `pnpm extract` |
+| 7 | **EXTRACT-001** | Pair with SCHEMA-001 classifier output. **Gate:** segments migration + page 3 committed ✅; still need backup strategy before full re-extract — no blind `pnpm extract` |
 | 8 | **READ-002** | Transitions (`SMASH CUT TO:`) — fidelity, not blocking QA |
 
 ### Tier 4 — Backlog / research
@@ -396,10 +399,10 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 ### Suggested sequence
 
 ```
-SCHEMA-001 → READ-004 display → READ-003 or Phase D → QA-006 → EXTRACT-001 (+ classifier segments) → READ-002
+READ-004 display → QA-006 → Phase D → EXTRACT-001 → READ-001
 ```
 
-**Dependencies:** EXTRACT-001 waits on SCHEMA-001 migration. READ-004 and READ-003 do not block SCHEMA-001.
+**Dependencies:** EXTRACT-001 waits on stable hand-fixes + backup strategy. READ-004 is independent.
 
 ---
 
@@ -408,12 +411,12 @@ SCHEMA-001 → READ-004 display → READ-003 or Phase D → QA-006 → EXTRACT-0
 | ID | Area | Ticket |
 |----|------|--------|
 | **READ-001** | Reader styling / extract | **Preserve inline emphasis in action (and dialogue?)** — PDF uses underline + italic on specific words for reading tone. Example: `el-029` — *"Bear's head tilts up in frustration at the mention of **Ian**"* — in the PDF, *Ian* is underlined and italicized; you almost want to say the name sarcastically in your head. Current JSON + UI flatten to plain text, so that nuance is lost. Open questions when we pick this up: does pdf.js expose font/style spans? Do we store inline marks in JSON or infer at render time? Scope across the script TBD. |
-| **READ-002** | Extract / reader display | **Capture transition directions** (e.g. `SMASH CUT TO:`) — currently dropped between elements. Example: after `el-031` (Nicky V.O. *"Ok! I'll see-"*), raw has `SMASH CUT TO:` right-aligned before `el-032` scene heading; structured JSON jumps straight to the heading. **MVP idea:** extract + store transition text; display an all-caps stylized line grouped with the following scene heading (visually paired, not orphaned). Open questions: new element type vs field on `scene_heading`? Same treatment for `CUT TO:`, `FADE IN:`, etc.? How many instances in the script? |
-| **READ-003** | Reader typography | **Scene heading visual hierarchy** — prod reader inverts PDF priority: scene headings are smaller + more faded (`text-scene-heading` ~11px label, 50% opacity) while action is larger serif (~15–16px, 65% opacity). PDF has bold all-caps sluglines that grab attention first; action follows in regular weight. **Preference:** move toward PDF hierarchy — scene heading bold/prominent, action secondary. Example moment: `INT. BEAR'S HOUSE - KITCHEN - CONTINUOUS` + following action block. Open questions: same treatment for `- CONTINUOUS` dividers vs new-scene openers? Mono vs sans for slugs? Revisit `scene-marker` band styling too? |
+| **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
+| **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
 | **READ-004** | Reader + QA editor / action styling | **Paragraph breaks in action blocks** — PDF often has two separate action paragraphs (blank line between). JSON stores one `action.text` string; reader and QA preview collapse to a single block. **Goal:** treat `\n\n` (double newline) as a paragraph break in display — mirror screenplay spacing. Example: `el-003` on page 2 — house/exterior description, then a gap, then Bear fixating on the romance film. QA editor already allows typing two newlines; need render path (reader `ElementView`, QA extracted pane) to split and style as separate `<p>` blocks. Open questions: also support in extract? Split into two elements vs inline `\n\n` in one? Dialogue/action only or scene headings too? |
 | **QA-006** | QA tool | **Change element type** — convert action ↔ dialogue ↔ scene_heading in the editor without merge/delete. See [QA-TOOL.md](./QA-TOOL.md). |
 | **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
-| **SCHEMA-001** | Data model + reader + QA + extract | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Replaces the single `parenthetical` + `lines[]` shape for mid-speech asides. Full spec below. |
+| **SCHEMA-001** | ✅ Done | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Shipped v7 tooling / v11 data; page 3 el-015/el-017 fixed. Full spec below. |
 
 ### SCHEMA-001 — Dialogue segments (spec)
 
@@ -491,7 +494,7 @@ interface DialogueTrack {
 - Action paragraph `\n\n` (READ-004) — stays on `action.text`
 - Nesting segments beyond speech/parenthetical
 
-**QA workflow after ship:** Fix page 3 by editing el-015 segments in QA tool → trim el-017 action → Save.
+**QA workflow (page 3, done):** el-015 segments `(some movement)` + trailing speech; el-017 action-only — committed at meta.version 11.
 
 ---
 

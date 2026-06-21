@@ -106,22 +106,39 @@ body {
     overflow-wrap: anywhere;
   }
 
-  /* Action — connective tissue, quiet */
+  /* Action — connective tissue, quiet relative to scene headings */
   .action-block {
     @apply mb-5;
   }
 
   .text-action {
     font-family: theme("fontFamily.reading");
-    font-size: clamp(0.9375rem, 2.5vw, 1rem);
+    font-size: clamp(0.875rem, 2.4vw, 0.9375rem);
     line-height: 1.65;
-    color: rgb(28 25 23 / 0.65);
+    color: rgb(28 25 23 / 0.55);
     overflow-wrap: anywhere;
   }
 
-  /* Scene slugs — pass-through markers, not banners */
+  /* Transitions — right-aligned cut directions before a new scene */
+  .transition-block {
+    @apply mt-6 mb-1;
+  }
+
+  .text-scene-transition {
+    font-family: theme("fontFamily.label");
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.45;
+    text-align: right;
+    text-transform: uppercase;
+    color: rgb(28 25 23 / 0.55);
+    overflow-wrap: anywhere;
+  }
+
+  /* Scene slugs — primary structural markers (READ-003) */
   .scene-marker {
-    @apply mt-10 mb-6 border-t border-stone-300/50 pt-4;
+    @apply mt-8 mb-5 border-t border-stone-300/60 pt-4;
   }
 
   .scene-marker-opener {
@@ -130,12 +147,12 @@ body {
 
   .text-scene-heading {
     font-family: theme("fontFamily.label");
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
+    font-size: clamp(0.75rem, 2.2vw, 0.8125rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
     line-height: 1.45;
     text-transform: uppercase;
-    color: rgb(28 25 23 / 0.5);
+    color: rgb(28 25 23 / 0.85);
     overflow-wrap: anywhere;
   }
 
@@ -145,12 +162,12 @@ body {
 
   .text-scene-continuous {
     font-family: theme("fontFamily.label");
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     line-height: 1.4;
     text-transform: uppercase;
-    color: rgb(28 25 23 / 0.4);
+    color: rgb(28 25 23 / 0.65);
   }
 
   .dual-column-block {

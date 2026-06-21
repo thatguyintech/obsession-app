@@ -44,6 +44,27 @@ function cloneData(data: ScreenplayData): ScreenplayData {
   return structuredClone(data);
 }
 
+function getPairedTransition(
+  elementId: string,
+  elements: ScreenplayElement[],
+): ScreenplayElement | null {
+  const index = elements.findIndex((element) => element.id === elementId);
+  if (index <= 0) return null;
+  const current = elements[index];
+  const previous = elements[index - 1];
+  if (current?.type === "scene_heading" && previous?.type === "transition") {
+    return previous;
+  }
+  return null;
+}
+
+function maxElementNumber(elements: ScreenplayElement[]): number {
+  return elements.reduce((max, element) => {
+    const match = /^el-(\d+)$/.exec(element.id);
+    return match ? Math.max(max, Number(match[1])) : max;
+  }, 0);
+}
+
 export function QaPage() {
   const search = useSearch({ strict: false }) as QaSearch;
   const baselineRef = useRef<ScreenplayData | null>(null);
@@ -145,6 +166,42 @@ export function QaPage() {
     if (!data || !baselineRef.current) return;
     setIsDirty(JSON.stringify(data) !== JSON.stringify(baselineRef.current));
   }, [data]);
+
+  function updatePairedTransition(sceneHeadingId: string, transitionText: string) {
+    setData((current) => {
+      if (!current) return current;
+      const elements = [...current.elements];
+      const index = elements.findIndex((element) => element.id === sceneHeadingId);
+      if (index === -1) return current;
+
+      const sceneHeading = elements[index]!;
+      const previous = index > 0 ? elements[index - 1] : null;
+      const trimmed = transitionText.trim();
+
+      if (!trimmed) {
+        if (previous?.type === "transition") {
+          elements.splice(index - 1, 1);
+        }
+        return { ...current, elements };
+      }
+
+      if (previous?.type === "transition") {
+        elements[index - 1] = { ...previous, text: trimmed };
+        return { ...current, elements };
+      }
+
+      const newId = `el-${String(maxElementNumber(elements) + 1).padStart(3, "0")}`;
+      elements.splice(index, 0, {
+        id: newId,
+        type: "transition",
+        text: trimmed,
+        pdfPage: sceneHeading.pdfPage,
+        printedPage: sceneHeading.printedPage,
+      });
+      return { ...current, elements };
+    });
+    setSaveMessage(null);
+  }
 
   function revertElement(elementId: string) {
     const original = baselineRef.current?.elements.find((element) => element.id === elementId);
@@ -370,6 +427,16 @@ export function QaPage() {
       {selectedElement ? (
         <ElementEditor
           element={selectedElement}
+          pairedTransition={
+            selectedElement.type === "scene_heading" && data
+              ? getPairedTransition(selectedElement.id, data.elements)
+              : null
+          }
+          onPairedTransitionChange={
+            selectedElement.type === "scene_heading"
+              ? (text) => updatePairedTransition(selectedElement.id, text)
+              : undefined
+          }
           onChange={updateElement}
           onRevert={() => revertElement(selectedElement.id)}
           onDelete={() => deleteElement(selectedElement.id)}

@@ -107,6 +107,16 @@ export function ElementView({
     );
   }
 
+  if (element.type === "transition") {
+    return (
+      <ElementWrapper elementId={element.id} highlight={highlight}>
+        <div className="transition-block">
+          <p className="text-scene-transition">{element.text}</p>
+        </div>
+      </ElementWrapper>
+    );
+  }
+
   if (element.type === "scene_heading") {
     const isContinuous = isContinuousSceneHeading(element.text ?? "");
     const isOpener = element.id === sceneHeadingId;

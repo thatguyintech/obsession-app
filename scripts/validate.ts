@@ -10,6 +10,7 @@ const SEARCH_TERMS = [
   "got into some pills",
   "brick",
   "int. bear's house - living room - night",
+  "smash cut to",
 ];
 
 const EXPECTED_CHARACTERS = new Set(["BEAR", "NICKY", "IAN", "SARAH", "CARTER"]);
@@ -77,6 +78,11 @@ if (moments[0]?.elementIds[0] !== elements[0]?.id) {
   fail("First moment should start with title_card element");
 }
 
+const transitionCount = elements.filter((element) => element.type === "transition").length;
+if (transitionCount < 5) {
+  fail(`Expected at least 5 transition elements, got ${transitionCount}`);
+}
+
 const sceneHeadingCount = elements.filter((element) => element.type === "scene_heading").length;
 if (sceneHeadingCount < 20) {
   fail("Scene heading count looks too low");
@@ -95,6 +101,12 @@ for (const expected of EXPECTED_CHARACTERS) {
 }
 
 for (const element of elements) {
+  if (element.type === "transition") {
+    if (!element.text?.trim()) {
+      fail(`Transition ${element.id} missing text`);
+    }
+  }
+
   if (element.type === "dialogue") {
     if (!element.segments?.length) {
       fail(`Dialogue ${element.id} missing segments`);
@@ -128,4 +140,5 @@ console.log("OK");
 console.log(`  elements: ${elements.length}`);
 console.log(`  moments: ${moments.length}`);
 console.log(`  dual_dialogue elements: ${dualCount}`);
+console.log(`  transitions: ${transitionCount}`);
 console.log(`  scene headings: ${sceneHeadingCount}`);

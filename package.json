@@ -9,6 +9,7 @@
     "apply-cleanup": "tsx scripts/apply-cleanup.ts",
     "validate": "tsx scripts/validate.ts",
     "migrate-dialogue-segments": "tsx scripts/migrate-dialogue-segments.ts",
+    "migrate-transitions": "tsx scripts/migrate-transitions.ts",
     "qa": "tsx scripts/qa.ts",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

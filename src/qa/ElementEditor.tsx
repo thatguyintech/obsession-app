@@ -4,6 +4,8 @@ import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-
 
 interface ElementEditorProps {
   element: ScreenplayElement;
+  pairedTransition?: ScreenplayElement | null;
+  onPairedTransitionChange?: (text: string) => void;
   onChange: (element: ScreenplayElement) => void;
   onRevert: () => void;
   onDelete: () => void;
@@ -178,7 +180,15 @@ function updateDualTrack(
   return { ...element, [side]: tracks };
 }
 
-export function ElementEditor({ element, onChange, onRevert, onDelete, onClose }: ElementEditorProps) {
+export function ElementEditor({
+  element,
+  pairedTransition,
+  onPairedTransitionChange,
+  onChange,
+  onRevert,
+  onDelete,
+  onClose,
+}: ElementEditorProps) {
   return (
     <div className="border-t border-stone-200 bg-white px-4 py-3">
       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -230,7 +240,44 @@ export function ElementEditor({ element, onChange, onRevert, onDelete, onClose }
           </>
         ) : null}
 
-        {element.type === "scene_heading" || element.type === "action" ? (
+        {element.type === "transition" ? (
+          <div>
+            <FieldLabel>Transition</FieldLabel>
+            <TextInput
+              value={element.text ?? ""}
+              onChange={(text) => onChange({ ...element, text })}
+              placeholder="SMASH CUT TO:"
+            />
+          </div>
+        ) : null}
+
+        {element.type === "scene_heading" ? (
+          <>
+            {onPairedTransitionChange ? (
+              <div>
+                <FieldLabel>Transition (optional)</FieldLabel>
+                <TextInput
+                  value={pairedTransition?.text ?? ""}
+                  onChange={onPairedTransitionChange}
+                  placeholder="SMASH CUT TO:"
+                />
+                <p className="mt-1 text-xs text-stone-500">
+                  Stored as a separate element before this scene heading.
+                </p>
+              </div>
+            ) : null}
+            <div>
+              <FieldLabel>Text</FieldLabel>
+              <TextArea
+                value={element.text ?? ""}
+                onChange={(text) => onChange({ ...element, text })}
+                rows={4}
+              />
+            </div>
+          </>
+        ) : null}
+
+        {element.type === "action" ? (
           <div>
             <FieldLabel>Text</FieldLabel>
             <TextArea
