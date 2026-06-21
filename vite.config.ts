@@ -5,20 +5,28 @@ import react from "@vitejs/plugin-react";
 import { saveScreenplayFromQa, type QaSavePayload } from "./scripts/qa-save.ts";
 
 function socialMetaTags(): Plugin {
+  const siteDescription =
+    "A mobile-friendly reader for the Obsession screenplay by Curry Barker. Scroll scene by scene with search, moment navigation, and a clean book-like layout built for your phone.";
+  const siteAuthor = "Curry Barker";
+  // Screenplay title-page date (March 9th).
+  const sitePublished = "2026-03-09T00:00:00.000Z";
+
   return {
     name: "social-meta-tags",
     transformIndexHtml(html) {
-      const siteUrl = (process.env.VITE_SITE_URL ?? process.env.CF_PAGES_URL ?? "").replace(
-        /\/$/,
-        "",
-      );
+      const siteUrl = (
+        process.env.VITE_SITE_URL ??
+        process.env.CF_PAGES_URL ??
+        "https://obsession.thatguyintech.com"
+      ).replace(/\/$/, "");
       const imagePath = "/obsession-thumbnail.png";
-      const ogImage = siteUrl ? `${siteUrl}${imagePath}` : imagePath;
-      const siteUrlMeta = siteUrl
-        ? `    <meta property="og:url" content="${siteUrl}" />\n    <link rel="canonical" href="${siteUrl}" />\n`
-        : "";
+      const ogImage = `${siteUrl}${imagePath}`;
+      const siteUrlMeta = `    <meta property="og:url" content="${siteUrl}" />\n    <link rel="canonical" href="${siteUrl}" />\n`;
 
       return html
+        .replaceAll("%SITE_DESCRIPTION%", siteDescription)
+        .replaceAll("%SITE_AUTHOR%", siteAuthor)
+        .replaceAll("%SITE_PUBLISHED%", sitePublished)
         .replaceAll("%OG_IMAGE%", ogImage)
         .replace("<!--SITE_URL_META-->", siteUrlMeta);
     },
