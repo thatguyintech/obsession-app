@@ -48,18 +48,42 @@ function SceneList({
                 {entry.momentNumber}
               </span>
               <span className="min-w-0 flex-1">
-                <span
-                  className={`text-toc-title block leading-snug transition-colors group-hover:text-stone-900 ${
-                    isActive ? "text-stone-900" : ""
-                  }`}
-                >
-                  {entry.title}
-                  {isActive ? (
-                    <span className="ml-2 font-label text-[0.65rem] tracking-wide text-stone-500 uppercase">
-                      Here
+                {entry.label ? (
+                  <>
+                    <span
+                      className={`block font-reading text-sm leading-snug normal-case tracking-normal transition-colors group-hover:text-stone-900 ${
+                        isActive ? "text-stone-900" : "text-stone-800"
+                      }`}
+                    >
+                      {entry.label}
+                      {isActive ? (
+                        <span className="ml-2 font-label text-[0.65rem] tracking-wide text-stone-500 uppercase">
+                          Here
+                        </span>
+                      ) : null}
                     </span>
-                  ) : null}
-                </span>
+                    <span
+                      className={`text-toc-title mt-0.5 block text-[0.65rem] leading-snug ${
+                        isActive ? "text-stone-600" : "text-stone-400"
+                      }`}
+                    >
+                      {entry.title}
+                    </span>
+                  </>
+                ) : (
+                  <span
+                    className={`text-toc-title block leading-snug transition-colors group-hover:text-stone-900 ${
+                      isActive ? "text-stone-900" : ""
+                    }`}
+                  >
+                    {entry.title}
+                    {isActive ? (
+                      <span className="ml-2 font-label text-[0.65rem] tracking-wide text-stone-500 uppercase">
+                        Here
+                      </span>
+                    ) : null}
+                  </span>
+                )}
                 {entry.printedPage ? (
                   <span className="mt-0.5 block text-xs text-stone-500">p. {entry.printedPage}</span>
                 ) : null}

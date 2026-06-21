@@ -192,7 +192,8 @@ export function Reader({ data }: ReaderProps) {
               </button>
             </div>
             <span className="shrink-0 text-right text-stone-600">
-              {momentIndex} / {lastMomentIndex}
+              Scene {momentIndex}
+              {lastMomentIndex > 0 ? ` / ${lastMomentIndex}` : ""}
               {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
             </span>
           </header>

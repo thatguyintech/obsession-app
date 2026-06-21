@@ -157,6 +157,14 @@ body {
     @apply mt-8 mb-6 border-t border-stone-300/60 pt-4;
   }
 
+  .reader-column:has(.moment-scene-label) .scene-marker {
+    @apply mt-0;
+  }
+
+  .reader-column:has(.moment-scene-label) .scene-marker-opener {
+    @apply mt-0 md:mt-0;
+  }
+
   .scene-marker-opener {
     @apply mt-12 md:mt-14;
   }

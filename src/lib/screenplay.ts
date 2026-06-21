@@ -1,6 +1,9 @@
 import type { ReaderState, SceneTocEntry, ScreenplayData, SearchResult, Moment } from "../types";
 import { ensureDialogueSegments, flattenSegments } from "../../lib/dialogue-segments";
 import { generateMoments } from "../../lib/moments";
+import { MOMENT_LABELS, getMomentLabel } from "./moment-labels";
+
+export { getMomentLabel };
 
 export const STORAGE_KEY = "obsession-reader-state";
 
@@ -95,6 +98,7 @@ export function buildSceneTableOfContents(data: ScreenplayData): SceneTocEntry[]
         momentId: moment.id,
         sceneHeadingId: moment.sceneHeadingId!,
         title: heading?.text ?? "Unknown scene",
+        label: MOMENT_LABELS[moment.id],
         printedPage: moment.printedPage ?? heading?.printedPage,
       };
     });
@@ -109,7 +113,11 @@ export function filterScenes(entries: SceneTocEntry[], query: string): SceneTocE
   }
 
   const normalized = trimmed.toLowerCase();
-  return entries.filter((entry) => entry.title.toLowerCase().includes(normalized));
+  return entries.filter(
+    (entry) =>
+      entry.title.toLowerCase().includes(normalized) ||
+      entry.label?.toLowerCase().includes(normalized),
+  );
 }
 
 export function resolveSceneJump(entries: SceneTocEntry[], query: string): SceneTocEntry | null {

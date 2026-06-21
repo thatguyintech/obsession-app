@@ -51,6 +51,8 @@ export interface SceneTocEntry {
   momentId: string;
   sceneHeadingId: string;
   title: string;
+  /** Optional plot-summary label (READ-plot experiment) */
+  label?: string;
   printedPage?: number;
 }
 
