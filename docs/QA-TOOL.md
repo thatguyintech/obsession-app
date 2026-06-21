@@ -150,12 +150,14 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 - [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
 - [x] Dialogue segments schema (SCHEMA-001) — types, migration, reader, QA segment editor
 - [x] Transition element type (READ-002) — classifier, migrate script, reader, QA scene-heading field
-- [ ] Change element type (QA-006) — Tier 2
+- [x] Change element type (QA-006) — type dropdown in editor; Add element on page
 - [x] Classifier: dialogue wrap at left margin (EXTRACT-001) — wrap-row merge + action-column exit
 
 See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for full stack.
 
-**Delete workflow:** paste misclassified text into the correct element → Delete the orphan → Save. Save regenerates beats/moments; element IDs may gap (e.g. el-015, el-017 on page 3).
+**Delete workflow:** paste misclassified text into the correct element → Delete the orphan → Save. Or use **Element type** dropdown to convert in place (e.g. action → dialogue). **Add** (extracted pane) inserts a new empty element after the selected card, or at end of page if none selected.
+
+**Convert workflow (QA-006):** select element → **Element type** dropdown → confirm → fill character/segments → Save. Text is preserved when converting action ↔ dialogue ↔ scene_heading ↔ transition.
 
 ---
 
@@ -164,7 +166,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 | ID | Status | Ticket |
 |----|--------|--------|
 | **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
-| **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
+| **QA-006** | ✅ Done | **Change / add element type** — type dropdown in editor (action, dialogue, scene_heading, transition); **Add** menu in extracted pane inserts after selection or end of page. Save regenerates beats/moments. |
 | **EXTRACT-001** | ✅ Done | **Dialogue wrap** — same-row left+right speech merge; `endsDialogueForAction` for action column. `pnpm extract` auto-backs up prior JSON. |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
 | **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |

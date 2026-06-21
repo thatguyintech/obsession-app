@@ -1,19 +1,58 @@
 import type { ScreenplayElement } from "../types";
 import { ElementView } from "../components/ElementView";
+import {
+  QA_EDITABLE_ELEMENT_TYPES,
+  type QaEditableElementType,
+} from "../../lib/qa-element-transform";
 
 interface ExtractedPaneProps {
   pdfPage: number;
   elements: ScreenplayElement[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  onAddElement: (type: QaEditableElementType) => void;
 }
 
-export function ExtractedPane({ pdfPage, elements, selectedId, onSelect }: ExtractedPaneProps) {
+function typeLabel(type: string): string {
+  return type.replaceAll("_", " ");
+}
+
+export function ExtractedPane({
+  pdfPage,
+  elements,
+  selectedId,
+  onSelect,
+  onAddElement,
+}: ExtractedPaneProps) {
   const pageElements = elements.filter((element) => element.pdfPage === pdfPage);
 
   return (
     <div className="qa-pane flex min-h-0 flex-col">
-      <h2 className="qa-pane-title">Extracted ({pageElements.length} elements)</h2>
+      <div className="mb-2 flex flex-wrap items-center gap-2">
+        <h2 className="qa-pane-title mb-0 flex-1">
+          Extracted ({pageElements.length} elements)
+        </h2>
+        <label className="flex items-center gap-1.5 text-xs text-stone-600">
+          Add
+          <select
+            defaultValue=""
+            onChange={(event) => {
+              const value = event.target.value;
+              if (!value) return;
+              onAddElement(value as QaEditableElementType);
+              event.target.value = "";
+            }}
+            className="rounded border border-stone-300 px-2 py-1 font-label text-xs text-stone-800"
+          >
+            <option value="">…</option>
+            {QA_EDITABLE_ELEMENT_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {typeLabel(type)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <div className="min-h-0 flex-1 space-y-3 overflow-auto rounded-lg border border-stone-200 bg-white p-4">
         {pageElements.length === 0 ? (
           <p className="text-sm text-stone-500">No elements tagged for this page.</p>

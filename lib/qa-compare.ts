@@ -30,6 +30,7 @@ export interface QaElementLike {
   id: string;
   type: string;
   pdfPage?: number;
+  printedPage?: number;
   text?: string;
   title?: string;
   author?: string;

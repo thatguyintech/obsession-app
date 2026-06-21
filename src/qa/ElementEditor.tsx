@@ -1,6 +1,13 @@
 import type { DialogueSegment, ScreenplayElement } from "../types";
 import type { DialogueTrack } from "../types";
 import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
+import {
+  convertElementType,
+  extractElementPlainText,
+  isQaEditableElementType,
+  QA_EDITABLE_ELEMENT_TYPES,
+  type QaEditableElementType,
+} from "../../lib/qa-element-transform";
 
 interface ElementEditorProps {
   element: ScreenplayElement;
@@ -180,6 +187,71 @@ function updateDualTrack(
   return { ...element, [side]: tracks };
 }
 
+function typeLabel(type: string): string {
+  return type.replaceAll("_", " ");
+}
+
+function TypeSelector({
+  element,
+  onTypeChange,
+}: {
+  element: ScreenplayElement;
+  onTypeChange: (type: QaEditableElementType) => void;
+}) {
+  const editable = isQaEditableElementType(element.type);
+  const plainText = extractElementPlainText(element);
+
+  function handleChange(nextType: QaEditableElementType) {
+    if (nextType === element.type) {
+      return;
+    }
+
+    if (!editable) {
+      window.alert(
+        `${typeLabel(element.type)} elements cannot change type here. Add a new element instead.`,
+      );
+      return;
+    }
+
+    if (
+      plainText &&
+      !window.confirm(
+        `Change ${element.id} from ${typeLabel(element.type)} to ${typeLabel(nextType)}?\n\nText is preserved where possible.`,
+      )
+    ) {
+      return;
+    }
+
+    onTypeChange(nextType);
+  }
+
+  return (
+    <div className="mb-3 max-w-xs">
+      <FieldLabel>Element type</FieldLabel>
+      {editable ? (
+        <select
+          value={element.type}
+          onChange={(event) => handleChange(event.target.value as QaEditableElementType)}
+          className="w-full rounded border border-stone-300 px-2 py-1.5 font-label text-sm text-stone-900"
+        >
+          {QA_EDITABLE_ELEMENT_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {typeLabel(type)}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <p className="rounded border border-stone-200 bg-stone-50 px-2 py-1.5 text-sm text-stone-700">
+          {typeLabel(element.type)}
+          <span className="mt-1 block text-xs text-stone-500">
+            Fixed type — use Add element for new blocks on this page.
+          </span>
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function ElementEditor({
   element,
   pairedTransition,
@@ -189,12 +261,16 @@ export function ElementEditor({
   onDelete,
   onClose,
 }: ElementEditorProps) {
+  function handleTypeChange(nextType: QaEditableElementType) {
+    onChange(convertElementType(element, nextType) as ScreenplayElement);
+  }
+
   return (
     <div className="border-t border-stone-200 bg-white px-4 py-3">
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <h3 className="text-sm font-semibold text-stone-900">
           Edit {element.id}{" "}
-          <span className="font-normal text-stone-500">({element.type.replace("_", " ")})</span>
+          <span className="font-normal text-stone-500">({typeLabel(element.type)})</span>
         </h3>
         <div className="ml-auto flex gap-2">
           <button
@@ -212,6 +288,8 @@ export function ElementEditor({
           </button>
         </div>
       </div>
+
+      <TypeSelector element={element} onTypeChange={handleTypeChange} />
 
       <div className="max-h-72 space-y-3 overflow-y-auto pr-1">
         {element.type === "title_card" ? (

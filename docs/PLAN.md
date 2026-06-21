@@ -377,7 +377,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Why |
 |---|-----|-----|
-| 4 | **QA-006** | Change element type without copy/delete gymnastics |
+| 4 | **QA-006** | ✅ Done — change/add element type in QA editor |
 | 5 | **READ-003** | Scene headings should lead visually (prod feedback); mostly CSS |
 | 6 | **Phase D** | Review workflow — mark pages done, CLI hints to `/qa?page=N` |
 
@@ -399,7 +399,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 ### Suggested sequence
 
 ```
-READ-004 display → QA-006 → Phase D → EXTRACT-001 → READ-001
+READ-004 display → Phase D → READ-001
 ```
 
 **Dependencies:** EXTRACT-001 waits on stable hand-fixes + backup strategy. READ-004 is independent.
@@ -414,7 +414,7 @@ READ-004 display → QA-006 → Phase D → EXTRACT-001 → READ-001
 | **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
 | **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
 | **READ-004** | Reader + QA editor / action styling | **Paragraph breaks in action blocks** — PDF often has two separate action paragraphs (blank line between). JSON stores one `action.text` string; reader and QA preview collapse to a single block. **Goal:** treat `\n\n` (double newline) as a paragraph break in display — mirror screenplay spacing. Example: `el-003` on page 2 — house/exterior description, then a gap, then Bear fixating on the romance film. QA editor already allows typing two newlines; need render path (reader `ElementView`, QA extracted pane) to split and style as separate `<p>` blocks. Open questions: also support in extract? Split into two elements vs inline `\n\n` in one? Dialogue/action only or scene headings too? |
-| **QA-006** | QA tool | **Change element type** — convert action ↔ dialogue ↔ scene_heading in the editor without merge/delete. See [QA-TOOL.md](./QA-TOOL.md). |
+| **QA-006** | QA tool | ✅ Done — **Change / add element type** — see [QA-TOOL.md](./QA-TOOL.md). |
 | **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Shipped v7 tooling / v11 data; page 3 el-015/el-017 fixed. Full spec below. |
 

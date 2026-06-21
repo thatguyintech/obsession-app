@@ -12,6 +12,12 @@ import {
 import { buildSuspectedGaps, filterActiveGaps, type QaSuspectedGap } from "../../lib/qa-gaps";
 import { mapWordsToLines, rectsForMissingWords } from "../../lib/qa-missing-words";
 import { resolveElementHighlight } from "../../lib/qa-provenance";
+import {
+  createEmptyElement,
+  findElementInsertIndex,
+  nextElementId,
+  type QaEditableElementType,
+} from "../../lib/qa-element-transform";
 import type { ScreenplayData, ScreenplayElement } from "../types";
 import { dismissGap, getDismissedGapIds } from "./qa-dismissals";
 import { ElementEditor } from "./ElementEditor";
@@ -60,13 +66,6 @@ function getPairedTransition(
     return previous;
   }
   return null;
-}
-
-function maxElementNumber(elements: ScreenplayElement[]): number {
-  return elements.reduce((max, element) => {
-    const match = /^el-(\d+)$/.exec(element.id);
-    return match ? Math.max(max, Number(match[1])) : max;
-  }, 0);
 }
 
 export function QaPage() {
@@ -261,7 +260,7 @@ export function QaPage() {
         return { ...current, elements };
       }
 
-      const newId = `el-${String(maxElementNumber(elements) + 1).padStart(3, "0")}`;
+      const newId = nextElementId(elements);
       elements.splice(index, 0, {
         id: newId,
         type: "transition",
@@ -308,6 +307,26 @@ export function QaPage() {
       };
     });
     setSelectedId(null);
+    setSaveMessage(null);
+  }
+
+  function addElement(type: QaEditableElementType) {
+    if (!data) return;
+
+    const newId = nextElementId(data.elements);
+    const printedPage = data.elements.find((element) => element.pdfPage === page)?.printedPage;
+
+    setData((current) => {
+      if (!current) return current;
+
+      const newElement = createEmptyElement(type, newId, page, printedPage) as ScreenplayElement;
+      const insertIndex = findElementInsertIndex(current.elements, page, selectedId);
+      const elements = [...current.elements];
+      elements.splice(insertIndex, 0, newElement);
+
+      return { ...current, elements };
+    });
+    setSelectedId(newId);
     setSaveMessage(null);
   }
 
@@ -546,6 +565,7 @@ export function QaPage() {
           elements={data.elements}
           selectedId={selectedId}
           onSelect={setSelectedId}
+          onAddElement={addElement}
         />
       </div>
 
