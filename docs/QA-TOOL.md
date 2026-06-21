@@ -168,6 +168,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 | **EXTRACT-001** | ✅ Done | **Dialogue wrap** — same-row left+right speech merge; `endsDialogueForAction` for action column. `pnpm extract` auto-backs up prior JSON. |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
 | **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |
+| **READ-001** | Todo | **Inline emphasis** — `*italic*`, `_underline_`, `**bold**`; render in reader + QA; strip delimiters in QA compare. See [PLAN.md — READ-001](./PLAN.md#backlog-ticket-reference). |
 
 ---
 
