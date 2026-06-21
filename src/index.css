@@ -194,12 +194,50 @@ body {
     color: rgb(28 25 23 / 0.72);
   }
 
+  .dual-dialogue {
+    @apply mb-7;
+  }
+
+  .dual-dialogue-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 3vw, 1.5rem);
+    align-items: start;
+  }
+
+  .dual-dialogue-column {
+    @apply min-w-0 space-y-4;
+  }
+
+  /* Widen the reading column when simultaneous dialogue needs horizontal space */
+  .reader-column:has(.dual-dialogue) {
+    max-width: min(100%, 42rem);
+  }
+
+  @media (min-width: 640px) {
+    .reader-column:has(.dual-dialogue) {
+      max-width: min(100%, 48rem);
+    }
+  }
+
   .dual-column-block {
-    @apply mb-7 min-w-0 border-l-2 py-0 pl-3;
+    @apply min-w-0 border-l-2 py-0 pl-2.5 sm:pl-3;
+  }
+
+  .dual-column-block .text-character {
+    font-size: clamp(0.6875rem, 2.8vw, 0.8125rem);
+    letter-spacing: 0.1em;
+  }
+
+  .dual-column-block .text-parenthetical {
+    font-size: clamp(0.75rem, 2.6vw, 0.8125rem);
+    margin-top: 0.0625rem;
+    margin-bottom: 0.25rem;
   }
 
   .dual-column-block .text-dialogue {
-    font-size: clamp(1rem, 3.8vw, 1.125rem);
+    font-size: clamp(0.875rem, 3.4vw, 1.0625rem);
+    line-height: 1.55;
   }
 
   .text-toc-title {

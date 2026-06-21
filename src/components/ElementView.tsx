@@ -35,14 +35,15 @@ function SegmentList({ segments }: { segments: DialogueSegment[] }) {
 }
 
 function TrackBlock({ track }: { track: DialogueTrack }) {
-  const color = getCharacterColor(track.character);
+  const character = track.character.trim();
+  const color = getCharacterColor(character);
   const blockStyle: CSSProperties = { borderLeftColor: color };
   const segments = ensureTrackSegments(track);
 
   return (
     <div className="dual-column-block min-w-0 text-left" style={blockStyle}>
       <p className="text-character break-words" style={{ color }}>
-        {track.character}
+        {character}
       </p>
       <SegmentList segments={segments} />
     </div>
@@ -174,22 +175,24 @@ export function ElementView({
   if (element.type === "dual_dialogue") {
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
-        <div className="mb-7 grid grid-cols-1 gap-6 min-[28rem]:grid-cols-2 md:gap-8">
-          <div className="min-w-0 space-y-6">
-            {element.left?.map((track) => (
-              <TrackBlock
-                key={`left-${track.character}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
-                track={track}
-              />
-            ))}
-          </div>
-          <div className="min-w-0 space-y-6">
-            {element.right?.map((track) => (
-              <TrackBlock
-                key={`right-${track.character}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
-                track={track}
-              />
-            ))}
+        <div className="dual-dialogue">
+          <div className="dual-dialogue-grid">
+            <div className="dual-dialogue-column">
+              {element.left?.map((track) => (
+                <TrackBlock
+                  key={`left-${track.character.trim()}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
+                  track={track}
+                />
+              ))}
+            </div>
+            <div className="dual-dialogue-column">
+              {element.right?.map((track) => (
+                <TrackBlock
+                  key={`right-${track.character.trim()}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
+                  track={track}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </ElementWrapper>
