@@ -146,7 +146,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 - [x] Dialogue segments schema (SCHEMA-001) — types, migration, reader, QA segment editor
 - [x] Transition element type (READ-002) — classifier, migrate script, reader, QA scene-heading field
 - [ ] Change element type (QA-006) — Tier 2
-- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — Tier 3; segments migration committed
+- [x] Classifier: dialogue wrap at left margin (EXTRACT-001) — wrap-row merge + action-column exit
 
 See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for full stack.
 
@@ -160,7 +160,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 |----|--------|--------|
 | **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
 | **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
-| **EXTRACT-001** | Todo | **Dialogue wrap at left margin** — `parseDialogue` breaks when wrapped line hits `x0 < 120`, tail misclassified as action. Fix classifier for future extracts; do not re-run full extract until QA hand-fixes are merged or backed up |
+| **EXTRACT-001** | ✅ Done | **Dialogue wrap** — same-row left+right speech merge; `endsDialogueForAction` for action column. `pnpm extract` auto-backs up prior JSON. |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
 | **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |
 
@@ -203,7 +203,7 @@ public/data/obsession.json → reader app (prod)
 
 **Source of truth for fixes:** `data/obsession.json` only. Never edit `obsession.raw.json` by hand (regenerate via extract).
 
-**Do not** re-run full `pnpm extract` after manual QA edits unless you have a merge strategy — extract would overwrite hand fixes.
+**Re-extract:** `pnpm extract` overwrites structured JSON but saves `data/obsession.v{N}.backup.json` first and bumps `meta.version`. After classifier fixes, prefer re-extract over hand-merging; re-QA WARN pages afterward.
 
 ---
 

@@ -4,4 +4,5 @@ dist
 *.local
 .DS_Store
 obsession-2026.pdf
+data/obsession.v*.backup.json
 pnpm-debug.log*

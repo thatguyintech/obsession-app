@@ -385,7 +385,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Gate |
 |---|-----|------|
-| 7 | **EXTRACT-001** | Pair with SCHEMA-001 classifier output. **Gate:** segments migration + page 3 committed ✅; still need backup strategy before full re-extract — no blind `pnpm extract` |
+| 7 | **EXTRACT-001** | ✅ Done — dialogue wrap-row fix + action-column exit; fresh `pnpm extract` backs up prior JSON and bumps version |
 | 8 | **READ-002** | Transitions (`SMASH CUT TO:`) — fidelity, not blocking QA |
 
 ### Tier 4 — Backlog / research

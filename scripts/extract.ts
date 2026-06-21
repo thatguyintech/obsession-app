@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, copyFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
@@ -13,6 +13,7 @@ import { applyCleanup } from "./lib/cleanup.js";
 import { generateMoments } from "./lib/moments.js";
 import { groupTextItemsIntoLines } from "./lib/pdf-lines.js";
 import type { RawPage, ScreenplayElementDraft } from "./lib/types.js";
+import { normalizeDialogueElement } from "../lib/dialogue-segments.js";
 
 const SCHEMA_VERSION = 2;
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -87,7 +88,7 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
     }
   }
 
-  const cleanedElements = applyCleanup(elements);
+  const cleanedElements = applyCleanup(elements).map((element) => normalizeDialogueElement(element));
 
   const beats = cleanedElements.map((element, index) => ({
     id: `beat-${String(index + 1).padStart(3, "0")}`,
@@ -120,8 +121,29 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
 
 const { payload, rawPages } = await extract();
 
+function readPreviousVersion(): number {
+  if (!existsSync(OUT_PATH)) {
+    return SCHEMA_VERSION;
+  }
+  try {
+    const previous = JSON.parse(readFileSync(OUT_PATH, "utf8")) as { meta?: { version?: number } };
+    return previous.meta?.version ?? SCHEMA_VERSION;
+  } catch {
+    return SCHEMA_VERSION;
+  }
+}
+
+const nextVersion = readPreviousVersion() + 1;
+payload.meta.version = nextVersion;
+
 mkdirSync(DATA_DIR, { recursive: true });
 mkdirSync(PUBLIC_DATA_DIR, { recursive: true });
+
+if (existsSync(OUT_PATH)) {
+  const backupPath = join(DATA_DIR, `obsession.v${readPreviousVersion()}.backup.json`);
+  copyFileSync(OUT_PATH, backupPath);
+  console.log(`Backed up previous JSON → ${backupPath}`);
+}
 
 writeFileSync(RAW_PATH, JSON.stringify({ pages: rawPages }, null, 2));
 writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2));
@@ -131,5 +153,8 @@ console.log(`Wrote ${RAW_PATH}`);
 console.log(`Wrote ${OUT_PATH}`);
 console.log(`Wrote ${join(PUBLIC_DATA_DIR, "obsession.json")}`);
 console.log(
-  `${payload.meta.elementCount} elements, ${payload.meta.momentCount} moments, ${payload.meta.pageCount} pdf pages`,
+  `${payload.meta.elementCount} elements, ${payload.meta.momentCount} moments, ${payload.meta.pageCount} pdf pages, version ${payload.meta.version}`,
 );
+
+const transitionCount = payload.elements.filter((element) => element.type === "transition").length;
+console.log(`  transitions: ${transitionCount}`);

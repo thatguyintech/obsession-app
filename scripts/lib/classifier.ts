@@ -157,6 +157,59 @@ function parseDualDialogue(
   ];
 }
 
+function endsDialogueForAction(line: Line): boolean {
+  if (isParenthetical(line.text)) {
+    return false;
+  }
+  if (isSceneHeading(line.text) || isCharacterCue(line.text, line.x0)) {
+    return true;
+  }
+  // Dialogue speech sits around x0 ~180+; action prose around x0 ~107.
+  if (line.x0 >= 150) {
+    return false;
+  }
+  return isInlineActionFragment(line);
+}
+
+function joinRowSpeech(row: Line[], pageWidth: number): string {
+  return row
+    .filter((line) => lineColumn(line, pageWidth) !== "center")
+    .sort((a, b) => a.x0 - b.x0)
+    .map((line) => line.text)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** Left+right on one row is often one dialogue line wrapped, not dual dialogue. */
+function isDialogueWrapRow(row: Line[], pageWidth: number): boolean {
+  const left = row.filter((line) => lineColumn(line, pageWidth) === "left");
+  const right = row.filter((line) => lineColumn(line, pageWidth) === "right");
+  if (left.length === 0 || right.length === 0) {
+    return false;
+  }
+
+  if (left.some((line) => isCharacterCue(line.text, line.x0))) {
+    return false;
+  }
+  if (right.some((line) => isCharacterCue(line.text, line.x0))) {
+    return false;
+  }
+
+  for (const line of row) {
+    if (isSceneHeading(line.text) || endsDialogueForAction(line)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function consumeRowIndex(lines: Line[], row: Line[], index: number): number {
+  const consumed = Math.max(...row.map((other) => lines.indexOf(other))) + 1;
+  return consumed <= index ? index + 1 : consumed;
+}
+
 function parseDialogue(
   lines: Line[],
   start: number,
@@ -180,15 +233,20 @@ function parseDialogue(
     }
 
     const row = linesAtY(lines, index);
-    if (
-      row.some((other) => lineColumn(other, pageWidth) === "left") &&
-      row.some((other) => lineColumn(other, pageWidth) === "right")
-    ) {
+    const hasLeft = row.some((other) => lineColumn(other, pageWidth) === "left");
+    const hasRight = row.some((other) => lineColumn(other, pageWidth) === "right");
+
+    if (hasLeft && hasRight) {
+      if (isDialogueWrapRow(row, pageWidth)) {
+        track.segments.push({ kind: "speech", text: joinRowSpeech(row, pageWidth) });
+        index = consumeRowIndex(lines, row, index);
+        continue;
+      }
       break;
     }
     if (isSceneHeading(line.text)) break;
     if (isCharacterCue(line.text, line.x0)) break;
-    if (line.x0 < 120 && !isParenthetical(line.text)) break;
+    if (endsDialogueForAction(line)) break;
 
     if (isParenthetical(line.text)) {
       track.segments.push({ kind: "parenthetical", text: line.text.slice(1, -1) });
