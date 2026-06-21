@@ -8,6 +8,7 @@ import {
 export const QA_OK_THRESHOLD = 0.95;
 export const QA_WARN_THRESHOLD = 0.8;
 export const PAGE_HEADER_RE = /^March 9th\b/i;
+export const PAGE_NUMBER_RE = /^\d+\.?$/;
 
 export type QaPageStatus = "SKIP" | "OK" | "WARN" | "FAIL";
 
@@ -113,10 +114,21 @@ export function extractElementText(element: QaElementLike): string {
   }
 }
 
+export function isRawContentLine(text: string): boolean {
+  const trimmed = text.trim();
+  if (!trimmed || PAGE_HEADER_RE.test(trimmed)) {
+    return false;
+  }
+  if (PAGE_NUMBER_RE.test(trimmed)) {
+    return false;
+  }
+  return true;
+}
+
 export function collectRawPageText(page: QaRawPage): string {
   const lines = page.lines
     .map((line) => line.text.trim())
-    .filter((text) => text.length > 0 && !PAGE_HEADER_RE.test(text));
+    .filter((text) => isRawContentLine(text));
 
   return lines.join(" ");
 }

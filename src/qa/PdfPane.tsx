@@ -12,16 +12,19 @@ GlobalWorkerOptions.workerSrc = pdfWorker;
 interface PdfPaneProps {
   pdfPage: number;
   highlightRects?: QaLineBBox[];
+  missingHighlightRects?: QaLineBBox[];
 }
 
 function PdfHighlightOverlay({
   rects,
   canvasWidth,
   canvasHeight,
+  variant,
 }: {
   rects: QaLineBBox[];
   canvasWidth: number;
   canvasHeight: number;
+  variant: "element" | "missing";
 }) {
   const pdfScale = QA_PDF_RENDER_SCALE / QA_PDF_EXTRACT_SCALE;
 
@@ -29,8 +32,8 @@ function PdfHighlightOverlay({
     <>
       {rects.map((rect, index) => (
         <div
-          key={index}
-          className="qa-pdf-highlight"
+          key={`${variant}-${index}`}
+          className={variant === "missing" ? "qa-pdf-highlight-missing" : "qa-pdf-highlight"}
           style={{
             left: `${((rect.x0 * pdfScale) / canvasWidth) * 100}%`,
             top: `${((rect.y0 * pdfScale) / canvasHeight) * 100}%`,
@@ -43,7 +46,11 @@ function PdfHighlightOverlay({
   );
 }
 
-export function PdfPane({ pdfPage, highlightRects = [] }: PdfPaneProps) {
+export function PdfPane({
+  pdfPage,
+  highlightRects = [],
+  missingHighlightRects = [],
+}: PdfPaneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pdfRef = useRef<Awaited<ReturnType<typeof getDocument>["promise"]> | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -113,13 +120,24 @@ export function PdfPane({ pdfPage, highlightRects = [] }: PdfPaneProps) {
             ref={canvasRef}
             className={`block max-w-full transition-opacity ${loading ? "opacity-20" : "opacity-100"}`}
           />
-          {!loading && !error && highlightRects.length > 0 && canvasSize.width > 0 ? (
+          {!loading && !error && canvasSize.width > 0 ? (
             <div className="pointer-events-none absolute inset-0">
-              <PdfHighlightOverlay
-                rects={highlightRects}
-                canvasWidth={canvasSize.width}
-                canvasHeight={canvasSize.height}
-              />
+              {missingHighlightRects.length > 0 ? (
+                <PdfHighlightOverlay
+                  rects={missingHighlightRects}
+                  canvasWidth={canvasSize.width}
+                  canvasHeight={canvasSize.height}
+                  variant="missing"
+                />
+              ) : null}
+              {highlightRects.length > 0 ? (
+                <PdfHighlightOverlay
+                  rects={highlightRects}
+                  canvasWidth={canvasSize.width}
+                  canvasHeight={canvasSize.height}
+                  variant="element"
+                />
+              ) : null}
             </div>
           ) : null}
         </div>

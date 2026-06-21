@@ -1,6 +1,6 @@
 import {
   extractElementText,
-  PAGE_HEADER_RE,
+  isRawContentLine,
   tokenize,
   type QaElementLike,
   type QaRawLine,
@@ -59,8 +59,7 @@ function elementCoverageScore(joinedRaw: string, elementText: string): number {
 }
 
 function isContentLine(line: QaRawLine): boolean {
-  const trimmed = line.text.trim();
-  return trimmed.length > 0 && !PAGE_HEADER_RE.test(trimmed);
+  return isRawContentLine(line.text);
 }
 
 function lineBBox(line: QaRawLineWithBBox): QaLineBBox | null {
@@ -130,7 +129,7 @@ function lineMatchesCharacter(lineText: string, character: string): boolean {
 }
 
 /** Stop extending a highlight window at the next speaker, slug, or action line. */
-function isHighlightBoundary(line: QaRawLine, hasContent: boolean): boolean {
+function isHighlightBoundary(line: QaRawLine, hasContent: boolean, element: QaElementLike): boolean {
   if (!hasContent) {
     return false;
   }
@@ -140,6 +139,11 @@ function isHighlightBoundary(line: QaRawLine, hasContent: boolean): boolean {
 
   if (isSceneHeadingText(text) || isCharacterCueText(text, x0)) {
     return true;
+  }
+
+  // Action blocks span multiple left-margin lines — only break on slug/cue for action elements.
+  if (element.type === "action" || element.type === "scene_heading") {
+    return false;
   }
 
   if (x0 < 150 && !isParentheticalText(text)) {
@@ -197,7 +201,7 @@ function findFuzzyLineIndices(
     for (let end = start; end < candidates.length; end += 1) {
       const { line, index } = candidates[end]!;
 
-      if (isHighlightBoundary(line, indices.length > 0)) {
+      if (isHighlightBoundary(line, indices.length > 0, element)) {
         break;
       }
 

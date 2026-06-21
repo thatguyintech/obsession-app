@@ -9,6 +9,7 @@ import {
   type QaRawPage,
 } from "../../lib/qa-compare";
 import { resolveElementHighlight } from "../../lib/qa-provenance";
+import { mapMissingWordsToLines, rectsForMissingWords } from "../../lib/qa-missing-words";
 import type { ScreenplayData, ScreenplayElement } from "../types";
 import { ElementEditor } from "./ElementEditor";
 import { ExtractedPane } from "./ExtractedPane";
@@ -73,6 +74,7 @@ export function QaPage() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPageState] = useState(() => clampPage(search.page ?? 1, 99));
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [focusMissingWord, setFocusMissingWord] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
@@ -137,6 +139,32 @@ export function QaPage() {
     const pageElements = data.elements.filter((element) => element.pdfPage === page);
     return resolveElementHighlight(selectedElement, currentRawPage, pageElements);
   }, [selectedElement, currentRawPage, data, page]);
+
+  const missingHits = useMemo(() => {
+    if (!currentRawPage || !currentReport) {
+      return [];
+    }
+    return mapMissingWordsToLines(currentRawPage, currentReport.missingWords);
+  }, [currentRawPage, currentReport]);
+
+  const uniqueMissingWords = useMemo(
+    () => [...new Set(currentReport?.missingWords ?? [])],
+    [currentReport],
+  );
+
+  const missingHighlightRects = useMemo(() => {
+    if (missingHits.length === 0) {
+      return [];
+    }
+    if (focusMissingWord) {
+      return missingHits.find((hit) => hit.word === focusMissingWord)?.rects ?? [];
+    }
+    return rectsForMissingWords(missingHits);
+  }, [missingHits, focusMissingWord]);
+
+  useEffect(() => {
+    setFocusMissingWord(uniqueMissingWords[0] ?? null);
+  }, [page, uniqueMissingWords.join("|")]);
 
   function setPage(nextPage: number) {
     setPageState(clampPage(nextPage, maxPage));
@@ -399,13 +427,48 @@ export function QaPage() {
         </div>
       ) : null}
 
+      {currentReport && uniqueMissingWords.length > 0 ? (
+        <div className="shrink-0 border-b border-red-200 bg-red-50 px-4 py-2 text-sm text-red-950">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">
+              Word hunt — {uniqueMissingWords.length} missing on this page
+            </span>
+            <span className="text-red-800">
+              ({currentReport.matchedWords}/{currentReport.totalRawWords} words matched)
+            </span>
+            <button
+              type="button"
+              className={`reader-chrome-button text-xs ${focusMissingWord === null ? "font-semibold" : ""}`}
+              onClick={() => setFocusMissingWord(null)}
+            >
+              Show all
+            </button>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {uniqueMissingWords.map((word) => (
+              <button
+                key={word}
+                type="button"
+                className={`rounded border px-2 py-0.5 font-label text-xs ${
+                  focusMissingWord === word
+                    ? "border-red-500 bg-red-200 font-semibold text-red-950"
+                    : "border-red-300 bg-white text-red-900 hover:bg-red-100"
+                }`}
+                onClick={() => setFocusMissingWord(word)}
+              >
+                {word}
+              </button>
+            ))}
+          </div>
+          <p className="mt-1 text-xs text-red-800">
+            Click a word to locate it on the PDF (red highlight). Fix the extracted JSON, Save, and
+            watch the score climb.
+          </p>
+        </div>
+      ) : null}
+
       {currentReport && (currentReport.status === "WARN" || currentReport.status === "FAIL") ? (
         <div className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-950">
-          {currentReport.missingWords.length > 0 ? (
-            <p>
-              <span className="font-semibold">Missing:</span> {formatWordList(currentReport.missingWords)}
-            </p>
-          ) : null}
           {currentReport.addedWords.length > 0 ? (
             <p>
               <span className="font-semibold">Extra:</span> {formatWordList(currentReport.addedWords)}
@@ -416,7 +479,11 @@ export function QaPage() {
       ) : null}
 
       <div className="qa-grid min-h-0 flex-1 gap-3 p-3">
-        <PdfPane pdfPage={page} highlightRects={elementHighlight.rects} />
+        <PdfPane
+          pdfPage={page}
+          highlightRects={elementHighlight.rects}
+          missingHighlightRects={missingHighlightRects}
+        />
         <ExtractedPane
           pdfPage={page}
           elements={data.elements}

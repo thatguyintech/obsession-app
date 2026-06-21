@@ -1,4 +1,4 @@
-import { PAGE_HEADER_RE, type QaElementLike, type QaRawPage } from "./qa-compare.js";
+import { isRawContentLine, type QaElementLike, type QaRawPage } from "./qa-compare.js";
 import {
   mapElementToRawLines,
   type MapElementOptions,
@@ -13,8 +13,7 @@ export interface RawLineProvenance {
 export type ProvenanceElement = QaElementLike & RawLineProvenance;
 
 function isContentLine(text: string): boolean {
-  const trimmed = text.trim();
-  return trimmed.length > 0 && !PAGE_HEADER_RE.test(trimmed);
+  return isRawContentLine(text);
 }
 
 function contentLineIndices(page: QaRawPage): number[] {

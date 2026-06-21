@@ -206,6 +206,12 @@ body {
     background: rgb(251 191 36 / 0.18);
   }
 
+  .qa-pdf-highlight-missing {
+    @apply absolute rounded-sm;
+    background: rgb(239 68 68 / 0.28);
+    outline: 1px solid rgb(239 68 68 / 0.45);
+  }
+
   .qa-grid {
     @apply grid grid-cols-1;
   }
