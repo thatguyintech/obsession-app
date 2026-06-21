@@ -1,8 +1,29 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { saveScreenplayFromQa, type QaSavePayload } from "./scripts/qa-save.ts";
+
+function socialMetaTags(): Plugin {
+  return {
+    name: "social-meta-tags",
+    transformIndexHtml(html) {
+      const siteUrl = (process.env.VITE_SITE_URL ?? process.env.CF_PAGES_URL ?? "").replace(
+        /\/$/,
+        "",
+      );
+      const imagePath = "/obsession-thumbnail.png";
+      const ogImage = siteUrl ? `${siteUrl}${imagePath}` : imagePath;
+      const siteUrlMeta = siteUrl
+        ? `    <meta property="og:url" content="${siteUrl}" />\n    <link rel="canonical" href="${siteUrl}" />\n`
+        : "";
+
+      return html
+        .replaceAll("%OG_IMAGE%", ogImage)
+        .replace("<!--SITE_URL_META-->", siteUrlMeta);
+    },
+  };
+}
 
 function readRequestBody(req: { on: Function }): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -76,7 +97,7 @@ function qaDevAssets() {
 }
 
 export default defineConfig({
-  plugins: [react(), qaDevAssets()],
+  plugins: [react(), socialMetaTags(), qaDevAssets()],
   server: {
     fs: {
       allow: ["."],
