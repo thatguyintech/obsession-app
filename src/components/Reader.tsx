@@ -218,7 +218,7 @@ export function Reader({ data }: ReaderProps) {
                 <HomeIcon />
               </button>
               <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
-                Search ( / )
+                Search (/)
               </button>
               <button type="button" className="reader-chrome-button" onClick={() => setTocOpen(true)}>
                 Scenes (T)
