@@ -112,7 +112,7 @@ export function resolveElementHighlight(
 
   const options: MapElementOptions = {
     minLineIndex,
-    useStoredProvenance: true,
+    useStoredProvenance: false,
   };
 
   return mapElementToRawLines(element, page, options);

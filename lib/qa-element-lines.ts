@@ -98,10 +98,168 @@ function indicesFromProvenance(
   return indices.length > 0 ? indices : null;
 }
 
+function isSceneHeadingText(text: string): boolean {
+  return text.startsWith("INT.") || text.startsWith("EXT.");
+}
+
+function isParentheticalText(text: string): boolean {
+  const trimmed = text.trim();
+  return trimmed.startsWith("(") && trimmed.endsWith(")");
+}
+
+function isCharacterCueText(text: string, x0 = 250): boolean {
+  if (text.length > 55 || isSceneHeadingText(text) || x0 < 150) {
+    return false;
+  }
+
+  const letters = [...text].filter((char) => /[a-z]/i.test(char));
+  if (letters.length === 0) {
+    return false;
+  }
+
+  const capsRatio = letters.filter((char) => char === char.toUpperCase()).length / letters.length;
+  return capsRatio >= 0.75;
+}
+
+function normalizeCharacterName(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function lineMatchesCharacter(lineText: string, character: string): boolean {
+  return normalizeCharacterName(lineText) === normalizeCharacterName(character);
+}
+
+/** Stop extending a highlight window at the next speaker, slug, or action line. */
+function isHighlightBoundary(line: QaRawLine, hasContent: boolean): boolean {
+  if (!hasContent) {
+    return false;
+  }
+
+  const text = line.text.trim();
+  const x0 = line.x0 ?? 0;
+
+  if (isSceneHeadingText(text) || isCharacterCueText(text, x0)) {
+    return true;
+  }
+
+  if (x0 < 150 && !isParentheticalText(text)) {
+    return true;
+  }
+
+  return false;
+}
+
+function prependCharacterCue(
+  page: QaRawPage,
+  indices: number[],
+  character: string,
+): number[] {
+  if (indices.length === 0) {
+    return indices;
+  }
+
+  const first = indices[0]!;
+  const previous = page.lines[first - 1];
+  if (!previous || !isContentLine(previous)) {
+    return indices;
+  }
+
+  if (lineMatchesCharacter(previous.text, character)) {
+    return [first - 1, ...indices];
+  }
+
+  return indices;
+}
+
+function findFuzzyLineIndices(
+  element: QaElementLike,
+  page: QaRawPage,
+  minLineIndex: number,
+): number[] {
+  const elementText = extractElementText(element);
+  if (!elementText.trim()) {
+    return [];
+  }
+
+  const candidates = page.lines
+    .map((line, index) => ({ line, index }))
+    .filter(({ line, index }) => isContentLine(line) && index >= minLineIndex);
+
+  let bestIndices: number[] = [];
+  let bestScore = 0;
+  let bestLength = Infinity;
+
+  for (let start = 0; start < candidates.length; start += 1) {
+    let joined = "";
+    const indices: number[] = [];
+    let previousScore = 0;
+
+    for (let end = start; end < candidates.length; end += 1) {
+      const { line, index } = candidates[end]!;
+
+      if (isHighlightBoundary(line, indices.length > 0)) {
+        break;
+      }
+
+      joined = joined ? `${joined} ${line.text}` : line.text;
+      indices.push(index);
+
+      const score = elementCoverageScore(joined, elementText);
+
+      if (
+        score >= MATCH_THRESHOLD &&
+        (score > bestScore || (score === bestScore && indices.length < bestLength))
+      ) {
+        bestScore = score;
+        bestIndices = [...indices];
+        bestLength = indices.length;
+      }
+
+      if (score >= 0.99) {
+        break;
+      }
+
+      // Duplicate words in later cues (e.g. "dropped") can plateau score — stop extending.
+      if (indices.length > 1 && score <= previousScore) {
+        break;
+      }
+
+      previousScore = score;
+    }
+  }
+
+  if (bestScore < MATCH_THRESHOLD) {
+    return [];
+  }
+
+  if (element.type === "dialogue" && element.character) {
+    return prependCharacterCue(page, bestIndices, element.character);
+  }
+
+  return bestIndices;
+}
+
 function rectsForIndices(page: QaRawPage, indices: number[]): QaLineBBox[] {
   return indices
     .map((index) => lineBBox(page.lines[index] as QaRawLineWithBBox))
     .filter((box): box is QaLineBBox => box !== null);
+}
+
+function trimProvenanceToElement(
+  element: QaElementLike,
+  page: QaRawPage,
+  indices: number[],
+): number[] {
+  if (indices.length === 0) {
+    return indices;
+  }
+
+  const fuzzy = findFuzzyLineIndices(element, page, indices[0]!);
+  if (fuzzy.length === 0) {
+    return indices;
+  }
+
+  return fuzzy;
 }
 
 /**
@@ -118,49 +276,14 @@ export function mapElementToRawLines(
   if (useStoredProvenance) {
     const stored = indicesFromProvenance(element, page);
     if (stored) {
-      return { lineIndices: stored, rects: rectsForIndices(page, stored) };
+      const trimmed = trimProvenanceToElement(element, page, stored);
+      return { lineIndices: trimmed, rects: rectsForIndices(page, trimmed) };
     }
   }
 
-  const elementText = extractElementText(element);
-  if (!elementText.trim()) {
-    return { lineIndices: [], rects: [] };
-  }
+  const bestIndices = findFuzzyLineIndices(element, page, options.minLineIndex ?? 0);
 
-  const minLineIndex = options.minLineIndex ?? 0;
-
-  const candidates = page.lines
-    .map((line, index) => ({ line, index }))
-    .filter(({ line, index }) => isContentLine(line) && index >= minLineIndex);
-
-  let bestIndices: number[] = [];
-  let bestScore = 0;
-  let bestLength = Infinity;
-
-  for (let start = 0; start < candidates.length; start += 1) {
-    let joined = "";
-    const indices: number[] = [];
-
-    for (let end = start; end < candidates.length; end += 1) {
-      const { line, index } = candidates[end]!;
-      joined = joined ? `${joined} ${line.text}` : line.text;
-      indices.push(index);
-
-      const score = elementCoverageScore(joined, elementText);
-      if (
-        score > bestScore ||
-        (score === bestScore && score >= MATCH_THRESHOLD && indices.length < bestLength)
-      ) {
-        bestScore = score;
-        bestIndices = [...indices];
-        bestLength = indices.length;
-      }
-
-      if (score >= 0.99) break;
-    }
-  }
-
-  if (bestScore < MATCH_THRESHOLD) {
+  if (bestIndices.length === 0) {
     return { lineIndices: [], rects: [] };
   }
 
