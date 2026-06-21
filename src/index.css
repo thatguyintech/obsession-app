@@ -64,6 +64,14 @@ body {
     @apply rounded px-2 py-1 text-stone-600 transition-colors hover:bg-stone-200/60 hover:text-stone-900;
   }
 
+  .reader-chrome-nav {
+    @apply reader-chrome-button min-w-[1.75rem] px-2 text-center font-label text-sm leading-none;
+  }
+
+  .reader-chrome-nav:disabled {
+    @apply pointer-events-none opacity-30;
+  }
+
   .overlay-backdrop {
     background: var(--bg-overlay);
   }

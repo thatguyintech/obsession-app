@@ -71,6 +71,14 @@ export function Reader({ data }: ReaderProps) {
     goToMoment(lastMomentIndex);
   }, [goToMoment, lastMomentIndex]);
 
+  const goToPrevious = useCallback(() => {
+    goToMoment(Math.max(momentIndex - 1, 0));
+  }, [goToMoment, momentIndex]);
+
+  const goToNext = useCallback(() => {
+    goToMoment(Math.min(momentIndex + 1, lastMomentIndex));
+  }, [goToMoment, lastMomentIndex, momentIndex]);
+
   const handleScroll = useCallback((nextScrollY: number) => {
     if (scrollSaveTimer.current) {
       window.clearTimeout(scrollSaveTimer.current);
@@ -116,11 +124,11 @@ export function Reader({ data }: ReaderProps) {
 
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        goToMoment(Math.min(momentIndex + 1, lastMomentIndex));
+        goToNext();
       }
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        goToMoment(Math.max(momentIndex - 1, 0));
+        goToPrevious();
       }
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -162,7 +170,7 @@ export function Reader({ data }: ReaderProps) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [goToEnd, goToMoment, goToStart, lastMomentIndex, momentIndex, requestRestart, restart, restartConfirmOpen, searchOpen, tocOpen]);
+  }, [goToEnd, goToNext, goToPrevious, goToStart, goToMoment, lastMomentIndex, momentIndex, requestRestart, restart, restartConfirmOpen, searchOpen, tocOpen]);
 
   if (!moment) {
     return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
@@ -191,11 +199,36 @@ export function Reader({ data }: ReaderProps) {
                 Restart (R)
               </button>
             </div>
-            <span className="shrink-0 text-right text-stone-600">
-              Scene {momentIndex}
-              {lastMomentIndex > 0 ? ` / ${lastMomentIndex}` : ""}
-              {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
-            </span>
+            <div className="flex shrink-0 items-center gap-2">
+              <div className="hidden items-center gap-0.5 sm:flex">
+                <button
+                  type="button"
+                  className="reader-chrome-nav"
+                  aria-label="Previous scene"
+                  disabled={momentIndex === 0}
+                  onClick={goToPrevious}
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  className="reader-chrome-nav"
+                  aria-label="Next scene"
+                  disabled={momentIndex >= lastMomentIndex}
+                  onClick={goToNext}
+                >
+                  →
+                </button>
+              </div>
+              <span className="sm:hidden text-stone-500" aria-hidden="true">
+                Tap ← →
+              </span>
+              <span className="text-right text-stone-600">
+                Scene {momentIndex}
+                {lastMomentIndex > 0 ? ` / ${lastMomentIndex}` : ""}
+                {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
+              </span>
+            </div>
           </header>
         </div>
       </div>
@@ -219,14 +252,14 @@ export function Reader({ data }: ReaderProps) {
       <button
         type="button"
         aria-label="Previous moment"
-        className="absolute bottom-0 left-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent md:w-16"
-        onClick={() => goToMoment(Math.max(momentIndex - 1, 0))}
+        className="absolute bottom-0 left-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent sm:hidden"
+        onClick={goToPrevious}
       />
       <button
         type="button"
         aria-label="Next moment"
-        className="absolute bottom-0 right-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent md:w-16"
-        onClick={() => goToMoment(Math.min(momentIndex + 1, lastMomentIndex))}
+        className="absolute bottom-0 right-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent sm:hidden"
+        onClick={goToNext}
       />
 
       {restartConfirmOpen ? (
