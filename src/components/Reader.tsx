@@ -19,6 +19,25 @@ function isTypingTarget(target: EventTarget | null): boolean {
   return tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable;
 }
 
+function HomeIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 10.5 12 4l8 6.5" />
+      <path d="M6 10v10h12V10" />
+    </svg>
+  );
+}
+
 export function Reader({ data }: ReaderProps) {
   const initial = loadReaderState(data);
   const [momentIndex, setMomentIndex] = useState(initial.currentMomentIndex);
@@ -49,6 +68,7 @@ export function Reader({ data }: ReaderProps) {
 
   const goToStart = useCallback(() => {
     goToMoment(0);
+    scrollRef.current?.scrollTo({ top: 0, behavior: "auto" });
   }, [goToMoment]);
 
   const restart = useCallback(() => {
@@ -189,6 +209,14 @@ export function Reader({ data }: ReaderProps) {
 
           <header className="reader-chrome flex min-w-0 items-center justify-between gap-2 px-4 py-2.5 text-xs">
             <div className="flex min-w-0 shrink items-center gap-1">
+              <button
+                type="button"
+                className="reader-chrome-home"
+                aria-label="Title page"
+                onClick={goToStart}
+              >
+                <HomeIcon />
+              </button>
               <button type="button" className="reader-chrome-button" onClick={() => setSearchOpen(true)}>
                 Search ( / )
               </button>

@@ -68,6 +68,10 @@ body {
     @apply reader-chrome-button min-w-[1.75rem] px-2 text-center font-label text-sm leading-none;
   }
 
+  .reader-chrome-home {
+    @apply reader-chrome-button mr-0.5 flex items-center justify-center p-1.5 text-stone-700;
+  }
+
   .reader-chrome-nav:disabled {
     @apply pointer-events-none opacity-30;
   }
