@@ -1,4 +1,4 @@
-# QA Tool — Progress & Plan
+# QA Tool — Reference
 
 > Internal maintainer tooling for verifying `data/obsession.json` against the PDF.
 > **Not deployed.** Reader prod app is unaffected.
@@ -11,9 +11,7 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 
 ---
 
-## What's built today
-
-### Shipped
+## What's built
 
 | Tool | Command / path | Purpose |
 |------|----------------|---------|
@@ -33,7 +31,7 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 └──────────────────────────┴──────────────────────────────────┘
 ```
 
-**Deep link:** `/qa?page=16` jumps to a flagged page.
+**Deep link:** `/qa?page=N` jumps to a page.
 
 **Suspected gaps:** After normalization (hyphens, PDF line-break splits like `wonde red` → `wondered`), remaining token diffs appear as **Suspected gaps**. Each gap has **Show on PDF** (red) and **Looks fine** (dismiss for this browser). Dismissals live in `localStorage` only.
 
@@ -47,6 +45,8 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 |------|------|
 | `lib/qa-compare.ts` | Shared word-compare logic (CLI + visual rescore) |
 | `lib/qa-element-lines.ts` | Element → raw line indices + PDF bboxes |
+| `lib/qa-normalize.ts` | Word normalization for compare |
+| `lib/qa-gaps.ts` | Suspected-gap detection |
 | `scripts/qa.ts` | CLI entry |
 | `scripts/qa-save.ts` | Save pipeline (searchText, moments, beats, validate) |
 | `src/qa/QaPage.tsx` | Main UI |
@@ -56,9 +56,7 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 | `vite.config.ts` | Dev middleware: `/__qa/source.pdf`, `/__qa/raw.json`, `POST /__qa/save` |
 | `src/router.tsx` | `/qa` route registered only when `import.meta.env.DEV` |
 
-**CLI baseline (approx.):** 89 OK · 9 WARN · 0 FAIL · 1 SKIP (title page)
-
-**Pages needing review:** 16, 35, 49, 63, 64, 70, 87, 90, 93
+**CLI baseline (Jun 2026):** 98 OK · 0 WARN · 0 FAIL · 1 SKIP (title page)
 
 Pipe CLI to file: `pnpm qa > qa-report.txt`
 
@@ -72,118 +70,66 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 | Wrong spacing (`a"poor`) | ❌ | 👁️ manual |
 | Misclassification (dialogue → action) | ❌ | 👁️ type badge + highlight |
 | All words present, wrong element type | ❌ | 👁️ manual |
-| Dropped transitions (`SMASH CUT TO:`) | ✅ (READ-002) | 👁️ transition element + highlight |
+| Dropped transitions (`SMASH CUT TO:`) | ✅ | 👁️ transition element + highlight |
 
-**Known pattern (fixed on page 3):** Classifier split Nicky voicemail — dialogue tail landed in a separate action element while word score stayed OK. Fix: merge text into correct element (segments for mid-speech asides), delete orphan, Save. Page 3 el-015/el-017 ✅ at v11.
+**Known pattern (fixed on page 3):** Classifier split Nicky voicemail — dialogue tail landed in a separate action element while word score stayed OK. Fix: merge text into correct element (segments for mid-speech asides), delete orphan, Save.
 
 ---
 
-## Team decisions (locked for v1)
+## Team decisions (locked)
 
 1. **Save model:** Whole-file save (atomic write of `obsession.json`).
-2. **Dual dialogue:** Editable in v1 (both tracks: character, parenthetical, lines).
-3. **Merge / split elements:** v1.5 (needed for page-boundary classifier bugs).
-4. **`meta.version`:** Bump on every save (invalidates reader `localStorage` progress).
-5. **Git:** Data fixes and tooling code in **separate commits**.
-6. **Deploy:** Visual tool stays **dev-only**; no prod route, no PDF in deploy.
+2. **Dual dialogue:** Editable (both tracks: character + segments).
+3. **`meta.version`:** Bump on every save (invalidates reader `localStorage` progress).
+4. **Git:** Data fixes and tooling code in **separate commits**.
+5. **Deploy:** Visual tool stays **dev-only**; no prod route, no PDF in deploy.
 
 ---
 
-## Phases
+## Editor capabilities
 
-### Phase A — Read-only visual ✅
+**Read-only visual:** split pane, page nav, OK/WARN/FAIL badge, linked highlighting.
 
-- [x] Split pane: PDF + extracted + raw
-- [x] Page navigation + review-page cycling
-- [x] OK/WARN/FAIL badge (shared compare logic)
-- [x] Fix PDF canvas mount bug
-- [x] Commit tooling separately from data
+**Edit + save:** in-memory edits, dirty state, live page rescore, `POST /__qa/save` → rebuild searchText/moments/beats, write `data/` + `public/data/`, validate.
 
-### Phase B — Edit in memory ✅
+**Structural edits:**
 
-- [x] Editor drawer/panel on element select
-- [x] Editable fields by type (including dual_dialogue)
-- [x] Dirty state + unsaved warning on page change
-- [x] Live page rescore after edits (client-side `analyzeQaPage`)
-- [x] Revert selected element
+- **Delete** — confirmation in editor; removed on Save
+- **Convert type** — dropdown (action, dialogue, scene_heading, transition); text preserved
+- **Add element** — inserts after selection or end of page
+- **Reorder** — drag ⋮⋮ on extracted cards (within page) and segment handles in dialogue editor
 
-### Phase C — Save pipeline ✅
-
-- [x] `POST /__qa/save` Vite dev middleware
-- [x] `scripts/qa-save.ts` — rebuild searchText, moments, beats, bump version
-- [x] Write `data/` + `public/data/`, run validate
-- [x] Global Save button + success/error feedback
-
-### Phase C½ — Linked highlighting ✅
-
-- [x] Click extracted card → highlight PDF region
-- [x] Fuzzy match element text → contiguous raw lines (`lib/qa-element-lines.ts`)
-- [x] PDF overlay aligned to scaled canvas (percentage positioning)
-
-**Highlight caveats:**
-
-- Anchors are recomputed on extract/save; unsaved QA edits still highlight the PDF source region (stored or sequential fuzzy)
-- Match fallback is fuzzy (75% element word coverage) when anchors cannot be resolved
-- Orphan raw lines without a matching element are rare after READ-002 (transitions captured)
-- Long-term improvement: store `rawLineStart`/`rawLineEnd` at extract time
-
-**Editor fields (v1):**
+**Editor fields:**
 
 | Type | Fields |
 |------|--------|
 | `action` | `text` |
 | `scene_heading` | `text`, optional **Transition** field (creates/updates preceding `transition` element) |
-| `transition` | `text` (also editable directly when selected) |
+| `transition` | `text` |
 | `dialogue` | `character`, `segments[]` (`speech` \| `parenthetical`) |
 | `dual_dialogue` | per-track `character`, `segments[]` |
 | `title_card` | `title`, `author`, `subtitle` (rare) |
 
-### Phase D — Review workflow
+**Workflows:**
 
-- [ ] `localStorage` reviewed/fixed page tracking
-- [ ] "Mark page reviewed" checkbox
-- [ ] CLI output hints: `Open /qa?page=N` for WARN pages
-- [ ] Optional: link from reader dev footer to `/qa` (dev only)
+- **Delete:** paste misclassified text into the correct element → Delete orphan → Save. Or convert type in place.
+- **Convert:** select element → **Element type** dropdown → confirm → fill character/segments → Save.
+- **Reorder:** drag handles → Save (beats/moments follow element order).
 
-### Phase E — Structural fixes
+**Highlight caveats:**
 
-- [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
-- [x] Dialogue segments schema (SCHEMA-001) — types, migration, reader, QA segment editor
-- [x] Transition element type (READ-002) — classifier, migrate script, reader, QA scene-heading field
-- [x] Change element type (QA-006) — type dropdown in editor; Add element on page
-- [x] Classifier: dialogue wrap at left margin (EXTRACT-001) — wrap-row merge + action-column exit
-
-See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for full stack.
-
-**Delete workflow:** paste misclassified text into the correct element → Delete the orphan → Save. Or use **Element type** dropdown to convert in place (e.g. action → dialogue). **Add** (extracted pane) inserts a new empty element after the selected card, or at end of page if none selected.
-
-**Convert workflow (QA-006):** select element → **Element type** dropdown → confirm → fill character/segments → Save. Text is preserved when converting action ↔ dialogue ↔ scene_heading ↔ transition.
-
-**Reorder (QA-007):** drag **⋮⋮** on extracted cards to reorder elements on the current page; drag segment handles in the dialogue editor to reorder speech/parenthetical blocks. Save to persist — beats/moments follow element order.
-
----
-
-## Backlog (QA / extract)
-
-| ID | Status | Ticket |
-|----|--------|--------|
-| **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
-| **QA-006** | ✅ Done | **Change / add element type** — type dropdown in editor (action, dialogue, scene_heading, transition); **Add** menu in extracted pane inserts after selection or end of page. Save regenerates beats/moments. |
-| **QA-007** | ✅ Done | **Drag to reorder** — ⋮⋮ handle on extracted pane cards (within page) and dialogue segments in editor. Save persists new order. |
-| **EXTRACT-001** | ✅ Done | **Dialogue wrap** — same-row left+right speech merge; `endsDialogueForAction` for action column. `pnpm extract` auto-backs up prior JSON. |
-| **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
-| **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |
-| **READ-001** | In progress | **Inline emphasis** — render ✅ (`InlineText`); QA editor buttons + extract auto-wrap todo. |
+- Anchors recomputed on extract/save; unsaved edits still highlight stored or fuzzy-matched regions
+- Match fallback is fuzzy (75% element word coverage) when anchors cannot be resolved
 
 ---
 
 ## Recommended workflow
 
 ```bash
-pnpm qa                          # terminal report → note WARN pages
-pnpm dev                         # open /qa?page=16
+pnpm qa                           # sanity check — expect 98 OK, 0 WARN
+pnpm dev                          # open /qa?page=N if investigating
 # compare PDF | extracted — click cards to link-highlight
-# edit → merge text manually → Delete orphan element → Save
+# edit → Save
 pnpm validate
 git commit -m "fix: correct dialogue on page 3" -- data/ public/data/
 ```
@@ -196,7 +142,7 @@ git commit -m "feat: add QA visual editor" -- src/qa/ lib/ scripts/ vite.config.
 
 ---
 
-## Architecture notes
+## Architecture
 
 ```
 obsession-2026.pdf (local, gitignored)
@@ -214,18 +160,10 @@ public/data/obsession.json → reader app (prod)
 
 **Source of truth for fixes:** `data/obsession.json` only. Never edit `obsession.raw.json` by hand (regenerate via extract).
 
-**Re-extract:** `pnpm extract` overwrites structured JSON but saves `data/obsession.v{N}.backup.json` first and bumps `meta.version`. After classifier fixes, prefer re-extract over hand-merging; re-QA WARN pages afterward.
-
----
-
-## Open questions (for future brainstorms)
-
-- Auto-strip printed page numbers from raw compare (reduce false WARN noise)?
-- Type heuristic: flag `action` blocks that start mid-sentence lowercase after dialogue?
-- Export QA session log (which pages reviewed, what changed)?
+**Re-extract:** `pnpm extract` overwrites structured JSON but saves `data/obsession.v{N}.backup.json` first and bumps `meta.version`. Re-extract overwrites QA hand fixes — coordinate before running on a hand-tuned JSON.
 
 ---
 
 ## Related docs
 
-- [PLAN.md](./PLAN.md) — data model, element types, reader backlog, **current priorities**
+- [PLAN.md](./PLAN.md) — data model, reader architecture, shipped status

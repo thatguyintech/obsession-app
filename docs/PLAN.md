@@ -65,7 +65,7 @@ Used for search, fidelity, and building moments. **Preserves raw `lines[]` array
 | `transition` | Cut direction (`SMASH CUT TO:`, `CUT TO:`, etc.) before a scene heading |
 | `scene_heading` | `INT.` / `EXT.` lines |
 | `action` | Stage direction / prose |
-| `dialogue` | Character name + ordered `segments[]` (see SCHEMA-001; legacy: optional `parenthetical` + `lines[]`) |
+| `dialogue` | Character name + ordered `segments[]` (`speech` \| `parenthetical`) |
 | `dual_dialogue` | Two parallel conversation tracks |
 
 **Dialogue element example:**
@@ -75,15 +75,17 @@ Used for search, fidelity, and building moments. **Preserves raw `lines[]` array
   "id": "el-042",
   "type": "dialogue",
   "character": "NICKY (O.S.)",
-  "parenthetical": "aggravated",
-  "lines": [
-    "Maybe she realized I wasn't in the back carving birch wood and weaving wool."
+  "segments": [
+    { "kind": "parenthetical", "text": "aggravated" },
+    { "kind": "speech", "text": "Maybe she realized I wasn't in the back carving birch wood and weaving wool." }
   ],
   "pdfPage": 13,
   "printedPage": 12,
   "searchText": "..."
 }
 ```
+
+**Segment kinds:** `speech` (dialogue body) and `parenthetical` (stage direction within a cue; stored without wrapping parens). Inline emphasis in text uses `*italic*`, `_underline_`, `**bold**` (rendered via `InlineText`; stripped for search/QA compare).
 
 **Dual dialogue element example:**
 
@@ -145,9 +147,9 @@ A **moment** is a scrollable block of contiguous story content. This is what the
 
 Moments can be generated at extract time or computed client-side from elements; extract-time is preferred for stable IDs and search → moment mapping.
 
-### 3. `beats[]` — legacy / internal (current prototype)
+### 3. `beats[]` — legacy / internal
 
-The live prototype still navigates **beats** (1 element = 1 tap). Beats remain in JSON for now but are **not the target navigation model**. They may be removed or kept only for debugging once moments ship.
+One beat per element — kept in JSON for QA/debugging. The reader navigates **moments**, not beats.
 
 ---
 
@@ -159,8 +161,8 @@ The live prototype still navigates **beats** (1 element = 1 tap). Beats remain i
 
 Do **not** render one `<p>` per raw script line. The UI joins `lines[]` into flowing paragraphs:
 
-- Dialogue: `lines.join(" ")` → single paragraph per speech (unless we later detect intentional blank-line breaks)
-- Action: already a single `text` field; render as one paragraph
+- Dialogue: reflow each `speech` segment; parentheticals render as asides
+- Action: split on `\n\n` into separate paragraphs
 - Dual dialogue: reflow each track's `lines[]` independently
 
 Raw lines remain in JSON for search fidelity and future reuse.
@@ -175,8 +177,8 @@ Mobile-first, comfortable for extended reading. Warm paper background (`#faf8f5`
 | **Character name** | 13–14px bold caps, **per-character accent color** |
 | **Dialogue block** | 2px left border + subtle tint in character color |
 | **Parenthetical** | 13–14px italic, stone gray |
-| **Action** | 17–19px serif, ~76% ink, neutral stone left rule (READ-005) |
-| **Transition** | 13–14px semibold caps, rule above, right-aligned (READ-005) |
+| **Action** | 17–19px serif, ~76% ink, neutral stone left rule |
+| **Transition** | 13–14px semibold caps, rule above, right-aligned |
 | **Scene opener** | 14–15px caps, tinted band, letter-spaced |
 | **Scene `- CONTINUOUS`** | Divider line, small muted caps |
 
@@ -270,20 +272,16 @@ Automated checks (`pnpm validate`):
 
 ## App UX
 
-### Navigation (target)
+### Navigation
 
 | Input | Behavior |
 |-------|----------|
 | Tap left / right (or ← / →) | Previous / next **moment** |
 | Vertical scroll | Within current moment |
-| `/` | Search (unchanged) |
+| `/` | Search |
 | `Esc` | Close search |
 
-Progress displays **moment index** (e.g. `12 / 87`), not beat count. Printed page shown when available.
-
-### Navigation (current prototype)
-
-Still on **beats** — one element per tap, no moment scroll. To be migrated.
+Progress displays **moment index** (e.g. `Scene 12 / 59 · p.16`). Each moment shows an optional **reference label** (`Location — beat`) for out-loud discussion — see `src/lib/moment-labels.ts`.
 
 ### User state — `localStorage`
 
@@ -306,8 +304,6 @@ Key: `obsession-reader-state`
 - No auth; progress persists between browser sessions
 - User state is separate from screenplay JSON
 
-**Current prototype** still uses `currentBeatId` / `currentBeatIndex` — migrate when moments ship.
-
 ### Search
 
 Client-side, in-memory, over `elements[]`:
@@ -323,7 +319,8 @@ Client-side, in-memory, over `elements[]`:
 ```
 obsession-app/
 ├── docs/
-│   └── PLAN.md
+│   ├── PLAN.md
+│   └── QA-TOOL.md
 ├── data/
 │   ├── obsession.raw.json
 │   └── obsession.json          ← elements + beats + moments
@@ -339,165 +336,17 @@ obsession-app/
 
 ---
 
-## Build Order
+## Shipped (Jun 2026)
 
-### Done
+**Pipeline:** PDF extract → classify → validate. `pnpm extract` backs up prior JSON and bumps `meta.version`.
 
-1. ✅ Extract — `pnpm extract` → raw + structured JSON + moments
-2. ✅ Validate — `pnpm validate`
-3. ✅ App shell — Vite + React + Tailwind + TanStack Router
-4. ✅ Moment navigation + in-moment scroll + localStorage progress
-5. ✅ Search → jump to moment (+ scroll to element)
-6. ✅ Left-aligned layout; dual dialogue side-by-side in scroll
-7. ✅ Display reflow — joined dialogue lines in UI
-8. ✅ Typography — dialogue 20px, character 16px, parenthetical 14px italic, action 18px serif
+**Reader:** Moment navigation + in-moment scroll, search, localStorage progress, left-aligned layout, dual dialogue columns, line reflow, mobile typography (`clamp()` scales), scene heading hierarchy, transition elements, action paragraph breaks, inline emphasis rendering, per-character colors, moment reference labels (`Location — beat`).
 
-### Later
+**Data quality:** Full QA pass complete — **98 OK · 0 WARN · 0 FAIL · 1 SKIP** (title page). Hand-fixes through `meta.version` 121. Dialogue `segments[]`, transition type, classifier wrap-row fix.
 
-1. **Dual font tuning** — sanity-check column size on small phones
-2. **Re-pair stacked dual dialogue** (Type B) in extract
-3. **Split long scenes** — only if needed after reading through
+**QA tool (dev-only):** CLI report, visual split-pane editor, linked PDF highlighting, suspected-gap dismissals, delete/convert/add elements, drag reorder. See [QA-TOOL.md](./QA-TOOL.md).
 
----
-
-## Current priorities (Jun 2026)
-
-Ordered stack for what to build next. **Ops work in parallel:** finish QA pass on 9 WARN pages (16, 35, 49, 63, 64, 70, 87, 90, 93) via `/qa?page=N`.
-
-### Tier 1 — Unblock correct content
-
-| # | ID | Why now |
-|---|-----|---------|
-| 1 | **READ-004** | ✅ Done — action `\n\n` → separate paragraphs in reader + QA |
-| 2 | *(ops)* | WARN page review — 9 pages left (16, 35, 49, 63, 64, 70, 87, 90, 93). |
-| — | **READ-002** | ✅ Done — `transition` element type, classifier, migrate script, reader + QA editor. |
-| — | **READ-003** | ✅ Done — scene heading hierarchy (bold/prominent slugs, quieter action). |
-| — | **SCHEMA-001** | ✅ Done — segments schema, page 3 data (v11). |
-
-### Tier 2 — QA velocity & reader polish
-
-| # | ID | Why |
-|---|-----|-----|
-| 4 | **QA-006** | ✅ Done — change/add element type in QA editor |
-| 5 | **READ-003** | Scene headings should lead visually (prod feedback); mostly CSS |
-| 6 | **Phase D** | Review workflow — mark pages done, CLI hints to `/qa?page=N` |
-
-### Tier 3 — Extract & structural capture (after hand-fixes stable)
-
-| # | ID | Gate |
-|---|-----|------|
-| 7 | **EXTRACT-001** | ✅ Done — dialogue wrap-row fix + action-column exit; fresh `pnpm extract` backs up prior JSON and bumps version |
-| 8 | **READ-002** | Transitions (`SMASH CUT TO:`) — fidelity, not blocking QA |
-
-### Tier 4 — Backlog / research
-
-| ID | Notes |
-|----|--------|
-| **READ-001** | Inline emphasis — render ✅; QA editor buttons + extract todo |
-| **READ-005** | ✅ Done — mobile typography & lane balance (action/transition presence) |
-| **Later** (build order) | Dual font tuning, Type B dual re-pair, split long scenes |
-| *(un ticketed)* | CLI page-number noise, mis-split heuristics, QA session log, extract line provenance |
-
-### Suggested sequence
-
-```
-READ-001 editor buttons → Phase D
-```
-
-**Dependencies:** EXTRACT-001 waits on stable hand-fixes + backup strategy. READ-004 is independent.
-
----
-
-## Backlog (ticket reference)
-
-| ID | Area | Ticket |
-|----|------|--------|
-| **READ-001** | Reader + QA + extract | **Inline emphasis — `*italic*` + `_underline_` + `**bold**`**. Convention: `*` italic, `_` underline (project-specific). **Done:** `InlineText` component in reader + QA preview; strip delimiters in QA compare + `rebuildSearchText`. **Todo:** QA editor wrap buttons; extract auto-wrap from pdf.js font flags. |
-| **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
-| **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
-| **READ-004** | Reader + QA | ✅ Done — action `\n\n` paragraph breaks |
-| **READ-005** | Reader CSS | ✅ Done — **Mobile typography & lane balance** — raised mobile `clamp()` floors; action 17–19px + 76% ink + stone left rule; transitions 13–14px semibold + top rule; scene headings bumped; dual dialogue slightly smaller; `px-4` / full width on phone. |
-| **QA-006** | QA tool | ✅ Done — **Change / add element type** — see [QA-TOOL.md](./QA-TOOL.md). |
-| **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
-| **SCHEMA-001** | ✅ Done | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Shipped v7 tooling / v11 data; page 3 el-015/el-017 fixed. Full spec below. |
-
-### SCHEMA-001 — Dialogue segments (spec)
-
-**Problem:** Dialogue today is `character` + optional `parenthetical` + `lines[]`. The reader renders **Who → one aside → speech**. Screenplay dialogue can interleave: speech → `(some movement)` → more speech in the **same** cue (page 3 Nicky voicemail after `Oh fuck! fuck!`). Classifier drops or mis-buckets the paren; even with QA edits there is no first-class place to store it.
-
-**Example (target JSON after migration):**
-
-```json
-{
-  "id": "el-015",
-  "type": "dialogue",
-  "character": "NICKY (V.O.)",
-  "segments": [
-    { "kind": "speech", "text": "Hey! You are so lucky you weren't scheduled today. ... Oh fuck! fuck!" },
-    { "kind": "parenthetical", "text": "some movement" },
-    { "kind": "speech", "text": "God damn it." }
-  ],
-  "pdfPage": 3,
-  "searchText": "..."
-}
-```
-
-`el-017` stays action-only: `Bear's eyes widen. He calls Nicky back immediately.`
-
-**Types (TypeScript):**
-
-```ts
-type DialogueSegmentKind = "speech" | "parenthetical";
-
-interface DialogueSegment {
-  kind: DialogueSegmentKind;
-  text: string; // parenthetical text WITHOUT wrapping parens (matches legacy parenthetical field)
-}
-
-interface DialogueTrack {
-  character: string;
-  segments: DialogueSegment[];
-  // legacy during migration — see below
-}
-
-// dialogue element: character + segments[]
-// dual_dialogue: left/right tracks each use segments[]
-```
-
-**Reader display:** For each segment in order — `speech` → dialogue body (`text-dialogue`); `parenthetical` → aside (`text-parenthetical`, render as `(text)`). Character name once at top. Same four-lane hierarchy as today, but repeatable within one block.
-
-**Migration (one-time script + bump `meta.version`):**
-
-| Legacy | → `segments` |
-|--------|----------------|
-| `lines: ["a", "b"]`, no `parenthetical` | `[{ kind: speech, text: "a" }, { kind: speech, text: "b" }]` |
-| `parenthetical: "laughter"`, `lines: ["Yeah"]` | `[{ kind: parenthetical, text: "laughter" }, { kind: speech, text: "Yeah" }]` |
-| Reflowed single-line dialogue (QA merges) | `[{ kind: speech, text: "..." }]` — keep as one speech segment unless editor splits |
-
-- **Canonical after migration:** `segments` required on dialogue / dual tracks; drop `parenthetical` + `lines` from JSON once migrated (or accept both in read path temporarily, write path emits `segments` only).
-- **Do not** re-run full `pnpm extract` until EXTRACT-001 emits `segments` — migrate existing hand-fixed JSON first.
-
-**Touch points (implementation order):**
-
-1. `src/types.ts`, `scripts/lib/types.ts` — add types
-2. `scripts/migrate-dialogue-segments.ts` (or similar) — convert `data/obsession.json`, run validate
-3. `scripts/lib/cleanup.ts` — `rebuildSearchText`, reflow helpers
-4. `scripts/lib/classifier.ts` — `parseDialogue` builds `segments[]`; `denormalizeBeat`
-5. `lib/qa-compare.ts` — `extractElementText` flattens segments for word compare
-6. `src/components/ElementView.tsx` — render segments
-7. `src/qa/ElementEditor.tsx` — segment list editor (add/remove/reorder speech vs paren rows)
-8. `scripts/qa-save.ts` — already rebuilds on save; ensure segment-aware
-9. `scripts/validate.ts` — require `segments`, forbid empty, validate kinds
-
-**Extract (pairs with EXTRACT-001):** While inside an active dialogue track, lines matching `(…)` append `{ kind: parenthetical }` and continue parsing; do not hand off to `parseAction` until true action column / new character cue.
-
-**Non-goals for v1:**
-
-- Inline emphasis within a speech segment (READ-001) — separate
-- Action paragraph `\n\n` (READ-004) — stays on `action.text`
-- Nesting segments beyond speech/parenthetical
-
-**QA workflow (page 3, done):** el-015 segments `(some movement)` + trailing speech; el-017 action-only — committed at meta.version 11.
+**No active build backlog.** Re-open work only when reading/testing surfaces a concrete issue.
 
 ---
 
@@ -532,14 +381,14 @@ interface DialogueTrack {
 
 | Area | Status |
 |------|--------|
-| PDF → JSON extract | ✅ Shipped (TypeScript + pdfjs-dist) |
+| PDF → JSON extract | ✅ Shipped |
+| QA tool + data pass | ✅ Shipped (see QA-TOOL.md) |
 | Moments + scroll navigation | ✅ Shipped |
-| Line reflow in UI | ✅ Shipped |
+| Line reflow + segments + emphasis | ✅ Shipped |
 | Typography / light theme | ✅ Shipped |
-| Per-character colors | ✅ Shipped |
-| Moment-based progress | ✅ Shipped |
+| Per-character colors + moment labels | ✅ Shipped |
 | Dual side-by-side in scroll | ✅ Shipped |
-| Beat-based reader | 🗄️ Legacy (beats still in JSON) |
+| `beats[]` in JSON | 🗄️ Legacy (debug/QA only) |
 
 ---
 
@@ -560,7 +409,8 @@ When picking up a new session:
 1. Read this file (`docs/PLAN.md`)
 2. Check `data/obsession.json` exists — if not, `pnpm extract`
 3. App reads `data/obsession.json` only, never the PDF
-4. **Target nav:** moments + scroll (see Implementation Status)
+4. Nav is **moments + scroll** — beats in JSON are legacy only
 5. User progress: `localStorage` key `obsession-reader-state` (`currentMomentId`, `scrollY`)
-6. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` for v1
-7. Display reflow is a UI concern — do not re-extract to fix line breaks
+6. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` in scroll
+7. Data fixes via `/qa` (dev) or hand-edit `data/obsession.json`; run `pnpm validate` before commit
+8. QA baseline: `pnpm qa` — expect 98 OK, 0 WARN (Jun 2026)
