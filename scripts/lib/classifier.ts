@@ -1,4 +1,6 @@
 import type { ColumnSide, DialogueTrack, Line, ScreenplayElementDraft } from "./types.js";
+import type { DialogueSegment } from "../../lib/dialogue-segments.js";
+import { ensureTrackSegments, segmentsSearchParts } from "../../lib/dialogue-segments.js";
 
 const HEADER_RE = /^March 9th\s+(\d+)\.?\s*$/;
 
@@ -55,8 +57,7 @@ function linesAtY(lines: Line[], index: number, tolerance = 4): Line[] {
 function trackToDict(track: DialogueTrack): DialogueTrack {
   return {
     character: track.character,
-    lines: track.lines,
-    ...(track.parenthetical ? { parenthetical: track.parenthetical } : {}),
+    segments: track.segments,
   };
 }
 
@@ -67,7 +68,7 @@ function parseDialogueTrack(
   side: ColumnSide,
 ): [DialogueTrack | null, number] {
   let index = start;
-  const track: DialogueTrack = { character: "", lines: [] };
+  const track: DialogueTrack = { character: "", segments: [] };
   let found = false;
 
   while (index < lines.length) {
@@ -98,11 +99,11 @@ function parseDialogueTrack(
         return [track, index];
       }
       if (isParenthetical(text)) {
-        track.parenthetical = text.slice(1, -1);
+        track.segments.push({ kind: "parenthetical", text: text.slice(1, -1) });
       } else if (isSceneHeading(text)) {
         return [track, index];
       } else {
-        track.lines.push(text);
+        track.segments.push({ kind: "speech", text });
       }
     }
 
@@ -164,7 +165,10 @@ function parseDialogue(
     return [null, start];
   }
 
-  const track: DialogueTrack = { character: lines[start].text, lines: [] };
+  const track: { character: string; segments: DialogueSegment[] } = {
+    character: lines[start].text,
+    segments: [],
+  };
   let index = start + 1;
 
   while (index < lines.length) {
@@ -186,14 +190,14 @@ function parseDialogue(
     if (line.x0 < 120 && !isParenthetical(line.text)) break;
 
     if (isParenthetical(line.text)) {
-      track.parenthetical = line.text.slice(1, -1);
+      track.segments.push({ kind: "parenthetical", text: line.text.slice(1, -1) });
     } else {
-      track.lines.push(line.text);
+      track.segments.push({ kind: "speech", text: line.text });
     }
     index += 1;
   }
 
-  if (track.lines.length === 0 && !track.parenthetical) {
+  if (track.segments.length === 0) {
     return [null, start];
   }
 
@@ -201,8 +205,7 @@ function parseDialogue(
     {
       type: "dialogue",
       character: track.character,
-      ...(track.parenthetical ? { parenthetical: track.parenthetical } : {}),
-      lines: track.lines,
+      segments: track.segments,
     },
     index,
   ];
@@ -360,12 +363,12 @@ export function buildSearchText(element: ScreenplayElementDraft): string {
       parts.push(element.text ?? "");
       break;
     case "dialogue":
-      parts.push(element.character ?? "", element.parenthetical ?? "", ...(element.lines ?? []));
+      parts.push(element.character ?? "", ...segmentsSearchParts(element.segments ?? []));
       break;
     case "dual_dialogue":
       for (const side of ["left", "right"] as const) {
         for (const track of element[side] ?? []) {
-          parts.push(track.character, track.parenthetical ?? "", ...track.lines);
+          parts.push(track.character, ...segmentsSearchParts(ensureTrackSegments(track)));
         }
       }
       break;
@@ -391,8 +394,7 @@ export function denormalizeBeat(element: ScreenplayElementDraft): Record<string,
       break;
     case "dialogue":
       beat.character = element.character;
-      if (element.parenthetical) beat.parenthetical = element.parenthetical;
-      beat.lines = element.lines;
+      beat.segments = element.segments;
       break;
     case "dual_dialogue":
       beat.left = element.left;

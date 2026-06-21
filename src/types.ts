@@ -1,3 +1,10 @@
+export type DialogueSegmentKind = "speech" | "parenthetical";
+
+export interface DialogueSegment {
+  kind: DialogueSegmentKind;
+  text: string;
+}
+
 export type ElementType =
   | "title_card"
   | "scene_heading"
@@ -7,8 +14,7 @@ export type ElementType =
 
 export interface DialogueTrack {
   character: string;
-  parenthetical?: string;
-  lines: string[];
+  segments: DialogueSegment[];
 }
 
 export interface ScreenplayElement {
@@ -19,8 +25,7 @@ export interface ScreenplayElement {
   author?: string;
   subtitle?: string;
   character?: string;
-  parenthetical?: string;
-  lines?: string[];
+  segments?: DialogueSegment[];
   left?: DialogueTrack[];
   right?: DialogueTrack[];
   pdfPage?: number;
@@ -56,8 +61,7 @@ export interface Beat {
   author?: string;
   subtitle?: string;
   character?: string;
-  parenthetical?: string;
-  lines?: string[];
+  segments?: DialogueSegment[];
   left?: DialogueTrack[];
   right?: DialogueTrack[];
   pdfPage?: number;

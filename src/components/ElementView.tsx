@@ -1,7 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { SceneTocEntry, ScreenplayElement } from "../types";
+import type { DialogueSegment, SceneTocEntry, ScreenplayElement } from "../types";
+import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
 import { getCharacterColor } from "../lib/character-colors";
-import { isContinuousSceneHeading, reflowLines } from "../lib/display";
+import { isContinuousSceneHeading } from "../lib/display";
 import { SceneTableOfContents } from "./SceneTableOfContents";
 import type { DialogueTrack } from "../types";
 
@@ -13,19 +14,35 @@ interface ElementViewProps {
   onGoToScene?: (momentIndex: number) => void;
 }
 
+function SegmentList({ segments }: { segments: DialogueSegment[] }) {
+  return (
+    <>
+      {segments.map((segment, index) =>
+        segment.kind === "parenthetical" ? (
+          <p key={`${index}-p`} className="text-parenthetical">
+            ({segment.text})
+          </p>
+        ) : (
+          <p key={`${index}-s`} className="text-dialogue">
+            {segment.text}
+          </p>
+        ),
+      )}
+    </>
+  );
+}
+
 function TrackBlock({ track }: { track: DialogueTrack }) {
   const color = getCharacterColor(track.character);
   const blockStyle: CSSProperties = { borderLeftColor: color };
+  const segments = ensureTrackSegments(track);
 
   return (
     <div className="dual-column-block min-w-0 text-left" style={blockStyle}>
       <p className="text-character break-words" style={{ color }}>
         {track.character}
       </p>
-      {track.parenthetical ? (
-        <p className="text-parenthetical">({track.parenthetical})</p>
-      ) : null}
-      <p className="text-dialogue">{reflowLines(track.lines)}</p>
+      <SegmentList segments={segments} />
     </div>
   );
 }
@@ -48,12 +65,10 @@ function ElementWrapper({
 
 function DialogueBlock({
   character,
-  parenthetical,
-  lines,
+  segments,
 }: {
   character: string;
-  parenthetical?: string;
-  lines: string[];
+  segments: DialogueSegment[];
 }) {
   const color = getCharacterColor(character);
   const blockStyle: CSSProperties = { borderLeftColor: color };
@@ -63,8 +78,7 @@ function DialogueBlock({
       <p className="text-character break-words" style={{ color }}>
         {character}
       </p>
-      {parenthetical ? <p className="text-parenthetical">({parenthetical})</p> : null}
-      <p className="text-dialogue">{reflowLines(lines)}</p>
+      <SegmentList segments={segments} />
     </div>
   );
 }
@@ -131,8 +145,7 @@ export function ElementView({
       <ElementWrapper elementId={element.id} highlight={highlight}>
         <DialogueBlock
           character={element.character ?? ""}
-          parenthetical={element.parenthetical}
-          lines={element.lines ?? []}
+          segments={ensureDialogueSegments(element)}
         />
       </ElementWrapper>
     );
@@ -144,12 +157,18 @@ export function ElementView({
         <div className="mb-7 grid grid-cols-1 gap-6 min-[28rem]:grid-cols-2 md:gap-8">
           <div className="min-w-0 space-y-6">
             {element.left?.map((track) => (
-              <TrackBlock key={`left-${track.character}-${track.lines[0]}`} track={track} />
+              <TrackBlock
+                key={`left-${track.character}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
+                track={track}
+              />
             ))}
           </div>
           <div className="min-w-0 space-y-6">
             {element.right?.map((track) => (
-              <TrackBlock key={`right-${track.character}-${track.lines[0]}`} track={track} />
+              <TrackBlock
+                key={`right-${track.character}-${ensureTrackSegments(track)[0]?.text ?? ""}`}
+                track={track}
+              />
             ))}
           </div>
         </div>

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { denormalizeBeat } from "./lib/classifier.js";
 import { rebuildSearchText } from "./lib/cleanup.js";
 import { generateMoments } from "./lib/moments.js";
+import { normalizeDialogueElement } from "../lib/dialogue-segments.js";
 import type { ScreenplayElementDraft } from "./lib/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -51,10 +52,13 @@ function runValidate(): { ok: boolean; output: string } {
 }
 
 export function prepareScreenplaySave(input: QaSavePayload): QaSavePayload {
-  const elements = input.elements.map((element) => ({
-    ...element,
-    searchText: rebuildSearchText(element),
-  }));
+  const elements = input.elements.map((element) => {
+    const normalized = normalizeDialogueElement(element);
+    return {
+      ...normalized,
+      searchText: rebuildSearchText(normalized),
+    };
+  });
 
   const beats = elements.map((element, index) => ({
     id: `beat-${String(index + 1).padStart(3, "0")}`,

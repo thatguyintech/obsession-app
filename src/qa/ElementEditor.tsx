@@ -1,4 +1,6 @@
-import type { DialogueTrack, ScreenplayElement } from "../types";
+import type { DialogueSegment, ScreenplayElement } from "../types";
+import type { DialogueTrack } from "../types";
+import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
 
 interface ElementEditorProps {
   element: ScreenplayElement;
@@ -6,18 +8,6 @@ interface ElementEditorProps {
   onRevert: () => void;
   onDelete: () => void;
   onClose: () => void;
-}
-
-function linesToTextarea(lines: string[] | undefined): string {
-  return (lines ?? []).join("\n");
-}
-
-function linesFromTextarea(value: string): string[] {
-  const lines = value.split("\n").map((line) => line.trimEnd());
-  while (lines.length > 0 && lines[lines.length - 1] === "") {
-    lines.pop();
-  }
-  return lines;
 }
 
 function FieldLabel({ children }: { children: string }) {
@@ -70,6 +60,79 @@ function TextArea({
   );
 }
 
+function SegmentEditor({
+  segments,
+  onChange,
+}: {
+  segments: DialogueSegment[];
+  onChange: (segments: DialogueSegment[]) => void;
+}) {
+  function updateSegment(index: number, next: DialogueSegment) {
+    onChange(segments.map((segment, segmentIndex) => (segmentIndex === index ? next : segment)));
+  }
+
+  function removeSegment(index: number) {
+    onChange(segments.filter((_, segmentIndex) => segmentIndex !== index));
+  }
+
+  function addSegment(kind: DialogueSegment["kind"]) {
+    onChange([...segments, { kind, text: "" }]);
+  }
+
+  return (
+    <div className="space-y-2">
+      {segments.map((segment, index) => (
+        <div key={index} className="flex flex-wrap items-start gap-2 rounded border border-stone-200 bg-stone-50 p-2">
+          <select
+            value={segment.kind}
+            onChange={(event) =>
+              updateSegment(index, {
+                ...segment,
+                kind: event.target.value as DialogueSegment["kind"],
+              })
+            }
+            className="rounded border border-stone-300 px-2 py-1 font-label text-xs text-stone-800"
+          >
+            <option value="speech">Speech</option>
+            <option value="parenthetical">Parenthetical</option>
+          </select>
+          <div className="min-w-0 flex-1">
+            <TextArea
+              value={segment.text}
+              onChange={(text) => updateSegment(index, { ...segment, text })}
+              rows={segment.kind === "parenthetical" ? 2 : 4}
+              placeholder={segment.kind === "parenthetical" ? "some movement" : "Dialogue line"}
+            />
+          </div>
+          <button
+            type="button"
+            className="reader-chrome-button text-xs text-stone-600"
+            onClick={() => removeSegment(index)}
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          className="reader-chrome-button text-xs"
+          onClick={() => addSegment("speech")}
+        >
+          + Speech
+        </button>
+        <button
+          type="button"
+          className="reader-chrome-button text-xs"
+          onClick={() => addSegment("parenthetical")}
+        >
+          + Parenthetical
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function DialogueTrackEditor({
   label,
   track,
@@ -79,6 +142,8 @@ function DialogueTrackEditor({
   track: DialogueTrack;
   onChange: (track: DialogueTrack) => void;
 }) {
+  const segments = ensureTrackSegments(track);
+
   return (
     <div className="rounded border border-stone-200 bg-stone-50 p-3">
       <p className="mb-2 font-label text-xs font-semibold text-stone-700">{label}</p>
@@ -87,25 +152,14 @@ function DialogueTrackEditor({
           <FieldLabel>Character</FieldLabel>
           <TextInput
             value={track.character}
-            onChange={(character) => onChange({ ...track, character })}
+            onChange={(character) => onChange({ ...track, segments, character })}
           />
         </div>
         <div>
-          <FieldLabel>Parenthetical</FieldLabel>
-          <TextInput
-            value={track.parenthetical ?? ""}
-            onChange={(parenthetical) =>
-              onChange({ ...track, parenthetical: parenthetical || undefined })
-            }
-            placeholder="optional"
-          />
-        </div>
-        <div>
-          <FieldLabel>Lines</FieldLabel>
-          <TextArea
-            value={linesToTextarea(track.lines)}
-            onChange={(value) => onChange({ ...track, lines: linesFromTextarea(value) })}
-            rows={5}
+          <FieldLabel>Segments</FieldLabel>
+          <SegmentEditor
+            segments={segments}
+            onChange={(nextSegments) => onChange({ ...track, segments: nextSegments })}
           />
         </div>
       </div>
@@ -193,25 +247,20 @@ export function ElementEditor({ element, onChange, onRevert, onDelete, onClose }
               <FieldLabel>Character</FieldLabel>
               <TextInput
                 value={element.character ?? ""}
-                onChange={(character) => onChange({ ...element, character })}
-              />
-            </div>
-            <div>
-              <FieldLabel>Parenthetical</FieldLabel>
-              <TextInput
-                value={element.parenthetical ?? ""}
-                onChange={(parenthetical) =>
-                  onChange({ ...element, parenthetical: parenthetical || undefined })
+                onChange={(character) =>
+                  onChange({
+                    ...element,
+                    character,
+                    segments: ensureDialogueSegments(element),
+                  })
                 }
-                placeholder="optional"
               />
             </div>
             <div>
-              <FieldLabel>Lines</FieldLabel>
-              <TextArea
-                value={linesToTextarea(element.lines)}
-                onChange={(value) => onChange({ ...element, lines: linesFromTextarea(value) })}
-                rows={6}
+              <FieldLabel>Segments</FieldLabel>
+              <SegmentEditor
+                segments={ensureDialogueSegments(element)}
+                onChange={(segments) => onChange({ ...element, segments })}
               />
             </div>
           </>

@@ -366,7 +366,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Why now |
 |---|-----|---------|
-| 1 | **SCHEMA-001** | Mid-speech parentheticals (page 3 `(some movement)` + `God damn it.`) have no first-class field. Blocks proper el-015 / el-017 fix and correct reader display. **Slice:** types → migration → reader → QA editor → validate. Do **not** re-extract until migrated JSON is committed. |
+| 1 | **SCHEMA-001** | ✅ Shipped — `segments[]` schema, migration, reader, QA editor. **Remaining:** fix page 3 el-015/`el-017` content in QA; EXTRACT-001 for classifier. |
 | 2 | **READ-004** (display) | `el-003` already has `\n\n` in JSON; reader still collapses to one block. Small, independent win — split `action.text` on `\n\n` in `ElementView`. |
 | 3 | *(ops)* | WARN page review — use delete + edit; SCHEMA-001 unlocks page 3 properly |
 

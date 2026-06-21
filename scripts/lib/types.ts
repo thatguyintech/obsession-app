@@ -1,3 +1,8 @@
+import type { DialogueSegment } from "../../lib/dialogue-segments.js";
+
+export type { DialogueSegment };
+export type DialogueSegmentKind = DialogueSegment["kind"];
+
 export interface Line {
   x0: number;
   y0: number;
@@ -8,8 +13,7 @@ export interface Line {
 
 export interface DialogueTrack {
   character: string;
-  parenthetical?: string;
-  lines: string[];
+  segments: DialogueSegment[];
 }
 
 export type ColumnSide = "left" | "right" | "center";
@@ -21,8 +25,7 @@ export interface ScreenplayElementDraft {
   author?: string;
   subtitle?: string;
   character?: string;
-  parenthetical?: string;
-  lines?: string[];
+  segments?: DialogueSegment[];
   left?: DialogueTrack[];
   right?: DialogueTrack[];
   pdfPage?: number;

@@ -27,6 +27,7 @@ interface Element {
   id: string;
   type: string;
   character?: string;
+  segments?: { kind: string; text: string }[];
   searchText?: string;
 }
 
@@ -90,6 +91,22 @@ const characters = new Set(
 for (const expected of EXPECTED_CHARACTERS) {
   if (!characters.has(expected)) {
     fail(`Missing expected character: ${expected}`);
+  }
+}
+
+for (const element of elements) {
+  if (element.type === "dialogue") {
+    if (!element.segments?.length) {
+      fail(`Dialogue ${element.id} missing segments`);
+    }
+    for (const segment of element.segments ?? []) {
+      if (segment.kind !== "speech" && segment.kind !== "parenthetical") {
+        fail(`Dialogue ${element.id} has invalid segment kind`);
+      }
+      if (!segment.text.trim()) {
+        fail(`Dialogue ${element.id} has empty segment`);
+      }
+    }
   }
 }
 

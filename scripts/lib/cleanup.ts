@@ -1,4 +1,9 @@
 import type { ScreenplayElementDraft } from "./types.js";
+import {
+  ensureDialogueSegments,
+  ensureTrackSegments,
+  segmentsSearchParts,
+} from "../../lib/dialogue-segments.js";
 
 const CHARACTER_CUE_FIXES: Record<string, string> = {
   "BEAR.": "BEAR",
@@ -146,9 +151,10 @@ function isOrphanCharacterCue(character: string): boolean {
   return character === "I";
 }
 
-function isContinuationLine(lines: string[] | undefined): boolean {
-  const first = lines?.[0]?.trim() ?? "";
-  if (!first) return false;
+function isContinuationSegment(segments: ReturnType<typeof ensureDialogueSegments>): boolean {
+  const firstSpeech = segments.find((segment) => segment.kind === "speech");
+  if (!firstSpeech) return false;
+  const first = firstSpeech.text.trim();
   return /^[a-z(]/.test(first) || /^was\s/i.test(first);
 }
 
@@ -163,10 +169,13 @@ function mergeOrphanDialogue(elements: ScreenplayElementDraft[]): ScreenplayElem
       previous?.type === "dialogue" &&
       element.character &&
       isOrphanCharacterCue(element.character) &&
-      isContinuationLine(element.lines) &&
+      isContinuationSegment(ensureDialogueSegments(element)) &&
       previous.character?.startsWith("IAN")
     ) {
-      previous.lines = [...(previous.lines ?? []), ...(element.lines ?? [])];
+      previous.segments = [
+        ...ensureDialogueSegments(previous),
+        ...ensureDialogueSegments(element),
+      ];
       continue;
     }
 
@@ -176,9 +185,12 @@ function mergeOrphanDialogue(elements: ScreenplayElementDraft[]): ScreenplayElem
   return merged;
 }
 
-function cleanupDialogueTrack(track: { character: string; parenthetical?: string; lines: string[] }) {
+function cleanupDialogueTrack(track: { character: string; segments: { kind: string; text: string }[] }) {
   track.character = normalizeCharacterCue(track.character);
-  track.lines = track.lines.map(fixInlineText);
+  track.segments = track.segments.map((segment) => ({
+    ...segment,
+    text: fixInlineText(segment.text),
+  }));
 }
 
 function cleanupElement(element: ScreenplayElementDraft): ScreenplayElementDraft {
@@ -192,8 +204,11 @@ function cleanupElement(element: ScreenplayElementDraft): ScreenplayElementDraft
     cleaned.character = normalizeCharacterCue(cleaned.character);
   }
 
-  if (cleaned.lines) {
-    cleaned.lines = cleaned.lines.map(fixInlineText);
+  if (cleaned.segments) {
+    cleaned.segments = cleaned.segments.map((segment) => ({
+      ...segment,
+      text: fixInlineText(segment.text),
+    }));
   }
 
   if (cleaned.left) {
@@ -227,14 +242,12 @@ export function rebuildSearchText(element: ScreenplayElementDraft): string {
   if (element.subtitle) parts.push(element.subtitle);
   if (element.text) parts.push(element.text);
   if (element.character) parts.push(element.character);
-  if (element.parenthetical) parts.push(element.parenthetical);
-  if (element.lines) parts.push(...element.lines);
+  if (element.segments) parts.push(...segmentsSearchParts(element.segments));
 
   for (const side of ["left", "right"] as const) {
     for (const track of element[side] ?? []) {
       parts.push(track.character);
-      if (track.parenthetical) parts.push(track.parenthetical);
-      parts.push(...track.lines);
+      parts.push(...segmentsSearchParts(ensureTrackSegments(track)));
     }
   }
 

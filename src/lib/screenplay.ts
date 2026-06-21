@@ -1,4 +1,5 @@
 import type { ReaderState, SceneTocEntry, ScreenplayData, SearchResult, Moment } from "../types";
+import { ensureDialogueSegments, flattenSegments } from "../../lib/dialogue-segments";
 import { generateMoments } from "../../lib/moments";
 
 export const STORAGE_KEY = "obsession-reader-state";
@@ -156,7 +157,7 @@ function buildSnippet(element: ScreenplayData["elements"][number]): string {
     return element.text ?? "";
   }
   if (element.type === "dialogue") {
-    return `${element.character}: ${element.lines?.join(" ") ?? ""}`;
+    return `${element.character}: ${flattenSegments(ensureDialogueSegments(element))}`;
   }
   if (element.type === "dual_dialogue") {
     const left = element.left?.[0];

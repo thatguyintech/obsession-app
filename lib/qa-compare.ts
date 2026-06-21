@@ -1,3 +1,10 @@
+import type { DialogueSegment } from "./dialogue-segments.js";
+import {
+  ensureDialogueSegments,
+  ensureTrackSegments,
+  flattenSegments,
+} from "./dialogue-segments.js";
+
 export const QA_OK_THRESHOLD = 0.95;
 export const QA_WARN_THRESHOLD = 0.8;
 export const PAGE_HEADER_RE = /^March 9th\b/i;
@@ -26,10 +33,11 @@ export interface QaElementLike {
   author?: string;
   subtitle?: string;
   character?: string;
+  segments?: DialogueSegment[];
   parenthetical?: string;
   lines?: string[];
-  left?: { character?: string; parenthetical?: string; lines?: string[] }[];
-  right?: { character?: string; parenthetical?: string; lines?: string[] }[];
+  left?: { character?: string; segments?: DialogueSegment[]; parenthetical?: string; lines?: string[] }[];
+  right?: { character?: string; segments?: DialogueSegment[]; parenthetical?: string; lines?: string[] }[];
 }
 
 export interface QaPageReport {
@@ -75,8 +83,13 @@ function wordFrequency(words: string[]): Map<string, number> {
   return freq;
 }
 
-function trackText(track: { character?: string; parenthetical?: string; lines?: string[] }): string {
-  return [track.character ?? "", track.parenthetical ?? "", ...(track.lines ?? [])].join(" ").trim();
+function trackText(track: {
+  character?: string;
+  segments?: DialogueSegment[];
+  parenthetical?: string;
+  lines?: string[];
+}): string {
+  return [track.character ?? "", flattenSegments(ensureTrackSegments(track))].join(" ").trim();
 }
 
 export function extractElementText(element: QaElementLike): string {
@@ -87,7 +100,7 @@ export function extractElementText(element: QaElementLike): string {
     case "action":
       return element.text ?? "";
     case "dialogue":
-      return [element.character ?? "", element.parenthetical ?? "", ...(element.lines ?? [])].join(" ");
+      return [element.character ?? "", flattenSegments(ensureDialogueSegments(element))].join(" ");
     case "dual_dialogue": {
       const sides = [...(element.left ?? []), ...(element.right ?? [])].map(trackText).filter(Boolean);
       return sides.join(" ");

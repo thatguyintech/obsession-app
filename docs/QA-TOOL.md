@@ -128,8 +128,8 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 |------|--------|
 | `action` | `text` |
 | `scene_heading` | `text` |
-| `dialogue` | `character`, `parenthetical`, `lines[]` |
-| `dual_dialogue` | per-track `character`, `parenthetical`, `lines[]` |
+| `dialogue` | `character`, `segments[]` (`speech` \| `parenthetical`) |
+| `dual_dialogue` | per-track `character`, `segments[]` |
 | `title_card` | `title`, `author`, `subtitle` (rare) |
 
 ### Phase D — Review workflow
@@ -142,7 +142,7 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 ### Phase E — Structural fixes
 
 - [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
-- [ ] Dialogue segments schema (SCHEMA-001) — **Tier 1, next engineering track**
+- [x] Dialogue segments schema (SCHEMA-001) — types, migration, reader, QA segment editor
 - [ ] Change element type (QA-006) — Tier 2
 - [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — Tier 3; after SCHEMA-001 migration
 
@@ -159,7 +159,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 | **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
 | **QA-006** | Todo | **Change element type** — e.g. action → dialogue without merge |
 | **EXTRACT-001** | Todo | **Dialogue wrap at left margin** — `parseDialogue` breaks when wrapped line hits `x0 < 120`, tail misclassified as action. Fix classifier for future extracts; do not re-run full extract until QA hand-fixes are merged or backed up |
-| **SCHEMA-001** | Todo | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]` replaces single `parenthetical` + `lines[]` for mid-speech asides. Example: page 3 `(some movement)` + `God damn it.` inside Nicky voicemail. Full spec in [PLAN.md](./PLAN.md#schema-001--dialogue-segments-spec). Implement migration before EXTRACT-001 re-extract. |
+| **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
 
 ---
 
