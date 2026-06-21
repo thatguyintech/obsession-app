@@ -119,6 +119,22 @@ body {
     overflow-wrap: anywhere;
   }
 
+  .text-action em,
+  .text-dialogue em {
+    font-style: italic;
+  }
+
+  .text-action u,
+  .text-dialogue u {
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .text-action strong,
+  .text-dialogue strong {
+    font-weight: 600;
+  }
+
   /* Transitions — right-aligned cut directions before a new scene */
   .transition-block {
     @apply mt-6 mb-1;

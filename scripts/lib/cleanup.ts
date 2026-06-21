@@ -4,6 +4,7 @@ import {
   ensureTrackSegments,
   segmentsSearchParts,
 } from "../../lib/dialogue-segments.js";
+import { stripInlineEmphasis } from "../../lib/inline-emphasis.js";
 
 const CHARACTER_CUE_FIXES: Record<string, string> = {
   "BEAR.": "BEAR",
@@ -240,14 +241,18 @@ export function rebuildSearchText(element: ScreenplayElementDraft): string {
   if (element.title) parts.push(element.title);
   if (element.author) parts.push(element.author);
   if (element.subtitle) parts.push(element.subtitle);
-  if (element.text) parts.push(element.text);
+  if (element.text) parts.push(stripInlineEmphasis(element.text));
   if (element.character) parts.push(element.character);
-  if (element.segments) parts.push(...segmentsSearchParts(element.segments));
+  if (element.segments) {
+    parts.push(...segmentsSearchParts(element.segments).map(stripInlineEmphasis));
+  }
 
   for (const side of ["left", "right"] as const) {
     for (const track of element[side] ?? []) {
       parts.push(track.character);
-      parts.push(...segmentsSearchParts(ensureTrackSegments(track)));
+      parts.push(
+        ...segmentsSearchParts(ensureTrackSegments(track)).map(stripInlineEmphasis),
+      );
     }
   }
 

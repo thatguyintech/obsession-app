@@ -1,4 +1,6 @@
 /** Shared OCR / extract artifact fixes for QA word comparison. */
+import { stripInlineEmphasis } from "./inline-emphasis.js";
+
 const QA_TEXT_REPLACEMENTS: Array<[string, string]> = [
   ["wonde red", "wondered"],
   ["year ns", "yearns"],
@@ -23,5 +25,5 @@ export function normalizeForQaCompare(text: string): string {
   // Glued quote artifacts: a"poor → a poor
   normalized = normalized.replace(/([a-z])"([a-z])/gi, "$1 $2");
 
-  return normalized;
+  return stripInlineEmphasis(normalized);
 }

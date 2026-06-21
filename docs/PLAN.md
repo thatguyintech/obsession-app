@@ -392,7 +392,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | ID | Notes |
 |----|--------|
-| **READ-001** | Inline emphasis — `*italic*` + `_underline_` in text fields; tone not correctness |
+| **READ-001** | Inline emphasis — render ✅; QA editor buttons + extract todo |
 | **Later** (build order) | Dual font tuning, Type B dual re-pair, split long scenes |
 | *(un ticketed)* | CLI page-number noise, mis-split heuristics, QA session log, extract line provenance |
 
@@ -410,7 +410,7 @@ READ-004 display → Phase D → READ-001
 
 | ID | Area | Ticket |
 |----|------|--------|
-| **READ-001** | Reader + QA + extract | **Inline emphasis — `*italic*` + `_underline_`** — PDF uses italic and/or underline for reading tone. Examples: page 71 → `*inviting*` in dialogue; page 75 `el-1076` → `_Some_ relief in the room`; `el-029` → `_*Ian*_` or `*Ian*` when PDF has both. **Convention (project-specific):** `*word*` = italic, `_word_` = underline, `**word**` = bold (standard). Differs from strict CommonMark where `_word_` is also italic — we **reserve `_` for underline only** so the two PDF styles stay distinct and editable in QA. **Render:** `renderInlineText()` → `<em>`, `<u>`, `<strong>`. Nested `_*Ian*_` → italic + underline. **QA compare:** strip `*`, `_`, `**` delimiters so marked words still match plain PDF text. **Extract (later):** pdf.js font flags → wrap italic as `*…*`, underline-only as `_…_`. **Editor:** italic / underline / bold buttons insert the matching wrappers. |
+| **READ-001** | Reader + QA + extract | **Inline emphasis — `*italic*` + `_underline_` + `**bold**`**. Convention: `*` italic, `_` underline (project-specific). **Done:** `InlineText` component in reader + QA preview; strip delimiters in QA compare + `rebuildSearchText`. **Todo:** QA editor wrap buttons; extract auto-wrap from pdf.js font flags. |
 | **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
 | **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
 | **READ-004** | Reader + QA editor / action styling | **Paragraph breaks in action blocks** — PDF often has two separate action paragraphs (blank line between). JSON stores one `action.text` string; reader and QA preview collapse to a single block. **Goal:** treat `\n\n` (double newline) as a paragraph break in display — mirror screenplay spacing. Example: `el-003` on page 2 — house/exterior description, then a gap, then Bear fixating on the romance film. QA editor already allows typing two newlines; need render path (reader `ElementView`, QA extracted pane) to split and style as separate `<p>` blocks. Open questions: also support in extract? Split into two elements vs inline `\n\n` in one? Dialogue/action only or scene headings too? |

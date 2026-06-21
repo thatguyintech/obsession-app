@@ -3,6 +3,7 @@ import type { DialogueSegment, SceneTocEntry, ScreenplayElement } from "../types
 import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
 import { getCharacterColor } from "../lib/character-colors";
 import { isContinuousSceneHeading } from "../lib/display";
+import { InlineText } from "./InlineText";
 import { SceneTableOfContents } from "./SceneTableOfContents";
 import type { DialogueTrack } from "../types";
 
@@ -24,7 +25,7 @@ function SegmentList({ segments }: { segments: DialogueSegment[] }) {
           </p>
         ) : (
           <p key={`${index}-s`} className="text-dialogue">
-            {segment.text}
+            <InlineText text={segment.text} />
           </p>
         ),
       )}
@@ -111,7 +112,9 @@ export function ElementView({
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
         <div className="transition-block">
-          <p className="text-scene-transition">{element.text}</p>
+          <p className="text-scene-transition">
+            <InlineText text={element.text ?? ""} />
+          </p>
         </div>
       </ElementWrapper>
     );
@@ -144,7 +147,9 @@ export function ElementView({
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
         <div className="action-block">
-          <p className="text-action">{element.text}</p>
+          <p className="text-action">
+            <InlineText text={element.text ?? ""} />
+          </p>
         </div>
       </ElementWrapper>
     );
