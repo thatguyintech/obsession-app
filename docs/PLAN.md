@@ -358,7 +358,52 @@ obsession-app/
 
 ---
 
-## Backlog (tickets — think about later, not scheduled)
+## Current priorities (Jun 2026)
+
+Ordered stack for what to build next. **Ops work in parallel:** finish QA pass on 9 WARN pages (16, 35, 49, 63, 64, 70, 87, 90, 93) via `/qa?page=N`.
+
+### Tier 1 — Unblock correct content
+
+| # | ID | Why now |
+|---|-----|---------|
+| 1 | **SCHEMA-001** | Mid-speech parentheticals (page 3 `(some movement)` + `God damn it.`) have no first-class field. Blocks proper el-015 / el-017 fix and correct reader display. **Slice:** types → migration → reader → QA editor → validate. Do **not** re-extract until migrated JSON is committed. |
+| 2 | **READ-004** (display) | `el-003` already has `\n\n` in JSON; reader still collapses to one block. Small, independent win — split `action.text` on `\n\n` in `ElementView`. |
+| 3 | *(ops)* | WARN page review — use delete + edit; SCHEMA-001 unlocks page 3 properly |
+
+### Tier 2 — QA velocity & reader polish
+
+| # | ID | Why |
+|---|-----|-----|
+| 4 | **QA-006** | Change element type without copy/delete gymnastics |
+| 5 | **READ-003** | Scene headings should lead visually (prod feedback); mostly CSS |
+| 6 | **Phase D** | Review workflow — mark pages done, CLI hints to `/qa?page=N` |
+
+### Tier 3 — Extract & structural capture (after hand-fixes stable)
+
+| # | ID | Gate |
+|---|-----|------|
+| 7 | **EXTRACT-001** | Pair with SCHEMA-001 classifier output. **Gate:** hand-fixed JSON migrated + committed; backup strategy; no blind `pnpm extract` |
+| 8 | **READ-002** | Transitions (`SMASH CUT TO:`) — fidelity, not blocking QA |
+
+### Tier 4 — Backlog / research
+
+| ID | Notes |
+|----|--------|
+| **READ-001** | Inline emphasis — needs span data or inline marks; tone not correctness |
+| **Later** (build order) | Dual font tuning, Type B dual re-pair, split long scenes |
+| *(un ticketed)* | CLI page-number noise, mis-split heuristics, QA session log, extract line provenance |
+
+### Suggested sequence
+
+```
+SCHEMA-001 → READ-004 display → READ-003 or Phase D → QA-006 → EXTRACT-001 (+ classifier segments) → READ-002
+```
+
+**Dependencies:** EXTRACT-001 waits on SCHEMA-001 migration. READ-004 and READ-003 do not block SCHEMA-001.
+
+---
+
+## Backlog (ticket reference)
 
 | ID | Area | Ticket |
 |----|------|--------|

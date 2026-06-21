@@ -142,9 +142,11 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 ### Phase E — Structural fixes
 
 - [x] Delete element (with confirmation) — copy text to neighbor, then delete orphan
-- [ ] Dialogue segments schema (SCHEMA-001) — speech/parenthetical blocks in one element
-- [ ] Change element type (QA-006)
-- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — manual QA fixes first; re-extract only with care
+- [ ] Dialogue segments schema (SCHEMA-001) — **Tier 1, next engineering track**
+- [ ] Change element type (QA-006) — Tier 2
+- [ ] Classifier: dialogue wrap at left margin (EXTRACT-001) — Tier 3; after SCHEMA-001 migration
+
+See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for full stack.
 
 **Delete workflow (el-015 / el-016 pattern):** paste misclassified text into the correct element → Delete the orphan → Save. Save regenerates beats/moments; element IDs may gap (el-015, el-017, …).
 
@@ -213,4 +215,4 @@ public/data/obsession.json → reader app (prod)
 
 ## Related docs
 
-- [PLAN.md](./PLAN.md) — data model, element types, reader backlog (READ-001–003)
+- [PLAN.md](./PLAN.md) — data model, element types, reader backlog, **current priorities**
