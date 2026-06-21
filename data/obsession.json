@@ -7,7 +7,7 @@
     "beatCount": 1420,
     "momentCount": 60,
     "extractedAt": "2026-06-21",
-    "version": 15
+    "version": 16
   },
   "elements": [
     {
@@ -33,9 +33,7 @@
       "text": "A small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" BEAR, 25, slouches on the couch, a depressed existence. He's decent-looking but lacks self-confidence. He fixates on a pivotal scene from a classic romance film on a small TV, it echoes adding an eerie ambiance to the room.",
       "pdfPage": 2,
       "id": "el-003",
-      "searchText": "a small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" bear, 25, slouches on the couch, a depressed existence. he's decent-looking but lacks self-confidence. he fixates on a pivotal scene from a classic romance film on a small tv, it echoes adding an eerie ambiance to the room.",
-      "rawLineStart": 1,
-      "rawLineEnd": 6
+      "searchText": "a small, old house with faded yellow walls, a tapestry behind the couch serves as a\"poor man's wallpaper.\" bear, 25, slouches on the couch, a depressed existence. he's decent-looking but lacks self-confidence. he fixates on a pivotal scene from a classic romance film on a small tv, it echoes adding an eerie ambiance to the room."
     },
     {
       "type": "dialogue",
@@ -101,9 +99,7 @@
       "text": "Bear’s eyes tell the story of a man who yearns for love but enjoys wallowing in his disappointments. He looks down at the ground in front of him and sighs. In the center of the room, a DEAD CAT lies where the coffee table should be. Its body is stiff, and the grease from its hair has begun to seep into the carpet, causing it to smell. Bear takes a deep breath and finally stands up.",
       "pdfPage": 2,
       "id": "el-005",
-      "searchText": "bear’s eyes tell the story of a man who yearns for love but enjoys wallowing in his disappointments. he looks down at the ground in front of him and sighs. in the center of the room, a dead cat lies where the coffee table should be. its body is stiff, and the grease from its hair has begun to seep into the carpet, causing it to smell. bear takes a deep breath and finally stands up.",
-      "rawLineStart": 20,
-      "rawLineEnd": 26
+      "searchText": "bear’s eyes tell the story of a man who yearns for love but enjoys wallowing in his disappointments. he looks down at the ground in front of him and sighs. in the center of the room, a dead cat lies where the coffee table should be. its body is stiff, and the grease from its hair has begun to seep into the carpet, causing it to smell. bear takes a deep breath and finally stands up."
     },
     {
       "type": "scene_heading",
@@ -119,9 +115,7 @@
       "text": "Countertops cluttered with junk. On the tile floor: a straw basket, pills, and candle wax from a shattered candle. Bear scoops the pills back into their bottle, reluctantly.",
       "pdfPage": 2,
       "id": "el-007",
-      "searchText": "countertops cluttered with junk. on the tile floor: a straw basket, pills, and candle wax from a shattered candle. bear scoops the pills back into their bottle, reluctantly.",
-      "rawLineStart": 28,
-      "rawLineEnd": 31
+      "searchText": "countertops cluttered with junk. on the tile floor: a straw basket, pills, and candle wax from a shattered candle. bear scoops the pills back into their bottle, reluctantly."
     },
     {
       "type": "scene_heading",
@@ -137,9 +131,7 @@
       "text": "Bear opens the mirror/medicine cabinet and places a pill bottle inside. He shuts the cabinet and looks at himself in the mirror. He tests out a smile; eerie.",
       "pdfPage": 2,
       "id": "el-009",
-      "searchText": "bear opens the mirror/medicine cabinet and places a pill bottle inside. he shuts the cabinet and looks at himself in the mirror. he tests out a smile; eerie.",
-      "rawLineStart": 33,
-      "rawLineEnd": 35
+      "searchText": "bear opens the mirror/medicine cabinet and places a pill bottle inside. he shuts the cabinet and looks at himself in the mirror. he tests out a smile; eerie."
     },
     {
       "type": "scene_heading",
@@ -155,18 +147,14 @@
       "text": "The coffee table is shoved aside. Bear, wearing rubber gloves and a dust mask, opens a trash bag over the cat's corpse. Bear drops the now HEAVY trash bag into a trash can.",
       "pdfPage": 2,
       "id": "el-011",
-      "searchText": "the coffee table is shoved aside. bear, wearing rubber gloves and a dust mask, opens a trash bag over the cat's corpse. bear drops the now heavy trash bag into a trash can.",
-      "rawLineStart": 37,
-      "rawLineEnd": 40
+      "searchText": "the coffee table is shoved aside. bear, wearing rubber gloves and a dust mask, opens a trash bag over the cat's corpse. bear drops the now heavy trash bag into a trash can."
     },
     {
       "type": "action",
       "text": "On his hands and knees, he scrubs grease and wax from the carpet. His phone rings in another room.",
       "pdfPage": 3,
       "id": "el-012",
-      "searchText": "on his hands and knees, he scrubs grease and wax from the carpet. his phone rings in another room.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "on his hands and knees, he scrubs grease and wax from the carpet. his phone rings in another room."
     },
     {
       "type": "scene_heading",
@@ -182,9 +170,7 @@
       "text": "Bear walks over to the nightstand, snatching his phone off the charger. A voicemail from NICKY. Bear’s face lights up.",
       "pdfPage": 3,
       "id": "el-014",
-      "searchText": "bear walks over to the nightstand, snatching his phone off the charger. a voicemail from nicky. bear’s face lights up.",
-      "rawLineStart": 5,
-      "rawLineEnd": 6
+      "searchText": "bear walks over to the nightstand, snatching his phone off the charger. a voicemail from nicky. bear’s face lights up."
     },
     {
       "type": "dialogue",
@@ -316,8 +302,8 @@
       "pdfPage": 3,
       "id": "el-019",
       "searchText": "nicky (v.o.) pain yeah... i’m fine. laughter i bet that was a funny voicemail - i dropped my crystal necklace down a drain while i was talking.",
-      "rawLineStart": 27,
-      "rawLineEnd": 40
+      "rawLineStart": 26,
+      "rawLineEnd": 32
     },
     {
       "type": "dialogue",
@@ -330,7 +316,9 @@
       ],
       "pdfPage": 3,
       "id": "el-020",
-      "searchText": "bear jeez."
+      "searchText": "bear jeez.",
+      "rawLineStart": 33,
+      "rawLineEnd": 34
     },
     {
       "type": "dialogue",
@@ -343,7 +331,9 @@
       ],
       "pdfPage": 3,
       "id": "el-021",
-      "searchText": "nicky (v.o.) yeah, so annoying-"
+      "searchText": "nicky (v.o.) yeah, so annoying-",
+      "rawLineStart": 35,
+      "rawLineEnd": 36
     },
     {
       "type": "dialogue",
@@ -356,7 +346,9 @@
       ],
       "pdfPage": 3,
       "id": "el-022",
-      "searchText": "bear did you get it back?"
+      "searchText": "bear did you get it back?",
+      "rawLineStart": 37,
+      "rawLineEnd": 38
     },
     {
       "type": "dialogue",
@@ -381,7 +373,9 @@
       ],
       "pdfPage": 3,
       "id": "el-023",
-      "searchText": "nicky (v.o.) no! like, it’s gone! i dropped it down a fucking drain! to herself of all days-"
+      "searchText": "nicky (v.o.) no! like, it’s gone! i dropped it down a fucking drain! to herself of all days-",
+      "rawLineStart": 39,
+      "rawLineEnd": 43
     },
     {
       "type": "dialogue",
@@ -541,9 +535,7 @@
       "text": "Bear, center-screen, illuminated only by a warm lamp behind him, sits on the edge of his bed, crying. Probably about the cat, or Nicky, or his life. Maybe all of the above.",
       "pdfPage": 4,
       "id": "el-033",
-      "searchText": "bear, center-screen, illuminated only by a warm lamp behind him, sits on the edge of his bed, crying. probably about the cat, or nicky, or his life. maybe all of the above.",
-      "rawLineStart": 26,
-      "rawLineEnd": 28
+      "searchText": "bear, center-screen, illuminated only by a warm lamp behind him, sits on the edge of his bed, crying. probably about the cat, or nicky, or his life. maybe all of the above."
     },
     {
       "type": "scene_heading",
@@ -559,9 +551,7 @@
       "text": "Crystals, witchcraft books, and incense. A thrifty “mom-and-pop” shop. Bear aimlessly shops, wearing an Oxford button-up and khakis. He cleans up nice.",
       "pdfPage": 4,
       "id": "el-035",
-      "searchText": "crystals, witchcraft books, and incense. a thrifty “mom-and-pop” shop. bear aimlessly shops, wearing an oxford button-up and khakis. he cleans up nice.",
-      "rawLineStart": 30,
-      "rawLineEnd": 33
+      "searchText": "crystals, witchcraft books, and incense. a thrifty “mom-and-pop” shop. bear aimlessly shops, wearing an oxford button-up and khakis. he cleans up nice."
     },
     {
       "type": "dialogue",
@@ -632,7 +622,7 @@
       "id": "el-040",
       "searchText": "the hipster clerk walks over, viola, 29, right out of woodstock.",
       "rawLineStart": 4,
-      "rawLineEnd": 5
+      "rawLineEnd": 4
     },
     {
       "type": "dialogue",
@@ -764,9 +754,7 @@
       "text": "Bear scans the crystals, grabbing a few. His eyes shift to a lonely shelf just over to the right. Its aged and out-of-place appearance stands out. The sign reads:\"Grab your One Wish Willow!” Only a few scattered boxes remain. They're the size of a toothpaste box, featuring a design reminiscent of a classic 1950s toy package. Bear grabs one. “ THE ONE WISH WILLOW. SPARK THE MIDDLE AND BREAK IT IN HALF! ” He flips it over. “ You only get one wish, so make it count!” Bear smiles; Nicky’s gonna love this.",
       "pdfPage": 5,
       "id": "el-048",
-      "searchText": "bear scans the crystals, grabbing a few. his eyes shift to a lonely shelf just over to the right. its aged and out-of-place appearance stands out. the sign reads:\"grab your one wish willow!” only a few scattered boxes remain. they're the size of a toothpaste box, featuring a design reminiscent of a classic 1950s toy package. bear grabs one. “ the one wish willow. spark the middle and break it in half! ” he flips it over. “ you only get one wish, so make it count!” bear smiles; nicky’s gonna love this.",
-      "rawLineStart": 27,
-      "rawLineEnd": 37
+      "searchText": "bear scans the crystals, grabbing a few. his eyes shift to a lonely shelf just over to the right. its aged and out-of-place appearance stands out. the sign reads:\"grab your one wish willow!” only a few scattered boxes remain. they're the size of a toothpaste box, featuring a design reminiscent of a classic 1950s toy package. bear grabs one. “ the one wish willow. spark the middle and break it in half! ” he flips it over. “ you only get one wish, so make it count!” bear smiles; nicky’s gonna love this."
     },
     {
       "type": "scene_heading",
@@ -1340,7 +1328,7 @@
       "id": "el-084",
       "searchText": "bear turns around to look at the clerk. she smiles very still; eerie.",
       "rawLineStart": 8,
-      "rawLineEnd": 9
+      "rawLineEnd": 8
     },
     {
       "type": "dialogue",
@@ -1375,9 +1363,7 @@
       "text": "Bear drives to trivia alone in his early 2000s model. His car still has crank-down windows. He appears to be talking to himself.",
       "pdfPage": 8,
       "id": "el-087",
-      "searchText": "bear drives to trivia alone in his early 2000s model. his car still has crank-down windows. he appears to be talking to himself.",
-      "rawLineStart": 14,
-      "rawLineEnd": 16
+      "searchText": "bear drives to trivia alone in his early 2000s model. his car still has crank-down windows. he appears to be talking to himself."
     },
     {
       "type": "dialogue",
@@ -2238,9 +2224,7 @@
       "text": "An upbeat retro bar, buzzing with trivia nerds. Bear sits with his best friends — Nicky, Ian, and Sarah. The focus stays tightly on Bear, not yet revealing his friends.",
       "pdfPage": 11,
       "id": "el-130",
-      "searchText": "an upbeat retro bar, buzzing with trivia nerds. bear sits with his best friends — nicky, ian, and sarah. the focus stays tightly on bear, not yet revealing his friends.",
-      "rawLineStart": 37,
-      "rawLineEnd": 39
+      "searchText": "an upbeat retro bar, buzzing with trivia nerds. bear sits with his best friends — nicky, ian, and sarah. the focus stays tightly on bear, not yet revealing his friends."
     },
     {
       "type": "dialogue",
@@ -2369,9 +2353,7 @@
       "text": "Bear forces a smile, listening to the gang. His gaze keeps returning to Nicky, despite attempts to look away.",
       "pdfPage": 12,
       "id": "el-137",
-      "searchText": "bear forces a smile, listening to the gang. his gaze keeps returning to nicky, despite attempts to look away.",
-      "rawLineStart": 18,
-      "rawLineEnd": 20
+      "searchText": "bear forces a smile, listening to the gang. his gaze keeps returning to nicky, despite attempts to look away."
     },
     {
       "type": "dialogue",
@@ -2461,9 +2443,7 @@
       "text": "Laughter. We cut from Bear to Ian's hand gently resting on Nicky's shoulder in comfort. Bear, disturbed, forces a laugh and joins in.",
       "pdfPage": 12,
       "id": "el-143",
-      "searchText": "laughter. we cut from bear to ian's hand gently resting on nicky's shoulder in comfort. bear, disturbed, forces a laugh and joins in.",
-      "rawLineStart": 33,
-      "rawLineEnd": 35
+      "searchText": "laughter. we cut from bear to ian's hand gently resting on nicky's shoulder in comfort. bear, disturbed, forces a laugh and joins in."
     },
     {
       "type": "dialogue",
@@ -2809,9 +2789,7 @@
       ],
       "pdfPage": 14,
       "id": "el-163",
-      "searchText": "sarah (o.s.) maybe to protect your happy ass.  (cont’d)",
-      "rawLineStart": 8,
-      "rawLineEnd": 12
+      "searchText": "sarah (o.s.) maybe to protect your happy ass.  (cont’d)"
     },
     {
       "type": "dialogue",
@@ -2825,8 +2803,8 @@
       "pdfPage": 14,
       "id": "el-164",
       "searchText": "sarah (o.s.) here we go.",
-      "rawLineStart": 13,
-      "rawLineEnd": 18
+      "rawLineStart": 12,
+      "rawLineEnd": 13
     },
     {
       "type": "dialogue",
@@ -2847,7 +2825,9 @@
       ],
       "pdfPage": 14,
       "id": "el-165",
-      "searchText": "nicky (o.s.) you know you’re thirty percent more likely to die from a gun accident by owning one."
+      "searchText": "nicky (o.s.) you know you’re thirty percent more likely to die from a gun accident by owning one.",
+      "rawLineStart": 14,
+      "rawLineEnd": 17
     },
     {
       "type": "dialogue",
@@ -2869,8 +2849,8 @@
       "pdfPage": 14,
       "id": "el-166",
       "searchText": "sarah (o.s.) and you’re one hundred percent more likely to die in a gunfight without a gun.",
-      "rawLineStart": 19,
-      "rawLineEnd": 25
+      "rawLineStart": 18,
+      "rawLineEnd": 21
     },
     {
       "type": "dialogue",
@@ -2891,16 +2871,16 @@
       ],
       "pdfPage": 14,
       "id": "el-167",
-      "searchText": "nicky (o.s.) aggravated and how many gunfights have yo u been in sarah? i need to pee."
+      "searchText": "nicky (o.s.) aggravated and how many gunfights have yo u been in sarah? i need to pee.",
+      "rawLineStart": 22,
+      "rawLineEnd": 25
     },
     {
       "type": "action",
       "text": "As Nicky exits, we shift to SARAH, 25, cute, effortlessly cool, with a large bass clef tattoo on her left arm and a heart tattoo above her left breast. She's unknowingly sporting a beer mustache.",
       "pdfPage": 14,
       "id": "el-168",
-      "searchText": "as nicky exits, we shift to sarah, 25, cute, effortlessly cool, with a large bass clef tattoo on her left arm and a heart tattoo above her left breast. she's unknowingly sporting a beer mustache.",
-      "rawLineStart": 26,
-      "rawLineEnd": 29
+      "searchText": "as nicky exits, we shift to sarah, 25, cute, effortlessly cool, with a large bass clef tattoo on her left arm and a heart tattoo above her left breast. she's unknowingly sporting a beer mustache."
     },
     {
       "type": "dialogue",
@@ -3152,9 +3132,7 @@
       "text": "Sarah looks confused.",
       "pdfPage": 15,
       "id": "el-182",
-      "searchText": "sarah looks confused.",
-      "rawLineStart": 25,
-      "rawLineEnd": 26
+      "searchText": "sarah looks confused."
     },
     {
       "type": "dialogue",
@@ -3256,9 +3234,7 @@
       "text": "Sarah shoots a look of embarrassment at Bear as she wipes the beer from her mouth. Ian and Nicky laugh.",
       "pdfPage": 16,
       "id": "el-190",
-      "searchText": "sarah shoots a look of embarrassment at bear as she wipes the beer from her mouth. ian and nicky laugh.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "sarah shoots a look of embarrassment at bear as she wipes the beer from her mouth. ian and nicky laugh."
     },
     {
       "type": "dialogue",
@@ -3350,7 +3326,7 @@
       "id": "el-196",
       "searchText": "the trivia guy, 40s, starts announcing as bear is about to speak.",
       "rawLineStart": 17,
-      "rawLineEnd": 18
+      "rawLineEnd": 17
     },
     {
       "type": "dialogue",
@@ -3386,7 +3362,7 @@
       "id": "el-198",
       "searchText": "bear tries to talk over the man. bear",
       "rawLineStart": 25,
-      "rawLineEnd": 27
+      "rawLineEnd": 25
     },
     {
       "type": "dual_dialogue",
@@ -3515,7 +3491,7 @@
       "pdfPage": 17,
       "id": "el-205",
       "searchText": "bear got into some pills! trivia guy (o.s.) and tonight’s theme is going to be early film trivia!",
-      "rawLineStart": 2,
+      "rawLineStart": 4,
       "rawLineEnd": 6
     },
     {
@@ -3523,9 +3499,7 @@
       "text": "The crowd cheers. NICKY, 24, steps into frame, a mix of intelligence, beauty, and effortless charm. She has the cool, girl-next-door appeal.",
       "pdfPage": 17,
       "id": "el-206",
-      "searchText": "the crowd cheers. nicky, 24, steps into frame, a mix of intelligence, beauty, and effortless charm. she has the cool, girl-next-door appeal.",
-      "rawLineStart": 7,
-      "rawLineEnd": 9
+      "searchText": "the crowd cheers. nicky, 24, steps into frame, a mix of intelligence, beauty, and effortless charm. she has the cool, girl-next-door appeal."
     },
     {
       "type": "dialogue",
@@ -3547,9 +3521,7 @@
       "text": "Nicky crawls into the booth, hugging Bear in a way that lingers beyond friendly. She kisses his cheek, enough to confuse any man. IAN (O.S.)",
       "pdfPage": 17,
       "id": "el-208",
-      "searchText": "nicky crawls into the booth, hugging bear in a way that lingers beyond friendly. she kisses his cheek, enough to confuse any man. ian (o.s.)",
-      "rawLineStart": 12,
-      "rawLineEnd": 16
+      "searchText": "nicky crawls into the booth, hugging bear in a way that lingers beyond friendly. she kisses his cheek, enough to confuse any man. ian (o.s.)"
     },
     {
       "type": "dual_dialogue",
@@ -3609,9 +3581,7 @@
       ],
       "pdfPage": 17,
       "id": "el-209",
-      "searchText": "ian (o.s.) jeez dude, sandy? that fucking sucks! trivia guy (o.s.) ok, this first one is a two- parter, you have to answer both. here we go. this animated film stars a blue genie that could grant three wishes. what is the name of this movie and what year did it come out?",
-      "rawLineStart": 17,
-      "rawLineEnd": 38
+      "searchText": "ian (o.s.) jeez dude, sandy? that fucking sucks! trivia guy (o.s.) ok, this first one is a two- parter, you have to answer both. here we go. this animated film stars a blue genie that could grant three wishes. what is the name of this movie and what year did it come out?"
     },
     {
       "type": "action",
@@ -3647,21 +3617,27 @@
       ],
       "pdfPage": 17,
       "id": "el-211",
-      "searchText": "trivia guy (o.s.) what classic movi e features a famous landmark in new york city that’s often associated with making wishes by throwing coins into its fountain?"
+      "searchText": "trivia guy (o.s.) what classic movi e features a famous landmark in new york city that’s often associated with making wishes by throwing coins into its fountain?",
+      "rawLineStart": 30,
+      "rawLineEnd": 35
     },
     {
       "type": "transition",
       "text": "CUT TO:",
       "pdfPage": 17,
       "id": "el-212",
-      "searchText": "cut to:"
+      "searchText": "cut to:",
+      "rawLineStart": 36,
+      "rawLineEnd": 36
     },
     {
       "type": "scene_heading",
       "text": "EXT. TRIVIA BAR - PARKING LOT - LATER",
       "pdfPage": 17,
       "id": "el-213",
-      "searchText": "ext. trivia bar - parking lot - later"
+      "searchText": "ext. trivia bar - parking lot - later",
+      "rawLineStart": 37,
+      "rawLineEnd": 37
     },
     {
       "type": "action",
@@ -3806,7 +3782,7 @@
       "id": "el-222",
       "searchText": "nicky joins in, smiling for the first time. bear thinks this is so cute.",
       "rawLineStart": 16,
-      "rawLineEnd": 17
+      "rawLineEnd": 16
     },
     {
       "type": "dialogue",
@@ -3849,7 +3825,7 @@
       "id": "el-223",
       "searchText": "sarah & nicky rapping yum-yum chocolate chip honey dip, can i get a scoop? baby take a ride in my coupe, you make me wanna- singing shoop, shoop ba-doop. shoop ba- doop, shoop ba-doop ba-doop ba- doop.",
       "rawLineStart": 19,
-      "rawLineEnd": 34
+      "rawLineEnd": 27
     },
     {
       "type": "dialogue",
@@ -3866,7 +3842,9 @@
       ],
       "pdfPage": 18,
       "id": "el-224",
-      "searchText": "ian playful see, sarah sucks!"
+      "searchText": "ian playful see, sarah sucks!",
+      "rawLineStart": 28,
+      "rawLineEnd": 30
     },
     {
       "type": "dialogue",
@@ -3883,14 +3861,18 @@
       ],
       "pdfPage": 18,
       "id": "el-225",
-      "searchText": "sarah taken aback wow."
+      "searchText": "sarah taken aback wow.",
+      "rawLineStart": 31,
+      "rawLineEnd": 33
     },
     {
       "type": "action",
       "text": "Nicky and Bear start laughing hard.",
       "pdfPage": 18,
       "id": "el-226",
-      "searchText": "nicky and bear start laughing hard."
+      "searchText": "nicky and bear start laughing hard.",
+      "rawLineStart": 34,
+      "rawLineEnd": 34
     },
     {
       "type": "dialogue",
@@ -4127,9 +4109,7 @@
       "text": "Ian hugs Nicky, and Sarah hugs Bear, giving him a flirty squeeze after the embrace.",
       "pdfPage": 19,
       "id": "el-243",
-      "searchText": "ian hugs nicky, and sarah hugs bear, giving him a flirty squeeze after the embrace.",
-      "rawLineStart": 25,
-      "rawLineEnd": 26
+      "searchText": "ian hugs nicky, and sarah hugs bear, giving him a flirty squeeze after the embrace."
     },
     {
       "type": "dialogue",
@@ -4157,7 +4137,7 @@
       "id": "el-245",
       "searchText": "bear and ian exchange a dap. ian points at bear as they part ways.",
       "rawLineStart": 30,
-      "rawLineEnd": 31
+      "rawLineEnd": 30
     },
     {
       "type": "dialogue",
@@ -4200,7 +4180,7 @@
       "id": "el-248",
       "searchText": "ian shoots bear a look of defeat. bear hides his disappointment.",
       "rawLineStart": 37,
-      "rawLineEnd": 38
+      "rawLineEnd": 37
     },
     {
       "type": "scene_heading",
@@ -4216,9 +4196,7 @@
       "text": "In the smallness of the car, Nicky's intoxication becomes more obvious. She slurs her words, stares off, and her movements are abrupt.",
       "pdfPage": 20,
       "id": "el-250",
-      "searchText": "in the smallness of the car, nicky's intoxication becomes more obvious. she slurs her words, stares off, and her movements are abrupt.",
-      "rawLineStart": 3,
-      "rawLineEnd": 5
+      "searchText": "in the smallness of the car, nicky's intoxication becomes more obvious. she slurs her words, stares off, and her movements are abrupt."
     },
     {
       "type": "dialogue",
@@ -4508,7 +4486,7 @@
       "id": "el-266",
       "searchText": "they laugh together, bear charmed by her humor. the conversation feels flirty.",
       "rawLineStart": 12,
-      "rawLineEnd": 13
+      "rawLineEnd": 12
     },
     {
       "type": "dialogue",
@@ -4873,9 +4851,7 @@
       "text": "Bear can’t keep his eyes off of her. Her EMOTIONAL INTELLIGENCE is so attractive to him.",
       "pdfPage": 22,
       "id": "el-285",
-      "searchText": "bear can’t keep his eyes off of her. her emotional intelligence is so attractive to him.",
-      "rawLineStart": 32,
-      "rawLineEnd": 33
+      "searchText": "bear can’t keep his eyes off of her. her emotional intelligence is so attractive to him."
     },
     {
       "type": "dialogue",
@@ -4907,7 +4883,7 @@
       "id": "el-287",
       "searchText": "a long beat. bear keeps going back to her lips. he aches to kiss her.",
       "rawLineStart": 40,
-      "rawLineEnd": 41
+      "rawLineEnd": 40
     },
     {
       "type": "dialogue",
@@ -5025,7 +5001,7 @@
       "id": "el-295",
       "searchText": "she seems impressed by his compassion and somewhat insulted by his “expertise.”",
       "rawLineStart": 18,
-      "rawLineEnd": 19
+      "rawLineEnd": 18
     },
     {
       "type": "dialogue",
@@ -5138,7 +5114,7 @@
       "id": "el-302",
       "searchText": "bear’s in his head, trying to figure out what to say to keep his good fortune going.",
       "rawLineStart": 36,
-      "rawLineEnd": 37
+      "rawLineEnd": 36
     },
     {
       "type": "dialogue",
@@ -5374,9 +5350,7 @@
       "text": "INT/EXT. PARKED CAR - CONTINUOUS Before she shuts the door:",
       "pdfPage": 24,
       "id": "el-318",
-      "searchText": "int/ext. parked car - continuous before she shuts the door:",
-      "rawLineStart": 34,
-      "rawLineEnd": 35
+      "searchText": "int/ext. parked car - continuous before she shuts the door:"
     },
     {
       "type": "dialogue",
@@ -5404,7 +5378,7 @@
       "id": "el-320",
       "searchText": "she bends down, peering through the car door opening. almost bothered.",
       "rawLineStart": 39,
-      "rawLineEnd": 40
+      "rawLineEnd": 39
     },
     {
       "type": "dialogue",
@@ -5585,7 +5559,7 @@
       "id": "el-331",
       "searchText": "bear’s speech is interrupted. he sits back in his disappointment.",
       "rawLineStart": 32,
-      "rawLineEnd": 33
+      "rawLineEnd": 32
     },
     {
       "type": "dialogue",
@@ -5758,9 +5732,7 @@
       "text": "The car door shuts, and Bear's expression falls, shoulders slumping. He watches Nicky enter her house and close the door behind her, pain washing over him.",
       "pdfPage": 26,
       "id": "el-344",
-      "searchText": "the car door shuts, and bear's expression falls, shoulders slumping. he watches nicky enter her house and close the door behind her, pain washing over him.",
-      "rawLineStart": 17,
-      "rawLineEnd": 19
+      "searchText": "the car door shuts, and bear's expression falls, shoulders slumping. he watches nicky enter her house and close the door behind her, pain washing over him."
     },
     {
       "type": "dialogue",
@@ -5782,9 +5754,7 @@
       "text": "A long beat. Bear reaches into his backp ack in the back seat and pulls out the ONE WISH WILLOW. Seeing it, he laughs, then glances at Nicky's empty porch and opens the box — Pop! A spark lights the stick. The box drops into his backpack, prompting another laugh.",
       "pdfPage": 26,
       "id": "el-346",
-      "searchText": "a long beat. bear reaches into his backp ack in the back seat and pulls out the one wish willow. seeing it, he laughs, then glances at nicky's empty porch and opens the box — pop! a spark lights the stick. the box drops into his backpack, prompting another laugh.",
-      "rawLineStart": 22,
-      "rawLineEnd": 26
+      "searchText": "a long beat. bear reaches into his backp ack in the back seat and pulls out the one wish willow. seeing it, he laughs, then glances at nicky's empty porch and opens the box — pop! a spark lights the stick. the box drops into his backpack, prompting another laugh."
     },
     {
       "type": "dialogue",
@@ -5814,9 +5784,7 @@
       "text": "He BREAKS THE BRANCH IN HALF, resting his head on the steering wheel. Starting the car, Bear startled by NICKY on the porch, looking at him, lost. She looks back at her house, confused, as if not recognizing it, then turns to Bear, points at herself questioningly, and walks to the car with a wide, eerie smile.",
       "pdfPage": 26,
       "id": "el-348",
-      "searchText": "he breaks the branch in half, resting his head on the steering wheel. starting the car, bear startled by nicky on the porch, looking at him, lost. she looks back at her house, confused, as if not recognizing it, then turns to bear, points at herself questioningly, and walks to the car with a wide, eerie smile.",
-      "rawLineStart": 32,
-      "rawLineEnd": 39
+      "searchText": "he breaks the branch in half, resting his head on the steering wheel. starting the car, bear startled by nicky on the porch, looking at him, lost. she looks back at her house, confused, as if not recognizing it, then turns to bear, points at herself questioningly, and walks to the car with a wide, eerie smile."
     },
     {
       "type": "dialogue",
@@ -5842,9 +5810,7 @@
       "text": "Bear glances at his broken stick, shoves it into his backpack, and hurriedly throws it to the back seat. He rolls down the window as Nicky approaches.",
       "pdfPage": 27,
       "id": "el-350",
-      "searchText": "bear glances at his broken stick, shoves it into his backpack, and hurriedly throws it to the back seat. he rolls down the window as nicky approaches.",
-      "rawLineStart": 2,
-      "rawLineEnd": 4
+      "searchText": "bear glances at his broken stick, shoves it into his backpack, and hurriedly throws it to the back seat. he rolls down the window as nicky approaches."
     },
     {
       "type": "dialogue",
@@ -5889,9 +5855,7 @@
       "text": "A beat. Bear nods, a mix of realization and relief crossing his face. He gets it now.",
       "pdfPage": 27,
       "id": "el-353",
-      "searchText": "a beat. bear nods, a mix of realization and relief crossing his face. he gets it now.",
-      "rawLineStart": 12,
-      "rawLineEnd": 13
+      "searchText": "a beat. bear nods, a mix of realization and relief crossing his face. he gets it now."
     },
     {
       "type": "dialogue",
@@ -5932,9 +5896,7 @@
       "text": "Silence stretches. Nicky's gaze on Bear is expectant, tapping her fingers on the window frame.",
       "pdfPage": 27,
       "id": "el-356",
-      "searchText": "silence stretches. nicky's gaze on bear is expectant, tapping her fingers on the window frame.",
-      "rawLineStart": 19,
-      "rawLineEnd": 20
+      "searchText": "silence stretches. nicky's gaze on bear is expectant, tapping her fingers on the window frame."
     },
     {
       "type": "dialogue",
@@ -6207,7 +6169,7 @@
       "id": "el-373",
       "searchText": "the repeated “yeah” in the same tone is eerie and makes bear a bit wary.",
       "rawLineStart": 20,
-      "rawLineEnd": 21
+      "rawLineEnd": 20
     },
     {
       "type": "dialogue",
@@ -6263,9 +6225,7 @@
       "text": "Nicky crosses her arms like a child who didn’t get her way. It's strange seeing her this way; her body language contradicts her personality.",
       "pdfPage": 28,
       "id": "el-377",
-      "searchText": "nicky crosses her arms like a child who didn’t get her way. it's strange seeing her this way; her body language contradicts her personality.",
-      "rawLineStart": 29,
-      "rawLineEnd": 31
+      "searchText": "nicky crosses her arms like a child who didn’t get her way. it's strange seeing her this way; her body language contradicts her personality."
     },
     {
       "type": "dialogue",
@@ -6479,7 +6439,7 @@
       "id": "el-391",
       "searchText": "nicky i must be pretty fucked up.",
       "rawLineStart": 27,
-      "rawLineEnd": 31
+      "rawLineEnd": 27
     },
     {
       "type": "dialogue",
@@ -6496,7 +6456,9 @@
       ],
       "pdfPage": 29,
       "id": "el-392",
-      "searchText": "bear yeah... i know. that’s why i think you need water and sleep. you know?"
+      "searchText": "bear yeah... i know. that’s why i think you need water and sleep. you know?",
+      "rawLineStart": 28,
+      "rawLineEnd": 30
     },
     {
       "type": "action",
@@ -7002,9 +6964,7 @@
       "text": "Bear and Nicky walk through the front door. Nicky looking around, wipes a tear, and walks towards the kitchen.",
       "pdfPage": 31,
       "id": "el-426",
-      "searchText": "bear and nicky walk through the front door. nicky looking around, wipes a tear, and walks towards the kitchen.",
-      "rawLineStart": 30,
-      "rawLineEnd": 31
+      "searchText": "bear and nicky walk through the front door. nicky looking around, wipes a tear, and walks towards the kitchen."
     },
     {
       "type": "dialogue",
@@ -7196,9 +7156,7 @@
       "text": "Nicky sits up in bed, fully clothed under the covers. Bear lingers in the doorway, like a father saying goodnight.",
       "pdfPage": 32,
       "id": "el-440",
-      "searchText": "nicky sits up in bed, fully clothed under the covers. bear lingers in the doorway, like a father saying goodnight.",
-      "rawLineStart": 23,
-      "rawLineEnd": 25
+      "searchText": "nicky sits up in bed, fully clothed under the covers. bear lingers in the doorway, like a father saying goodnight."
     },
     {
       "type": "dialogue",
@@ -7212,8 +7170,8 @@
       "pdfPage": 32,
       "id": "el-441",
       "searchText": "nicky i’m sorry i was so weird earlier. i-",
-      "rawLineStart": 26,
-      "rawLineEnd": 33
+      "rawLineStart": 25,
+      "rawLineEnd": 26
     },
     {
       "type": "dialogue",
@@ -7234,7 +7192,9 @@
       ],
       "pdfPage": 32,
       "id": "el-442",
-      "searchText": "bear no need to explain. take all the space-or i mean, time that you need okay? goodnight."
+      "searchText": "bear no need to explain. take all the space-or i mean, time that you need okay? goodnight.",
+      "rawLineStart": 27,
+      "rawLineEnd": 30
     },
     {
       "type": "action",
@@ -7254,7 +7214,9 @@
       ],
       "pdfPage": 32,
       "id": "el-444",
-      "searchText": "nicky wait."
+      "searchText": "nicky wait.",
+      "rawLineStart": 33,
+      "rawLineEnd": 34
     },
     {
       "type": "dialogue",
@@ -7362,9 +7324,7 @@
       "text": "Bear starts to remove his shoes when Nicky begins undressing. He quickly turns away. She continues to remove her shirt and pants in the b.g. This is BIZARRE, but he ain’t complaining. Slowly turning back, he sees Nicky giving him a sad smile. He approaches her gently and softly touches her arm.",
       "pdfPage": 33,
       "id": "el-452",
-      "searchText": "bear starts to remove his shoes when nicky begins undressing. he quickly turns away. she continues to remove her shirt and pants in the b.g. this is bizarre, but he ain’t complaining. slowly turning back, he sees nicky giving him a sad smile. he approaches her gently and softly touches her arm.",
-      "rawLineStart": 14,
-      "rawLineEnd": 20
+      "searchText": "bear starts to remove his shoes when nicky begins undressing. he quickly turns away. she continues to remove her shirt and pants in the b.g. this is bizarre, but he ain’t complaining. slowly turning back, he sees nicky giving him a sad smile. he approaches her gently and softly touches her arm."
     },
     {
       "type": "dialogue",
@@ -7401,9 +7361,7 @@
       "text": "Bear hesitates, then sits beside her on the bed, cautious and uncertain of the limits. He's taken aback when she lays her head on his shoulder.",
       "pdfPage": 33,
       "id": "el-455",
-      "searchText": "bear hesitates, then sits beside her on the bed, cautious and uncertain of the limits. he's taken aback when she lays her head on his shoulder.",
-      "rawLineStart": 26,
-      "rawLineEnd": 28
+      "searchText": "bear hesitates, then sits beside her on the bed, cautious and uncertain of the limits. he's taken aback when she lays her head on his shoulder."
     },
     {
       "type": "dialogue",
@@ -7541,9 +7499,7 @@
       "text": "A tear rolling down her face, she softly takes Bear's chin and leans in for a kiss.",
       "pdfPage": 34,
       "id": "el-465",
-      "searchText": "a tear rolling down her face, she softly takes bear's chin and leans in for a kiss.",
-      "rawLineStart": 9,
-      "rawLineEnd": 10
+      "searchText": "a tear rolling down her face, she softly takes bear's chin and leans in for a kiss."
     },
     {
       "type": "dialogue",
@@ -7569,9 +7525,7 @@
       "text": "Bear is uncertain if her feelings stem from grief or desperation. Yet, gazing into her eyes, he realizes his deep longing for this moment. He succumbs to her kisses, each one intensifying their shared passion. Suddenly, Nicky opens her eyes to find herself kissing Bear. She recoils in shock, pushing him away with TERROR IN HER EYES.",
       "pdfPage": 34,
       "id": "el-467",
-      "searchText": "bear is uncertain if her feelings stem from grief or desperation. yet, gazing into her eyes, he realizes his deep longing for this moment. he succumbs to her kisses, each one intensifying their shared passion. suddenly, nicky opens her eyes to find herself kissing bear. she recoils in shock, pushing him away with terror in her eyes.",
-      "rawLineStart": 14,
-      "rawLineEnd": 20
+      "searchText": "bear is uncertain if her feelings stem from grief or desperation. yet, gazing into her eyes, he realizes his deep longing for this moment. he succumbs to her kisses, each one intensifying their shared passion. suddenly, nicky opens her eyes to find herself kissing bear. she recoils in shock, pushing him away with terror in her eyes."
     },
     {
       "type": "action",
@@ -7579,7 +7533,7 @@
       "pdfPage": 34,
       "id": "el-468",
       "searchText": "ah! bear!? bear, equally confused, is taken aback.",
-      "rawLineStart": 22,
+      "rawLineStart": 23,
       "rawLineEnd": 23
     },
     {
@@ -7794,9 +7748,7 @@
       ],
       "pdfPage": 35,
       "id": "el-480",
-      "searchText": " (cont’d) bear scared the shit out of me. what?",
-      "rawLineStart": 16,
-      "rawLineEnd": 21
+      "searchText": " (cont’d) bear scared the shit out of me. what?"
     },
     {
       "type": "dialogue",
@@ -7852,9 +7804,7 @@
       "text": "Bear studies Nicky as she starts to cry again. He’s skeptical but extends his arm to comfort her from a distance.",
       "pdfPage": 35,
       "id": "el-484",
-      "searchText": "bear studies nicky as she starts to cry again. he’s skeptical but extends his arm to comfort her from a distance.",
-      "rawLineStart": 29,
-      "rawLineEnd": 30
+      "searchText": "bear studies nicky as she starts to cry again. he’s skeptical but extends his arm to comfort her from a distance."
     },
     {
       "type": "transition",
@@ -7879,9 +7829,7 @@
       "text": "Bear lies on the floor with blankets and a pillow, eyes wide open. He gets up and exits frame. --BATHROOM He flips on the light and washes his face. Leaving the bathroom- --BEDROOM He sees NICKY’S DARK SHADOW sitting up in bed staring at him.",
       "pdfPage": 35,
       "id": "el-487",
-      "searchText": "bear lies on the floor with blankets and a pillow, eyes wide open. he gets up and exits frame. --bathroom he flips on the light and washes his face. leaving the bathroom- --bedroom he sees nicky’s dark shadow sitting up in bed staring at him.",
-      "rawLineStart": 33,
-      "rawLineEnd": 39
+      "searchText": "bear lies on the floor with blankets and a pillow, eyes wide open. he gets up and exits frame. --bathroom he flips on the light and washes his face. leaving the bathroom- --bedroom he sees nicky’s dark shadow sitting up in bed staring at him."
     },
     {
       "type": "dialogue",
@@ -7946,9 +7894,7 @@
       "text": "A prolonged, eerie silence. They lock eyes. Then, Bear lies back on his pallet as the silent tension mounts.",
       "pdfPage": 36,
       "id": "el-492",
-      "searchText": "a prolonged, eerie silence. they lock eyes. then, bear lies back on his pallet as the silent tension mounts.",
-      "rawLineStart": 6,
-      "rawLineEnd": 7
+      "searchText": "a prolonged, eerie silence. they lock eyes. then, bear lies back on his pallet as the silent tension mounts."
     },
     {
       "type": "dialogue",
@@ -8020,7 +7966,7 @@
       "id": "el-498",
       "searchText": "bear joins her in bed. she quickly wraps an arm around him. frozen, bear is uneasy.",
       "rawLineStart": 17,
-      "rawLineEnd": 18
+      "rawLineEnd": 17
     },
     {
       "type": "scene_heading",
@@ -8036,9 +7982,7 @@
       "text": "The sun filters through the blinds as Bear wakes up to an empty bed, his mind racing. He chuckles at the notion of a wild dream until Nicky’s bag by the door catches his eye, prompting him to get up.",
       "pdfPage": 36,
       "id": "el-500",
-      "searchText": "the sun filters through the blinds as bear wakes up to an empty bed, his mind racing. he chuckles at the notion of a wild dream until nicky’s bag by the door catches his eye, prompting him to get up.",
-      "rawLineStart": 20,
-      "rawLineEnd": 23
+      "searchText": "the sun filters through the blinds as bear wakes up to an empty bed, his mind racing. he chuckles at the notion of a wild dream until nicky’s bag by the door catches his eye, prompting him to get up."
     },
     {
       "type": "scene_heading",
@@ -8054,9 +7998,7 @@
       "text": "Breakfast is on the table and an odd smell lingers, but the house seems vacant. He walks to the kitchen, finding his cat's corpse on the ground, surrounded by flower petals. Bear approaches,",
       "pdfPage": 36,
       "id": "el-502",
-      "searchText": "breakfast is on the table and an odd smell lingers, but the house seems vacant. he walks to the kitchen, finding his cat's corpse on the ground, surrounded by flower petals. bear approaches,",
-      "rawLineStart": 25,
-      "rawLineEnd": 29
+      "searchText": "breakfast is on the table and an odd smell lingers, but the house seems vacant. he walks to the kitchen, finding his cat's corpse on the ground, surrounded by flower petals. bear approaches,"
     },
     {
       "type": "dialogue",
@@ -8213,9 +8155,7 @@
       "text": "Nicky adjusts herself as if she is offended by the remark. She picks up the stiff, dead cat with one hand and tosses it in the garbage, a hint of attitude in her action.",
       "pdfPage": 37,
       "id": "el-513",
-      "searchText": "nicky adjusts herself as if she is offended by the remark. she picks up the stiff, dead cat with one hand and tosses it in the garbage, a hint of attitude in her action.",
-      "rawLineStart": 16,
-      "rawLineEnd": 18
+      "searchText": "nicky adjusts herself as if she is offended by the remark. she picks up the stiff, dead cat with one hand and tosses it in the garbage, a hint of attitude in her action."
     },
     {
       "type": "dialogue",
@@ -8267,9 +8207,7 @@
       "text": "A wide shot shows MANDY'S MUSIC, featuring a large\"MARCHING SEASON DISCOUNT MATINÉE\" sign. Only a handful of cars are parked out front. Bear's car pulls up. Both in uniform, Bear and Nicky exit, Bear with a backpack. As they walk, Nicky grabs Bear’s hand, but he gently pulls away.",
       "pdfPage": 37,
       "id": "el-517",
-      "searchText": "a wide shot shows mandy's music, featuring a large\"marching season discount matinée\" sign. only a handful of cars are parked out front. bear's car pulls up. both in uniform, bear and nicky exit, bear with a backpack. as they walk, nicky grabs bear’s hand, but he gently pulls away.",
-      "rawLineStart": 27,
-      "rawLineEnd": 32
+      "searchText": "a wide shot shows mandy's music, featuring a large\"marching season discount matinée\" sign. only a handful of cars are parked out front. bear's car pulls up. both in uniform, bear and nicky exit, bear with a backpack. as they walk, nicky grabs bear’s hand, but he gently pulls away."
     },
     {
       "type": "dialogue",
@@ -8332,9 +8270,7 @@
       "text": "Saxophones, drum sets, and guitars line the walls. We follow them as CARTER, 52, the overweight boss and Sarah's dad, quickly draws Nicky's attention.",
       "pdfPage": 38,
       "id": "el-522",
-      "searchText": "saxophones, drum sets, and guitars line the walls. we follow them as carter, 52, the overweight boss and sarah's dad, quickly draws nicky's attention.",
-      "rawLineStart": 3,
-      "rawLineEnd": 5
+      "searchText": "saxophones, drum sets, and guitars line the walls. we follow them as carter, 52, the overweight boss and sarah's dad, quickly draws nicky's attention."
     },
     {
       "type": "dialogue",
@@ -8370,7 +8306,7 @@
       "id": "el-524",
       "searchText": "we continue to follow behind bear. nicky (o.s)",
       "rawLineStart": 11,
-      "rawLineEnd": 13
+      "rawLineEnd": 11
     },
     {
       "type": "dual_dialogue",
@@ -8401,9 +8337,7 @@
       ],
       "pdfPage": 38,
       "id": "el-525",
-      "searchText": "nicky (o.s.) to carter nooo, that’s not- nicky’s voice, distant in the b.g.  (cont’d)",
-      "rawLineStart": 18,
-      "rawLineEnd": 23
+      "searchText": "nicky (o.s.) to carter nooo, that’s not- nicky’s voice, distant in the b.g.  (cont’d)"
     },
     {
       "type": "dialogue",
@@ -8420,7 +8354,9 @@
       ],
       "pdfPage": 38,
       "id": "el-526",
-      "searchText": "nicky (o.s.) to carter no, i’m not really getting you."
+      "searchText": "nicky (o.s.) to carter no, i’m not really getting you.",
+      "rawLineStart": 22,
+      "rawLineEnd": 24
     },
     {
       "type": "action",
@@ -8429,7 +8365,7 @@
       "id": "el-527",
       "searchText": "we move past the front desk, finding ian by the computer, smiling broadly.",
       "rawLineStart": 25,
-      "rawLineEnd": 26
+      "rawLineEnd": 25
     },
     {
       "type": "dialogue",
@@ -8483,9 +8419,7 @@
       "text": "A breakfast table, surrounded by a microwave, fridge, and coffee machine. Bear place s his backpack on the table and makes a beeline for the coffee.",
       "pdfPage": 38,
       "id": "el-531",
-      "searchText": "a breakfast table, surrounded by a microwave, fridge, and coffee machine. bear place s his backpack on the table and makes a beeline for the coffee.",
-      "rawLineStart": 34,
-      "rawLineEnd": 36
+      "searchText": "a breakfast table, surrounded by a microwave, fridge, and coffee machine. bear place s his backpack on the table and makes a beeline for the coffee."
     },
     {
       "type": "dialogue",
@@ -8643,9 +8577,7 @@
       "text": "Then, from across the store through the break room window, Bear sees Nicky watching him, a smile on her face.",
       "pdfPage": 39,
       "id": "el-541",
-      "searchText": "then, from across the store through the break room window, bear sees nicky watching him, a smile on her face.",
-      "rawLineStart": 16,
-      "rawLineEnd": 17
+      "searchText": "then, from across the store through the break room window, bear sees nicky watching him, a smile on her face."
     },
     {
       "type": "dialogue",
@@ -8671,9 +8603,7 @@
       "text": "Bear's focused on Nicky, not listening anymore. Ian turns to see what captured his attention.",
       "pdfPage": 39,
       "id": "el-543",
-      "searchText": "bear's focused on nicky, not listening anymore. ian turns to see what captured his attention.",
-      "rawLineStart": 22,
-      "rawLineEnd": 23
+      "searchText": "bear's focused on nicky, not listening anymore. ian turns to see what captured his attention."
     },
     {
       "type": "dialogue",
@@ -8701,7 +8631,7 @@
       "id": "el-545",
       "searchText": "bear smiles at nicky genuinely and then turns around to hide his face.",
       "rawLineStart": 28,
-      "rawLineEnd": 29
+      "rawLineEnd": 28
     },
     {
       "type": "dialogue",
@@ -9523,18 +9453,14 @@
       "text": "Ian leaves and Bear pretends to make coffee. Through the window, we see Ian and Nicky talking. Bear turns around, avoiding eye contact. Quickly, his gaze lands on the unzipped backpack on the table, exposing the ONE WISH WILLOW. Realization hits Bear as he looks back at Ian and Nicky. Ian talks, Nicky nods, yet her unsettling smile at Bear remains. Bear strides through the break room door.",
       "pdfPage": 42,
       "id": "el-599",
-      "searchText": "ian leaves and bear pretends to make coffee. through the window, we see ian and nicky talking. bear turns around, avoiding eye contact. quickly, his gaze lands on the unzipped backpack on the table, exposing the one wish willow. realization hits bear as he looks back at ian and nicky. ian talks, nicky nods, yet her unsettling smile at bear remains. bear strides through the break room door.",
-      "rawLineStart": 31,
-      "rawLineEnd": 38
+      "searchText": "ian leaves and bear pretends to make coffee. through the window, we see ian and nicky talking. bear turns around, avoiding eye contact. quickly, his gaze lands on the unzipped backpack on the table, exposing the one wish willow. realization hits bear as he looks back at ian and nicky. ian talks, nicky nods, yet her unsettling smile at bear remains. bear strides through the break room door."
     },
     {
       "type": "action",
       "text": "INT - MANDY’S MUSIC - FRONT DESK AREA - CONTINUOUS Bear walks straight over to the computer.",
       "pdfPage": 43,
       "id": "el-600",
-      "searchText": "int - mandy’s music - front desk area - continuous bear walks straight over to the computer.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "int - mandy’s music - front desk area - continuous bear walks straight over to the computer."
     },
     {
       "type": "dialogue",
@@ -9575,9 +9501,7 @@
       "text": "Ian continues to talk to Nicky in the b.g. as Bear goes to a search engine. He types: One Wish Willow 80s recall. He skims the results and clicks keywords: Collectible item, novelty, Mandela effect. AS HE TYPES, THE CHAOS OF THE STORE INCREASES. HORNS PLAY OUT OF TUNE, STUDENTS CHATTER, AND LAUGHTER GROWING IN VOLUME.",
       "pdfPage": 43,
       "id": "el-603",
-      "searchText": "ian continues to talk to nicky in the b.g. as bear goes to a search engine. he types: one wish willow 80s recall. he skims the results and clicks keywords: collectible item, novelty, mandela effect. as he types, the chaos of the store increases. horns play out of tune, students chatter, and laughter growing in volume.",
-      "rawLineStart": 9,
-      "rawLineEnd": 16
+      "searchText": "ian continues to talk to nicky in the b.g. as bear goes to a search engine. he types: one wish willow 80s recall. he skims the results and clicks keywords: collectible item, novelty, mandela effect. as he types, the chaos of the store increases. horns play out of tune, students chatter, and laughter growing in volume."
     },
     {
       "type": "dialogue",
@@ -9618,9 +9542,7 @@
       "text": "He types: Does a One Wish Willow actually work? No, a One Wish Willow is just an urban legend. Yes, a One Wish Willow really does grant you one wish! One Wish Willows never existed. This is a result of the Mandela effect. Click. When a large group of people remember something that never existed this is a phenomenon called the Mandela effect. If you find a One Wish Willow stay away. Related searches: Big Foot, Skin-walkers, Fruit of the Loom logo. We stay on Bear, curious. THE CHAOS OF THE STORE ACTS AS A SOUNDTRACK. HORNS, FEEDBACK, AND CHATTER BUILD THE INTENSITY.",
       "pdfPage": 43,
       "id": "el-606",
-      "searchText": "he types: does a one wish willow actually work? no, a one wish willow is just an urban legend. yes, a one wish willow really does grant you one wish! one wish willows never existed. this is a result of the mandela effect. click. when a large group of people remember something that never existed this is a phenomenon called the mandela effect. if you find a one wish willow stay away. related searches: big foot, skin-walkers, fruit of the loom logo. we stay on bear, curious. the chaos of the store acts as a soundtrack. horns, feedback, and chatter build the intensity.",
-      "rawLineStart": 22,
-      "rawLineEnd": 35
+      "searchText": "he types: does a one wish willow actually work? no, a one wish willow is just an urban legend. yes, a one wish willow really does grant you one wish! one wish willows never existed. this is a result of the mandela effect. click. when a large group of people remember something that never existed this is a phenomenon called the mandela effect. if you find a one wish willow stay away. related searches: big foot, skin-walkers, fruit of the loom logo. we stay on bear, curious. the chaos of the store acts as a soundtrack. horns, feedback, and chatter build the intensity."
     },
     {
       "type": "dialogue",
@@ -9683,9 +9605,7 @@
       "text": "The tranquility of the surroundings contrasts with the prior commotion. The gentle chirping of crickets fills the air. Bear exits the store, Nicky trailing closely behind. Sarah and Ian follow.",
       "pdfPage": 44,
       "id": "el-611",
-      "searchText": "the tranquility of the surroundings contrasts with the prior commotion. the gentle chirping of crickets fills the air. bear exits the store, nicky trailing closely behind. sarah and ian follow.",
-      "rawLineStart": 11,
-      "rawLineEnd": 14
+      "searchText": "the tranquility of the surroundings contrasts with the prior commotion. the gentle chirping of crickets fills the air. bear exits the store, nicky trailing closely behind. sarah and ian follow."
     },
     {
       "type": "dialogue",
@@ -9898,18 +9818,14 @@
       "text": "Bear folds laundry in the living room, distracted. The ONE WISH WILLOW sits on the coffee table, beside his open laptop with a\"MOLLY SIDE EFFECTS\" article tab visible. Bear pulls up his phone to call Nicky. A knock at the door. Bear jerks his head.",
       "pdfPage": 45,
       "id": "el-626",
-      "searchText": "bear folds laundry in the living room, distracted. the one wish willow sits on the coffee table, beside his open laptop with a\"molly side effects\" article tab visible. bear pulls up his phone to call nicky. a knock at the door. bear jerks his head.",
-      "rawLineStart": 6,
-      "rawLineEnd": 10
+      "searchText": "bear folds laundry in the living room, distracted. the one wish willow sits on the coffee table, beside his open laptop with a\"molly side effects\" article tab visible. bear pulls up his phone to call nicky. a knock at the door. bear jerks his head."
     },
     {
       "type": "action",
       "text": "INT/EXT. BEAR’S HOUSE - FRONT DOOR - CONTINUOUS Nicky stands at the door, wearing a lovely dress and full makeup. She is stunning.",
       "pdfPage": 45,
       "id": "el-627",
-      "searchText": "int/ext. bear’s house - front door - continuous nicky stands at the door, wearing a lovely dress and full makeup. she is stunning.",
-      "rawLineStart": 11,
-      "rawLineEnd": 13
+      "searchText": "int/ext. bear’s house - front door - continuous nicky stands at the door, wearing a lovely dress and full makeup. she is stunning."
     },
     {
       "type": "dialogue",
@@ -10076,9 +9992,7 @@
       "text": "Bear leans into the door frame. He’s relieved to know the truth, though it does sting.",
       "pdfPage": 46,
       "id": "el-638",
-      "searchText": "bear leans into the door frame. he’s relieved to know the truth, though it does sting.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "bear leans into the door frame. he’s relieved to know the truth, though it does sting."
     },
     {
       "type": "dialogue",
@@ -10181,9 +10095,7 @@
       "text": "Bear’s eyes narrow with disappointment. Nicky's gaze shifts, a growing concern in her eyes.",
       "pdfPage": 46,
       "id": "el-645",
-      "searchText": "bear’s eyes narrow with disappointment. nicky's gaze shifts, a growing concern in her eyes.",
-      "rawLineStart": 19,
-      "rawLineEnd": 20
+      "searchText": "bear’s eyes narrow with disappointment. nicky's gaze shifts, a growing concern in her eyes."
     },
     {
       "type": "dialogue",
@@ -10258,9 +10170,7 @@
       "text": "Nicky abruptly turns, now facing away. We see the back of her head, her shoulders shaking as she bursts into laughter — an extremely BIZARRE moment.",
       "pdfPage": 46,
       "id": "el-650",
-      "searchText": "nicky abruptly turns, now facing away. we see the back of her head, her shoulders shaking as she bursts into laughter — an extremely bizarre moment.",
-      "rawLineStart": 31,
-      "rawLineEnd": 33
+      "searchText": "nicky abruptly turns, now facing away. we see the back of her head, her shoulders shaking as she bursts into laughter — an extremely bizarre moment."
     },
     {
       "type": "dialogue",
@@ -10282,9 +10192,7 @@
       "text": "Nicky turns back around to face Bear. Her face is flat. Serious. A long beat.",
       "pdfPage": 46,
       "id": "el-652",
-      "searchText": "nicky turns back around to face bear. her face is flat. serious. a long beat.",
-      "rawLineStart": 36,
-      "rawLineEnd": 37
+      "searchText": "nicky turns back around to face bear. her face is flat. serious. a long beat."
     },
     {
       "type": "dialogue",
@@ -10377,9 +10285,7 @@
       "text": "A long beat. It’s an oddly romantic moment. Bear stares at her. His smile becomes a laugh, somewhat shy and defensive.",
       "pdfPage": 47,
       "id": "el-659",
-      "searchText": "a long beat. it’s an oddly romantic moment. bear stares at her. his smile becomes a laugh, somewhat shy and defensive.",
-      "rawLineStart": 12,
-      "rawLineEnd": 13
+      "searchText": "a long beat. it’s an oddly romantic moment. bear stares at her. his smile becomes a laugh, somewhat shy and defensive."
     },
     {
       "type": "dialogue",
@@ -10428,9 +10334,7 @@
       "text": "Bear is in shock, suddenly hyperaware of his face, posture, and clothing. He even concentrates to breathe. This is real.",
       "pdfPage": 47,
       "id": "el-662",
-      "searchText": "bear is in shock, suddenly hyperaware of his face, posture, and clothing. he even concentrates to breathe. this is real.",
-      "rawLineStart": 21,
-      "rawLineEnd": 22
+      "searchText": "bear is in shock, suddenly hyperaware of his face, posture, and clothing. he even concentrates to breathe. this is real."
     },
     {
       "type": "dialogue",
@@ -10460,9 +10364,7 @@
       "text": "Bear glances at the ground, then back up at her. He's dreamed of this moment his entire adult life.",
       "pdfPage": 47,
       "id": "el-664",
-      "searchText": "bear glances at the ground, then back up at her. he's dreamed of this moment his entire adult life.",
-      "rawLineStart": 28,
-      "rawLineEnd": 29
+      "searchText": "bear glances at the ground, then back up at her. he's dreamed of this moment his entire adult life."
     },
     {
       "type": "dialogue",
@@ -10484,9 +10386,7 @@
       "text": "Nicky walks over, gently tugs his shirt, and wraps her arms tightly around him in a silent embrace, leaning her forehead into his shoulder. Bear's gaze stays up, lost in deep thought.",
       "pdfPage": 47,
       "id": "el-666",
-      "searchText": "nicky walks over, gently tugs his shirt, and wraps her arms tightly around him in a silent embrace, leaning her forehead into his shoulder. bear's gaze stays up, lost in deep thought.",
-      "rawLineStart": 32,
-      "rawLineEnd": 36
+      "searchText": "nicky walks over, gently tugs his shirt, and wraps her arms tightly around him in a silent embrace, leaning her forehead into his shoulder. bear's gaze stays up, lost in deep thought."
     },
     {
       "type": "scene_heading",
@@ -10502,18 +10402,14 @@
       "text": "THE MUSIC CONTINUES WITHIN THE FOLLOWING MONTAGE-ESC SCENES. Nicky and Bear are together on the bed, the room bathed in warm colors and shadows. Nicky crawls above Bear, and they begin to kiss slowly, with intensity.",
       "pdfPage": 47,
       "id": "el-668",
-      "searchText": "the music continues within the following montage-esc scenes. nicky and bear are together on the bed, the room bathed in warm colors and shadows. nicky crawls above bear, and they begin to kiss slowly, with intensity.",
-      "rawLineStart": 38,
-      "rawLineEnd": 41
+      "searchText": "the music continues within the following montage-esc scenes. nicky and bear are together on the bed, the room bathed in warm colors and shadows. nicky crawls above bear, and they begin to kiss slowly, with intensity."
     },
     {
       "type": "action",
       "text": "Suddenly, a stark realization FLICKERS IN NICKY'S EYES, a silent scream of awareness. She snaps upright, as if jolted by an unseen force.",
       "pdfPage": 48,
       "id": "el-669",
-      "searchText": "suddenly, a stark realization flickers in nicky's eyes, a silent scream of awareness. she snaps upright, as if jolted by an unseen force.",
-      "rawLineStart": 2,
-      "rawLineEnd": 4
+      "searchText": "suddenly, a stark realization flickers in nicky's eyes, a silent scream of awareness. she snaps upright, as if jolted by an unseen force."
     },
     {
       "type": "dialogue",
@@ -10583,9 +10479,7 @@
       "text": "Bear leans back, alarmed and bewildered, unwilling to go through this again. Nicky tenderly draws him back, guiding his ha nd to caress her face, then down her chest to between her legs. She moans, and they kiss, reigniting their passion as they hurriedly shed their clothes.",
       "pdfPage": 48,
       "id": "el-675",
-      "searchText": "bear leans back, alarmed and bewildered, unwilling to go through this again. nicky tenderly draws him back, guiding his ha nd to caress her face, then down her chest to between her legs. she moans, and they kiss, reigniting their passion as they hurriedly shed their clothes.",
-      "rawLineStart": 13,
-      "rawLineEnd": 18
+      "searchText": "bear leans back, alarmed and bewildered, unwilling to go through this again. nicky tenderly draws him back, guiding his ha nd to caress her face, then down her chest to between her legs. she moans, and they kiss, reigniting their passion as they hurriedly shed their clothes."
     },
     {
       "type": "transition",
@@ -10610,9 +10504,7 @@
       "text": "- Nicky and Bear make breakfast together. - Nicky and Bear eat at the table. Laughing, having a good time.",
       "pdfPage": 48,
       "id": "el-678",
-      "searchText": "- nicky and bear make breakfast together. - nicky and bear eat at the table. laughing, having a good time.",
-      "rawLineStart": 21,
-      "rawLineEnd": 23
+      "searchText": "- nicky and bear make breakfast together. - nicky and bear eat at the table. laughing, having a good time."
     },
     {
       "type": "scene_heading",
@@ -10628,9 +10520,7 @@
       "text": "- Nicky and Bear in the break room making out. - Ian sees this and think it’s SO strange. - Sarah is deeply hurt by this. - Nicky and Bear play the piano together at work. - Carter has an uncomfortable look on his face.",
       "pdfPage": 48,
       "id": "el-680",
-      "searchText": "- nicky and bear in the break room making out. - ian sees this and think it’s so strange. - sarah is deeply hurt by this. - nicky and bear play the piano together at work. - carter has an uncomfortable look on his face.",
-      "rawLineStart": 25,
-      "rawLineEnd": 30
+      "searchText": "- nicky and bear in the break room making out. - ian sees this and think it’s so strange. - sarah is deeply hurt by this. - nicky and bear play the piano together at work. - carter has an uncomfortable look on his face."
     },
     {
       "type": "scene_heading",
@@ -10646,18 +10536,14 @@
       "text": "Nicky’s bedroom is pink with flower decals, marching band stickers, and bookshelves full of books.",
       "pdfPage": 48,
       "id": "el-682",
-      "searchText": "nicky’s bedroom is pink with flower decals, marching band stickers, and bookshelves full of books.",
-      "rawLineStart": 32,
-      "rawLineEnd": 33
+      "searchText": "nicky’s bedroom is pink with flower decals, marching band stickers, and bookshelves full of books."
     },
     {
       "type": "action",
       "text": "- Nicky and Bear look at yearbook photos together on Nicky’s Bed. - Nicky and Bear Reminisce about when they met.",
       "pdfPage": 49,
       "id": "el-683",
-      "searchText": "- nicky and bear look at yearbook photos together on nicky’s bed. - nicky and bear reminisce about when they met.",
-      "rawLineStart": 2,
-      "rawLineEnd": 4
+      "searchText": "- nicky and bear look at yearbook photos together on nicky’s bed. - nicky and bear reminisce about when they met."
     },
     {
       "type": "scene_heading",
@@ -10673,9 +10559,7 @@
       "text": "A cozy, somewhat upscale spot with checkered tablecloths and candles, it's the town's go-to for\"fancy.\" Bear and Nicky share a bread and butter platter.",
       "pdfPage": 49,
       "id": "el-685",
-      "searchText": "a cozy, somewhat upscale spot with checkered tablecloths and candles, it's the town's go-to for\"fancy.\" bear and nicky share a bread and butter platter.",
-      "rawLineStart": 6,
-      "rawLineEnd": 8
+      "searchText": "a cozy, somewhat upscale spot with checkered tablecloths and candles, it's the town's go-to for\"fancy.\" bear and nicky share a bread and butter platter."
     },
     {
       "type": "dialogue",
@@ -10771,9 +10655,7 @@
       ],
       "pdfPage": 49,
       "id": "el-689",
-      "searchText": " (cont’d) nicky i’ll be in your band.",
-      "rawLineStart": 23,
-      "rawLineEnd": 26
+      "searchText": " (cont’d) nicky i’ll be in your band."
     },
     {
       "type": "action",
@@ -11045,8 +10927,8 @@
       "pdfPage": 50,
       "id": "el-706",
       "searchText": "bear ian... you actually... you told me that once.",
-      "rawLineStart": 27,
-      "rawLineEnd": 32
+      "rawLineStart": 26,
+      "rawLineEnd": 28
     },
     {
       "type": "dialogue",
@@ -11060,8 +10942,8 @@
       "pdfPage": 50,
       "id": "el-707",
       "searchText": "nicky i did?",
-      "rawLineStart": 33,
-      "rawLineEnd": 34
+      "rawLineStart": 29,
+      "rawLineEnd": 30
     },
     {
       "type": "dialogue",
@@ -11075,8 +10957,8 @@
       "pdfPage": 50,
       "id": "el-708",
       "searchText": "bear you said i was a “closed book.”",
-      "rawLineStart": 36,
-      "rawLineEnd": 42
+      "rawLineStart": 31,
+      "rawLineEnd": 32
     },
     {
       "type": "dialogue",
@@ -11109,14 +10991,18 @@
       ],
       "pdfPage": 50,
       "id": "el-709",
-      "searchText": "nicky i did. squinting in thought well, the best part about a closed book, is now i get to read it from the start. a book not many people have read, since it’s private."
+      "searchText": "nicky i did. squinting in thought well, the best part about a closed book, is now i get to read it from the start. a book not many people have read, since it’s private.",
+      "rawLineStart": 33,
+      "rawLineEnd": 39
     },
     {
       "type": "action",
       "text": "A long, intimate beat.",
       "pdfPage": 50,
       "id": "el-710",
-      "searchText": "a long, intimate beat."
+      "searchText": "a long, intimate beat.",
+      "rawLineStart": 40,
+      "rawLineEnd": 40
     },
     {
       "type": "dialogue",
@@ -11129,7 +11015,9 @@
       ],
       "pdfPage": 50,
       "id": "el-711",
-      "searchText": "bear what do you want to know?"
+      "searchText": "bear what do you want to know?",
+      "rawLineStart": 41,
+      "rawLineEnd": 42
     },
     {
       "type": "dialogue",
@@ -11470,9 +11358,7 @@
       "text": "Bear picks up a piece of bread, smells it, licks it, and holds it to his eye for inspection.",
       "pdfPage": 52,
       "id": "el-730",
-      "searchText": "bear picks up a piece of bread, smells it, licks it, and holds it to his eye for inspection.",
-      "rawLineStart": 15,
-      "rawLineEnd": 16
+      "searchText": "bear picks up a piece of bread, smells it, licks it, and holds it to his eye for inspection."
     },
     {
       "type": "dialogue",
@@ -11777,18 +11663,14 @@
       ],
       "pdfPage": 53,
       "id": "el-749",
-      "searchText": "ian (v.o.) i called the hospital nicky told me about and they didn’t even know who was talking about. something’s going on, dude.",
-      "rawLineStart": 23,
-      "rawLineEnd": 28
+      "searchText": "ian (v.o.) i called the hospital nicky told me about and they didn’t even know who was talking about. something’s going on, dude."
     },
     {
       "type": "action",
       "text": "Bear looks back at Nicky in the distance and waves, then turns in the other direction.",
       "pdfPage": 53,
       "id": "el-751",
-      "searchText": "bear looks back at nicky in the distance and waves, then turns in the other direction.",
-      "rawLineStart": 29,
-      "rawLineEnd": 30
+      "searchText": "bear looks back at nicky in the distance and waves, then turns in the other direction."
     },
     {
       "type": "dialogue",
@@ -11906,9 +11788,7 @@
       "text": "Ian’s voice fades away as Bear drops into a state of darkness. He slowly turns his head to Nicky as Ian talks.",
       "pdfPage": 54,
       "id": "el-757",
-      "searchText": "ian’s voice fades away as bear drops into a state of darkness. he slowly turns his head to nicky as ian talks.",
-      "rawLineStart": 9,
-      "rawLineEnd": 10
+      "searchText": "ian’s voice fades away as bear drops into a state of darkness. he slowly turns his head to nicky as ian talks."
     },
     {
       "type": "dialogue",
@@ -11940,7 +11820,7 @@
       "id": "el-759",
       "searchText": "nicky is staring at bear, smiling in an unnatural, creepy way.",
       "rawLineStart": 15,
-      "rawLineEnd": 16
+      "rawLineEnd": 15
     },
     {
       "type": "dialogue",
@@ -11974,9 +11854,7 @@
       "text": "Bear’s mind goes to the ONE WISH WILLOW. He can’t believe it, but he does. He understands now.",
       "pdfPage": 54,
       "id": "el-761",
-      "searchText": "bear’s mind goes to the one wish willow. he can’t believe it, but he does. he understands now.",
-      "rawLineStart": 22,
-      "rawLineEnd": 23
+      "searchText": "bear’s mind goes to the one wish willow. he can’t believe it, but he does. he understands now."
     },
     {
       "type": "dialogue",
@@ -12000,7 +11878,7 @@
       "id": "el-763",
       "searchText": "bear hangs up and slowly walks over to the dinner table. total shock.",
       "rawLineStart": 26,
-      "rawLineEnd": 27
+      "rawLineEnd": 26
     },
     {
       "type": "dialogue",
@@ -12135,7 +12013,7 @@
       "id": "el-772",
       "searchText": "bear hesitates but opens it. it’s a silky, reddish-brown stone.",
       "rawLineStart": 7,
-      "rawLineEnd": 8
+      "rawLineEnd": 7
     },
     {
       "type": "dialogue",
@@ -12291,7 +12169,7 @@
       "id": "el-782",
       "searchText": "bear thinks. he grabs the stone and holds it against his chest.",
       "rawLineStart": 32,
-      "rawLineEnd": 33
+      "rawLineEnd": 32
     },
     {
       "type": "dialogue",
@@ -12338,7 +12216,7 @@
       "id": "el-785",
       "searchText": "nicky gives bear an eerie, creepy smile. it could almost be interpreted as threatening.",
       "rawLineStart": 40,
-      "rawLineEnd": 41
+      "rawLineEnd": 40
     },
     {
       "type": "dialogue",
@@ -12495,9 +12373,7 @@
       "text": "The restaurant slips into a hushed, uneasy silence, all eyes on them, the air charged with discomfort.",
       "pdfPage": 56,
       "id": "el-796",
-      "searchText": "the restaurant slips into a hushed, uneasy silence, all eyes on them, the air charged with discomfort.",
-      "rawLineStart": 23,
-      "rawLineEnd": 24
+      "searchText": "the restaurant slips into a hushed, uneasy silence, all eyes on them, the air charged with discomfort."
     },
     {
       "type": "dialogue",
@@ -12600,9 +12476,7 @@
       "text": "A pause. Nicky sits, and the restaurant buzz resumes. Playfully, she grabs Bear's leg under the table, her eerie smile returning.",
       "pdfPage": 57,
       "id": "el-803",
-      "searchText": "a pause. nicky sits, and the restaurant buzz resumes. playfully, she grabs bear's leg under the table, her eerie smile returning.",
-      "rawLineStart": 2,
-      "rawLineEnd": 4
+      "searchText": "a pause. nicky sits, and the restaurant buzz resumes. playfully, she grabs bear's leg under the table, her eerie smile returning."
     },
     {
       "type": "dialogue",
@@ -12624,9 +12498,7 @@
       "text": "Silence settles. Bear, lost in thought, realizes his yearning for her overshadows all. Her actions, her lies — it all fades, only her presence matters.",
       "pdfPage": 57,
       "id": "el-805",
-      "searchText": "silence settles. bear, lost in thought, realizes his yearning for her overshadows all. her actions, her lies — it all fades, only her presence matters.",
-      "rawLineStart": 7,
-      "rawLineEnd": 9
+      "searchText": "silence settles. bear, lost in thought, realizes his yearning for her overshadows all. her actions, her lies — it all fades, only her presence matters."
     },
     {
       "type": "dialogue",
@@ -12652,9 +12524,7 @@
       "text": "His response reveals a disregard for truth, showing a readiness to ignore darker realities for affection, hinting at a deeply flawed person.",
       "pdfPage": 57,
       "id": "el-807",
-      "searchText": "his response reveals a disregard for truth, showing a readiness to ignore darker realities for affection, hinting at a deeply flawed person.",
-      "rawLineStart": 13,
-      "rawLineEnd": 15
+      "searchText": "his response reveals a disregard for truth, showing a readiness to ignore darker realities for affection, hinting at a deeply flawed person."
     },
     {
       "type": "scene_heading",
@@ -12670,9 +12540,7 @@
       "text": "Nicky slams Bear against the wall, kissing fiercely. They move to the bed where Bear playfully pushes her down. Clothes shed, Bear kisses her neck. Mid-moan, Nicky locks eyes with Bear, her expression shifting to SHEER PANIC. With a frantic shove, she pushes him away and lets out a BLOOD-CURDLING SCREAM, her body trembling.",
       "pdfPage": 57,
       "id": "el-809",
-      "searchText": "nicky slams bear against the wall, kissing fiercely. they move to the bed where bear playfully pushes her down. clothes shed, bear kisses her neck. mid-moan, nicky locks eyes with bear, her expression shifting to sheer panic. with a frantic shove, she pushes him away and lets out a blood-curdling scream, her body trembling.",
-      "rawLineStart": 17,
-      "rawLineEnd": 22
+      "searchText": "nicky slams bear against the wall, kissing fiercely. they move to the bed where bear playfully pushes her down. clothes shed, bear kisses her neck. mid-moan, nicky locks eyes with bear, her expression shifting to sheer panic. with a frantic shove, she pushes him away and lets out a blood-curdling scream, her body trembling."
     },
     {
       "type": "dialogue",
@@ -12694,9 +12562,7 @@
       "text": "Bear remains unfazed, his eerie calm demeanor chilling. Within moments, she's back, kissing his stomach. The disturbance registers as nothing more than a fleeting inconvenience to him.",
       "pdfPage": 57,
       "id": "el-811",
-      "searchText": "bear remains unfazed, his eerie calm demeanor chilling. within moments, she's back, kissing his stomach. the disturbance registers as nothing more than a fleeting inconvenience to him.",
-      "rawLineStart": 25,
-      "rawLineEnd": 28
+      "searchText": "bear remains unfazed, his eerie calm demeanor chilling. within moments, she's back, kissing his stomach. the disturbance registers as nothing more than a fleeting inconvenience to him."
     },
     {
       "type": "dialogue",
@@ -12781,7 +12647,7 @@
       "id": "el-818",
       "searchText": "bear’s smile fades, a subtle acknowledgment of what he never thought he was.",
       "rawLineStart": 2,
-      "rawLineEnd": 3
+      "rawLineEnd": 2
     },
     {
       "type": "scene_heading",
@@ -12797,9 +12663,7 @@
       "text": "Bear wakes up and checks the clock: 3:32 AM. He turns to find Nicky missing from the bed. Sitting up, he scans the room. In a very dark corner, a figure is barely visible — so faint, it might be nothing. Bear leans forward, squinting intently. Suddenly, the figure steps forward. It's clear SOMEONE is there.",
       "pdfPage": 58,
       "id": "el-820",
-      "searchText": "bear wakes up and checks the clock: 3:32 am. he turns to find nicky missing from the bed. sitting up, he scans the room. in a very dark corner, a figure is barely visible — so faint, it might be nothing. bear leans forward, squinting intently. suddenly, the figure steps forward. it's clear someone is there.",
-      "rawLineStart": 5,
-      "rawLineEnd": 10
+      "searchText": "bear wakes up and checks the clock: 3:32 am. he turns to find nicky missing from the bed. sitting up, he scans the room. in a very dark corner, a figure is barely visible — so faint, it might be nothing. bear leans forward, squinting intently. suddenly, the figure steps forward. it's clear someone is there."
     },
     {
       "type": "dialogue",
@@ -12893,7 +12757,7 @@
       "id": "el-826",
       "searchText": "nicky slowly steps back into her dark corner, morphing into a shadow.",
       "rawLineStart": 24,
-      "rawLineEnd": 25
+      "rawLineEnd": 24
     },
     {
       "type": "dialogue",
@@ -13002,9 +12866,7 @@
       "text": "Bear leans against the headboard and slides onto his back. The presence of her watchful eyes prevents him from going back to sleep, yet his unease prevents him from doing anything about it. There is a long silence. The tension grows.",
       "pdfPage": 59,
       "id": "el-833",
-      "searchText": "bear leans against the headboard and slides onto his back. the presence of her watchful eyes prevents him from going back to sleep, yet his unease prevents him from doing anything about it. there is a long silence. the tension grows.",
-      "rawLineStart": 5,
-      "rawLineEnd": 9
+      "searchText": "bear leans against the headboard and slides onto his back. the presence of her watchful eyes prevents him from going back to sleep, yet his unease prevents him from doing anything about it. there is a long silence. the tension grows."
     },
     {
       "type": "dialogue",
@@ -13045,9 +12907,7 @@
       "text": "Nicky emerges from the shadows, holding a sharp love crystal. Playfully, she teases like a child, car ving into Bear's arm with the crystal.",
       "pdfPage": 59,
       "id": "el-836",
-      "searchText": "nicky emerges from the shadows, holding a sharp love crystal. playfully, she teases like a child, car ving into bear's arm with the crystal.",
-      "rawLineStart": 16,
-      "rawLineEnd": 18
+      "searchText": "nicky emerges from the shadows, holding a sharp love crystal. playfully, she teases like a child, car ving into bear's arm with the crystal."
     },
     {
       "type": "dialogue",
@@ -13069,9 +12929,7 @@
       "text": "Bear pulls his arm back. Nicky's eyes ROLL BACK, and she laughs loudly but quickly.",
       "pdfPage": 59,
       "id": "el-838",
-      "searchText": "bear pulls his arm back. nicky's eyes roll back, and she laughs loudly but quickly.",
-      "rawLineStart": 22,
-      "rawLineEnd": 23
+      "searchText": "bear pulls his arm back. nicky's eyes roll back, and she laughs loudly but quickly."
     },
     {
       "type": "dialogue",
@@ -13097,9 +12955,7 @@
       "text": "Suddenly, she frowns, stands, and walks to the other side of the bed. Nicky halts, her hand extended as if caught mid-run. Her arm remains still, her hand waves slowly at Bear. After a pause, she quickly drops back onto the bed, kisses Bear on the cheek, and closes her eyes. Terrified, Bear waits briefly before cautiously standing.",
       "pdfPage": 59,
       "id": "el-840",
-      "searchText": "suddenly, she frowns, stands, and walks to the other side of the bed. nicky halts, her hand extended as if caught mid-run. her arm remains still, her hand waves slowly at bear. after a pause, she quickly drops back onto the bed, kisses bear on the cheek, and closes her eyes. terrified, bear waits briefly before cautiously standing.",
-      "rawLineStart": 27,
-      "rawLineEnd": 32
+      "searchText": "suddenly, she frowns, stands, and walks to the other side of the bed. nicky halts, her hand extended as if caught mid-run. her arm remains still, her hand waves slowly at bear. after a pause, she quickly drops back onto the bed, kisses bear on the cheek, and closes her eyes. terrified, bear waits briefly before cautiously standing."
     },
     {
       "type": "dialogue",
@@ -13122,7 +12978,7 @@
       "pdfPage": 59,
       "id": "el-842",
       "searchText": "staaaaaaaayyyyy! he quickly lies back, staring at the ceiling, heart racing.",
-      "rawLineStart": 36,
+      "rawLineStart": 37,
       "rawLineEnd": 37
     },
     {
@@ -13139,9 +12995,7 @@
       "text": "Bear and Nicky stand by the front door. Bear puts his lanyard on and kisses Nicky goodbye.",
       "pdfPage": 59,
       "id": "el-844",
-      "searchText": "bear and nicky stand by the front door. bear puts his lanyard on and kisses nicky goodbye.",
-      "rawLineStart": 39,
-      "rawLineEnd": 40
+      "searchText": "bear and nicky stand by the front door. bear puts his lanyard on and kisses nicky goodbye."
     },
     {
       "type": "dialogue",
@@ -13244,9 +13098,7 @@
       "text": "We focus on Nicky as Bear exits. She stays still, an awkward smile frozen on her face. Despite the sound of the door closing, she doesn't move. Nicky begins to pee, the liquid running down her leg, staining the floor yellow ish-red.",
       "pdfPage": 60,
       "id": "el-851",
-      "searchText": "we focus on nicky as bear exits. she stays still, an awkward smile frozen on her face. despite the sound of the door closing, she doesn't move. nicky begins to pee, the liquid running down her leg, staining the floor yellow ish-red.",
-      "rawLineStart": 14,
-      "rawLineEnd": 17
+      "searchText": "we focus on nicky as bear exits. she stays still, an awkward smile frozen on her face. despite the sound of the door closing, she doesn't move. nicky begins to pee, the liquid running down her leg, staining the floor yellow ish-red."
     },
     {
       "type": "scene_heading",
@@ -13607,9 +13459,7 @@
       "text": "Sarah and Carter leave the room. Bear, folding boxes, stealthily glances through the window, watching their reactions to the letter. Sarah's face crumbles; Carter, unmoved. As Sarah's gaze lifts, Bear ducks his head, avoiding detection. Sarah returns and sits on a nearby tuba case. Her eyes puffy from crying.",
       "pdfPage": 61,
       "id": "el-876",
-      "searchText": "sarah and carter leave the room. bear, folding boxes, stealthily glances through the window, watching their reactions to the letter. sarah's face crumbles; carter, unmoved. as sarah's gaze lifts, bear ducks his head, avoiding detection. sarah returns and sits on a nearby tuba case. her eyes puffy from crying.",
-      "rawLineStart": 34,
-      "rawLineEnd": 40
+      "searchText": "sarah and carter leave the room. bear, folding boxes, stealthily glances through the window, watching their reactions to the letter. sarah's face crumbles; carter, unmoved. as sarah's gaze lifts, bear ducks his head, avoiding detection. sarah returns and sits on a nearby tuba case. her eyes puffy from crying."
     },
     {
       "type": "dialogue",
@@ -13685,7 +13535,7 @@
       "id": "el-882",
       "searchText": "sarah rests her head on bear's shoulder. hesitant, he allows it.",
       "rawLineStart": 12,
-      "rawLineEnd": 13
+      "rawLineEnd": 12
     },
     {
       "type": "dialogue",
@@ -14040,7 +13890,7 @@
       "id": "el-905",
       "searchText": "ian i just don't want you, or nicky for that matter, to get hurt.",
       "rawLineStart": 29,
-      "rawLineEnd": 33
+      "rawLineEnd": 30
     },
     {
       "type": "dialogue",
@@ -14053,7 +13903,9 @@
       ],
       "pdfPage": 63,
       "id": "el-906",
-      "searchText": "bear second time i’ve heard that today."
+      "searchText": "bear second time i’ve heard that today.",
+      "rawLineStart": 31,
+      "rawLineEnd": 32
     },
     {
       "type": "dialogue",
@@ -14079,8 +13931,8 @@
       "pdfPage": 63,
       "id": "el-907",
       "searchText": "ian because she’s also my friend, and i’m totally thrown off by this. can you just please break this down for me?",
-      "rawLineStart": 34,
-      "rawLineEnd": 40
+      "rawLineStart": 33,
+      "rawLineEnd": 37
     },
     {
       "type": "dual_dialogue",
@@ -14107,9 +13959,7 @@
       ],
       "pdfPage": 63,
       "id": "el-908",
-      "searchText": "bear i don’t want to break it down for you.  (cont’d)",
-      "rawLineStart": 41,
-      "rawLineEnd": 43
+      "searchText": "bear i don’t want to break it down for you.  (cont’d)"
     },
     {
       "type": "dialogue",
@@ -14343,9 +14193,7 @@
       ],
       "pdfPage": 64,
       "id": "el-920",
-      "searchText": "bear oh, fuck you man! she’s all over me! are you fucking kidding me?  (cont’d)",
-      "rawLineStart": 35,
-      "rawLineEnd": 42
+      "searchText": "bear oh, fuck you man! she’s all over me! are you fucking kidding me?  (cont’d)"
     },
     {
       "type": "action",
@@ -14605,9 +14453,7 @@
       "text": "Bear pushes the door open and flicks on the lights. Stepping inside, he's greeted by Nicky, soaked in sweat and vomit, standing in a sickening pool of bodily fluids. She is in the same spot where he left her, with urine staining her clothes and vomit still dribbling from her mouth.",
       "pdfPage": 65,
       "id": "el-936",
-      "searchText": "bear pushes the door open and flicks on the lights. stepping inside, he's greeted by nicky, soaked in sweat and vomit, standing in a sickening pool of bodily fluids. she is in the same spot where he left her, with urine staining her clothes and vomit still dribbling from her mouth.",
-      "rawLineStart": 37,
-      "rawLineEnd": 41
+      "searchText": "bear pushes the door open and flicks on the lights. stepping inside, he's greeted by nicky, soaked in sweat and vomit, standing in a sickening pool of bodily fluids. she is in the same spot where he left her, with urine staining her clothes and vomit still dribbling from her mouth."
     },
     {
       "type": "dialogue",
@@ -14633,9 +14479,7 @@
       "text": "Nicky springs at Bear, hugging him eagerly like an excited dog. Bear protests, arms raised.",
       "pdfPage": 66,
       "id": "el-938",
-      "searchText": "nicky springs at bear, hugging him eagerly like an excited dog. bear protests, arms raised.",
-      "rawLineStart": 5,
-      "rawLineEnd": 6
+      "searchText": "nicky springs at bear, hugging him eagerly like an excited dog. bear protests, arms raised."
     },
     {
       "type": "dialogue",
@@ -14723,9 +14567,7 @@
       "text": "Nicky gives an uneasy laugh amid the terrible smell. eyes WIDE with confusion and fear.",
       "pdfPage": 66,
       "id": "el-944",
-      "searchText": "nicky gives an uneasy laugh amid the terrible smell. eyes wide with confusion and fear.",
-      "rawLineStart": 19,
-      "rawLineEnd": 21
+      "searchText": "nicky gives an uneasy laugh amid the terrible smell. eyes wide with confusion and fear."
     },
     {
       "type": "dialogue",
@@ -14842,9 +14684,7 @@
       "text": "Bear moves to th e bathroom door, speaking through it, his voice raised above the water's noise.",
       "pdfPage": 66,
       "id": "el-954",
-      "searchText": "bear moves to th e bathroom door, speaking through it, his voice raised above the water's noise.",
-      "rawLineStart": 38,
-      "rawLineEnd": 39
+      "searchText": "bear moves to th e bathroom door, speaking through it, his voice raised above the water's noise."
     },
     {
       "type": "dialogue",
@@ -15061,7 +14901,7 @@
       "id": "el-969",
       "searchText": "the shower water stops, plunging everything into eerie quiet. bear's eyes widen.",
       "rawLineStart": 31,
-      "rawLineEnd": 32
+      "rawLineEnd": 31
     },
     {
       "type": "dialogue",
@@ -15284,14 +15124,16 @@
       "id": "el-982",
       "searchText": "nicky (o.s.) so, i think i could probably go.",
       "rawLineStart": 27,
-      "rawLineEnd": 33
+      "rawLineEnd": 28
     },
     {
       "type": "action",
       "text": "Silence.",
       "pdfPage": 68,
       "id": "el-983",
-      "searchText": "silence."
+      "searchText": "silence.",
+      "rawLineStart": 29,
+      "rawLineEnd": 29
     },
     {
       "type": "dialogue",
@@ -15312,7 +15154,9 @@
       ],
       "pdfPage": 68,
       "id": "el-984",
-      "searchText": "bear somber yeah... i mean, in that case, yeah. you probably could."
+      "searchText": "bear somber yeah... i mean, in that case, yeah. you probably could.",
+      "rawLineStart": 30,
+      "rawLineEnd": 33
     },
     {
       "type": "dialogue",
@@ -15471,9 +15315,7 @@
       "text": "Bear is UNCOMFORTABLE. He maintains his distance from the door, bracing for another scream.",
       "pdfPage": 69,
       "id": "el-995",
-      "searchText": "bear is uncomfortable. he maintains his distance from the door, bracing for another scream.",
-      "rawLineStart": 20,
-      "rawLineEnd": 21
+      "searchText": "bear is uncomfortable. he maintains his distance from the door, bracing for another scream."
     },
     {
       "type": "dialogue",
@@ -15691,7 +15533,7 @@
       "pdfPage": 70,
       "id": "el-1008",
       "searchText": " (cont’d) nicky well, if you wanted me to go- nooo, i think i’ll stay.",
-      "rawLineStart": 9,
+      "rawLineStart": 13,
       "rawLineEnd": 14
     },
     {
@@ -15717,9 +15559,7 @@
       "text": "The house is modest yet aged, filled with booming music. Bear fixes himself a drink as Ian approaches.",
       "pdfPage": 70,
       "id": "el-1011",
-      "searchText": "the house is modest yet aged, filled with booming music. bear fixes himself a drink as ian approaches.",
-      "rawLineStart": 17,
-      "rawLineEnd": 18
+      "searchText": "the house is modest yet aged, filled with booming music. bear fixes himself a drink as ian approaches."
     },
     {
       "type": "dialogue",
@@ -15758,7 +15598,7 @@
       "id": "el-1014",
       "searchText": "bear looks into the living room; nicky laughs at a joke.",
       "rawLineStart": 23,
-      "rawLineEnd": 27
+      "rawLineEnd": 23
     },
     {
       "type": "dialogue",
@@ -15775,7 +15615,9 @@
       ],
       "pdfPage": 70,
       "id": "el-1015",
-      "searchText": "ian that’s your new nickname, co-dip- shit."
+      "searchText": "ian that’s your new nickname, co-dip- shit.",
+      "rawLineStart": 24,
+      "rawLineEnd": 26
     },
     {
       "type": "dialogue",
@@ -15789,8 +15631,8 @@
       "pdfPage": 70,
       "id": "el-1016",
       "searchText": "bear wow. creative.",
-      "rawLineStart": 28,
-      "rawLineEnd": 32
+      "rawLineStart": 27,
+      "rawLineEnd": 28
     },
     {
       "type": "dialogue",
@@ -15807,7 +15649,9 @@
       ],
       "pdfPage": 70,
       "id": "el-1017",
-      "searchText": "ian i knew you were going to bring her. she guilt you?"
+      "searchText": "ian i knew you were going to bring her. she guilt you?",
+      "rawLineStart": 29,
+      "rawLineEnd": 31
     },
     {
       "type": "dialogue",
@@ -15825,8 +15669,8 @@
       "pdfPage": 70,
       "id": "el-1018",
       "searchText": "bear she didn’t guilt me. shut the fuck up.",
-      "rawLineStart": 33,
-      "rawLineEnd": 39
+      "rawLineStart": 32,
+      "rawLineEnd": 34
     },
     {
       "type": "dialogue",
@@ -15847,14 +15691,18 @@
       ],
       "pdfPage": 70,
       "id": "el-1019",
-      "searchText": "ian egging on you couldn’t be without her for three hours?"
+      "searchText": "ian egging on you couldn’t be without her for three hours?",
+      "rawLineStart": 35,
+      "rawLineEnd": 38
     },
     {
       "type": "action",
       "text": "Bear finishes his drink.",
       "pdfPage": 70,
       "id": "el-1020",
-      "searchText": "bear finishes his drink."
+      "searchText": "bear finishes his drink.",
+      "rawLineStart": 39,
+      "rawLineEnd": 39
     },
     {
       "type": "dialogue",
@@ -15932,9 +15780,7 @@
       "text": "They join the party: Sarah, REGGIE, 27, tall and lanky; JOE, 22, the younger brother type; CHRIS, 24, happy-go-lucky.",
       "pdfPage": 71,
       "id": "el-1026",
-      "searchText": "they join the party: sarah, reggie, 27, tall and lanky; joe, 22, the younger brother type; chris, 24, happy-go-lucky.",
-      "rawLineStart": 12,
-      "rawLineEnd": 13
+      "searchText": "they join the party: sarah, reggie, 27, tall and lanky; joe, 22, the younger brother type; chris, 24, happy-go-lucky."
     },
     {
       "type": "dialogue",
@@ -15994,9 +15840,7 @@
       "text": "Ian sits beside Sarah, the room alive with DRUNK JENGA. Nicky, looking HOT, signals Bear. Hopeful, Bear joins her, craving a hint of normality. Reggie pulls a block out from the Jenga tower and reads it aloud.",
       "pdfPage": 71,
       "id": "el-1030",
-      "searchText": "ian sits beside sarah, the room alive with drunk jenga. nicky, looking hot, signals bear. hopeful, bear joins her, craving a hint of normality. reggie pulls a block out from the jenga tower and reads it aloud.",
-      "rawLineStart": 22,
-      "rawLineEnd": 26
+      "searchText": "ian sits beside sarah, the room alive with drunk jenga. nicky, looking hot, signals bear. hopeful, bear joins her, craving a hint of normality. reggie pulls a block out from the jenga tower and reads it aloud."
     },
     {
       "type": "dialogue",
@@ -16227,9 +16071,7 @@
       "text": "Nicky's laughter erupts, loud and forced, getting attention. Silence. She STANDS, laughing again — a forceful, exaggerated laugh. She halts, stares directly at the ceiling in silence, then turns her gaze back to the crowd.",
       "pdfPage": 72,
       "id": "el-1045",
-      "searchText": "nicky's laughter erupts, loud and forced, getting attention. silence. she stands, laughing again — a forceful, exaggerated laugh. she halts, stares directly at the ceiling in silence, then turns her gaze back to the crowd.",
-      "rawLineStart": 23,
-      "rawLineEnd": 28
+      "searchText": "nicky's laughter erupts, loud and forced, getting attention. silence. she stands, laughing again — a forceful, exaggerated laugh. she halts, stares directly at the ceiling in silence, then turns her gaze back to the crowd."
     },
     {
       "type": "dialogue",
@@ -16251,9 +16093,7 @@
       "text": "Nicky sits, leaving the room in uncertain silence. Ian, shaking his head, pulls a block, attempting to reclaim the mood.",
       "pdfPage": 72,
       "id": "el-1048",
-      "searchText": "nicky sits, leaving the room in uncertain silence. ian, shaking his head, pulls a block, attempting to reclaim the mood.",
-      "rawLineStart": 31,
-      "rawLineEnd": 33
+      "searchText": "nicky sits, leaving the room in uncertain silence. ian, shaking his head, pulls a block, attempting to reclaim the mood."
     },
     {
       "type": "dialogue",
@@ -16279,9 +16119,7 @@
       "text": "Ian downs a shot. Setting the glass down, its clink echoes deafeningly in the room's sudden silence.",
       "pdfPage": 72,
       "id": "el-1050",
-      "searchText": "ian downs a shot. setting the glass down, its clink echoes deafeningly in the room's sudden silence.",
-      "rawLineStart": 37,
-      "rawLineEnd": 38
+      "searchText": "ian downs a shot. setting the glass down, its clink echoes deafeningly in the room's sudden silence."
     },
     {
       "type": "dialogue",
@@ -16322,9 +16160,7 @@
       "text": "Nicky pulls a brick, doesn’t read it aloud, stands, grabs her phone, and starts reading.",
       "pdfPage": 73,
       "id": "el-1053",
-      "searchText": "nicky pulls a brick, doesn’t read it aloud, stands, grabs her phone, and starts reading.",
-      "rawLineStart": 4,
-      "rawLineEnd": 5
+      "searchText": "nicky pulls a brick, doesn’t read it aloud, stands, grabs her phone, and starts reading."
     },
     {
       "type": "dialogue",
@@ -16470,9 +16306,7 @@
       "text": "Laughter turns to unease. Nicky sets her phone down, reciting the remainder from memory.",
       "pdfPage": 73,
       "id": "el-1059",
-      "searchText": "laughter turns to unease. nicky sets her phone down, reciting the remainder from memory.",
-      "rawLineStart": 36,
-      "rawLineEnd": 37
+      "searchText": "laughter turns to unease. nicky sets her phone down, reciting the remainder from memory."
     },
     {
       "type": "dialogue",
@@ -16606,9 +16440,7 @@
       "text": "Bear reads a brick, his face pales. He glances at Nicky, who leans forward with anticipation. Then, he looks at Ian.",
       "pdfPage": 74,
       "id": "el-1067",
-      "searchText": "bear reads a brick, his face pales. he glances at nicky, who leans forward with anticipation. then, he looks at ian.",
-      "rawLineStart": 15,
-      "rawLineEnd": 16
+      "searchText": "bear reads a brick, his face pales. he glances at nicky, who leans forward with anticipation. then, he looks at ian."
     },
     {
       "type": "dialogue",
@@ -16630,9 +16462,7 @@
       "text": "It’s Sarah. “Oohs” and “wows ” ripple through the crowd. as Nicky swiftly rises, capturing everyone's attention. Moving deliberately, she stops behind Sarah, who sits in a metal fold-up chair. Discomfort thickens as Nicky grabs Sarah’s chair, pausing tensely before dragging it back, the creak echoing through the room. Settling into Sarah's place, she puckers up childishly, eyes tightly shut. Bear scans the shocked faces before leaning in to kiss Nicky. Tears stream down her closed eyes as she sobs heavily, the rhythm like a broken record. Her head sways until she composes herself enough to speak.",
       "pdfPage": 74,
       "id": "el-1069",
-      "searchText": "it’s sarah. “oohs” and “wows ” ripple through the crowd. as nicky swiftly rises, capturing everyone's attention. moving deliberately, she stops behind sarah, who sits in a metal fold-up chair. discomfort thickens as nicky grabs sarah’s chair, pausing tensely before dragging it back, the creak echoing through the room. settling into sarah's place, she puckers up childishly, eyes tightly shut. bear scans the shocked faces before leaning in to kiss nicky. tears stream down her closed eyes as she sobs heavily, the rhythm like a broken record. her head sways until she composes herself enough to speak.",
-      "rawLineStart": 20,
-      "rawLineEnd": 32
+      "searchText": "it’s sarah. “oohs” and “wows ” ripple through the crowd. as nicky swiftly rises, capturing everyone's attention. moving deliberately, she stops behind sarah, who sits in a metal fold-up chair. discomfort thickens as nicky grabs sarah’s chair, pausing tensely before dragging it back, the creak echoing through the room. settling into sarah's place, she puckers up childishly, eyes tightly shut. bear scans the shocked faces before leaning in to kiss nicky. tears stream down her closed eyes as she sobs heavily, the rhythm like a broken record. her head sways until she composes herself enough to speak."
     },
     {
       "type": "dialogue",
@@ -16714,9 +16544,7 @@
       "text": "Ian shoots Nicky an almost hurt look. She returns to her original seat in silence.",
       "pdfPage": 75,
       "id": "el-1073",
-      "searchText": "ian shoots nicky an almost hurt look. she returns to her original seat in silence.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "ian shoots nicky an almost hurt look. she returns to her original seat in silence."
     },
     {
       "type": "dialogue",
@@ -16789,9 +16617,7 @@
       "text": "Speechless and uncomfortable, no one stirs. The focus shifts to Bear, visibly shaken, his gaze fixed on Nicky.",
       "pdfPage": 75,
       "id": "el-1078",
-      "searchText": "speechless and uncomfortable, no one stirs. the focus shifts to bear, visibly shaken, his gaze fixed on nicky.",
-      "rawLineStart": 15,
-      "rawLineEnd": 16
+      "searchText": "speechless and uncomfortable, no one stirs. the focus shifts to bear, visibly shaken, his gaze fixed on nicky."
     },
     {
       "type": "dialogue",
@@ -16878,7 +16704,7 @@
       "pdfPage": 75,
       "id": "el-1084",
       "searchText": "ian (o.s.) any other takers?  (cont’d)",
-      "rawLineStart": 25,
+      "rawLineStart": 26,
       "rawLineEnd": 27
     },
     {
@@ -16886,9 +16712,7 @@
       "text": "Nicky locks ey es with Bear, guilt washing over her. Suddenly, she JOLTS back into her body, the TRUE NICKY emerging. She moves abruptly, franticly searching for ANYTHING that could hurt her. A vodka bottle. She SMASHES it on the table. Everyone jerks back in fear.",
       "pdfPage": 75,
       "id": "el-1085",
-      "searchText": "nicky locks ey es with bear, guilt washing over her. suddenly, she jolts back into her body, the true nicky emerging. she moves abruptly, franticly searching for anything that could hurt her. a vodka bottle. she smashes it on the table. everyone jerks back in fear.",
-      "rawLineStart": 28,
-      "rawLineEnd": 32
+      "searchText": "nicky locks ey es with bear, guilt washing over her. suddenly, she jolts back into her body, the true nicky emerging. she moves abruptly, franticly searching for anything that could hurt her. a vodka bottle. she smashes it on the table. everyone jerks back in fear."
     },
     {
       "type": "dialogue",
@@ -16910,9 +16734,7 @@
       "text": "IT’S NOT ME! PLEASE! After several attempts, the glass shatters. She grabs the broken end of the bottle and stabs it into her face. The bl unt glass FAILS to puncture, causing damage nonetheless. She manages one more stab before switching back to HAPPY NICKY.",
       "pdfPage": 75,
       "id": "el-1087",
-      "searchText": "it’s not me! please! after several attempts, the glass shatters. she grabs the broken end of the bottle and stabs it into her face. the bl unt glass fails to puncture, causing damage nonetheless. she manages one more stab before switching back to happy nicky.",
-      "rawLineStart": 35,
-      "rawLineEnd": 40
+      "searchText": "it’s not me! please! after several attempts, the glass shatters. she grabs the broken end of the bottle and stabs it into her face. the bl unt glass fails to puncture, causing damage nonetheless. she manages one more stab before switching back to happy nicky."
     },
     {
       "type": "action",
@@ -16921,7 +16743,7 @@
       "id": "el-1088",
       "searchText": "she drops the glass. everyone is up, some cower in the corners.",
       "rawLineStart": 2,
-      "rawLineEnd": 3
+      "rawLineEnd": 2
     },
     {
       "type": "dialogue",
@@ -17041,9 +16863,7 @@
       "text": "Nicky rests her broken face on Bear’s shoulder as he drives. She looks desperate, clinging on for dear life. Then her face morphs to pure affection, then panic again. Bear is frightened and miserable.",
       "pdfPage": 76,
       "id": "el-1098",
-      "searchText": "nicky rests her broken face on bear’s shoulder as he drives. she looks desperate, clinging on for dear life. then her face morphs to pure affection, then panic again. bear is frightened and miserable.",
-      "rawLineStart": 21,
-      "rawLineEnd": 24
+      "searchText": "nicky rests her broken face on bear’s shoulder as he drives. she looks desperate, clinging on for dear life. then her face morphs to pure affection, then panic again. bear is frightened and miserable."
     },
     {
       "type": "scene_heading",
@@ -17059,9 +16879,7 @@
       "text": "From afar we see Bear and a NURSE try to get a reluctant Nicky out of his car. Nicky pushes Bear off of her, refusing to go. Bear pulls the Nurse off to the side. While they talk, Nicky gets out of the car and begins to do a little dance. The Nurse ultimately refuses to take Nicky because of the principle of informed consent.",
       "pdfPage": 76,
       "id": "el-1100",
-      "searchText": "from afar we see bear and a nurse try to get a reluctant nicky out of his car. nicky pushes bear off of her, refusing to go. bear pulls the nurse off to the side. while they talk, nicky gets out of the car and begins to do a little dance. the nurse ultimately refuses to take nicky because of the principle of informed consent.",
-      "rawLineStart": 26,
-      "rawLineEnd": 33
+      "searchText": "from afar we see bear and a nurse try to get a reluctant nicky out of his car. nicky pushes bear off of her, refusing to go. bear pulls the nurse off to the side. while they talk, nicky gets out of the car and begins to do a little dance. the nurse ultimately refuses to take nicky because of the principle of informed consent."
     },
     {
       "type": "scene_heading",
@@ -17079,7 +16897,7 @@
       "id": "el-1102",
       "searchText": "bear reluctantly lets nicky hold his hand as they enter the house.",
       "rawLineStart": 35,
-      "rawLineEnd": 36
+      "rawLineEnd": 35
     },
     {
       "type": "scene_heading",
@@ -17095,9 +16913,7 @@
       "text": "Bear and Nicky sit at opposite ends of the dinner table. Frustrated, Bear bows his head. After a moment, Nicky approaches, sitting beside Bear. She gently places her hand on his. He tolerates it briefly before standing up abruptly.",
       "pdfPage": 77,
       "id": "el-1104",
-      "searchText": "bear and nicky sit at opposite ends of the dinner table. frustrated, bear bows his head. after a moment, nicky approaches, sitting beside bear. she gently places her hand on his. he tolerates it briefly before standing up abruptly.",
-      "rawLineStart": 3,
-      "rawLineEnd": 7
+      "searchText": "bear and nicky sit at opposite ends of the dinner table. frustrated, bear bows his head. after a moment, nicky approaches, sitting beside bear. she gently places her hand on his. he tolerates it briefly before standing up abruptly."
     },
     {
       "type": "dialogue",
@@ -17164,8 +16980,8 @@
       "pdfPage": 77,
       "id": "el-1108",
       "searchText": "bear nicky... why did you do that? why did you act that way tonight?",
-      "rawLineStart": 16,
-      "rawLineEnd": 24
+      "rawLineStart": 15,
+      "rawLineEnd": 17
     },
     {
       "type": "dialogue",
@@ -17179,8 +16995,8 @@
       "pdfPage": 77,
       "id": "el-1109",
       "searchText": "nicky i know. i said i’m sorry.",
-      "rawLineStart": 25,
-      "rawLineEnd": 29
+      "rawLineStart": 18,
+      "rawLineEnd": 19
     },
     {
       "type": "dialogue",
@@ -17197,7 +17013,9 @@
       ],
       "pdfPage": 77,
       "id": "el-1110",
-      "searchText": "bear you’re scaring everyone. and you hurt yourself. look at your face."
+      "searchText": "bear you’re scaring everyone. and you hurt yourself. look at your face.",
+      "rawLineStart": 20,
+      "rawLineEnd": 22
     },
     {
       "type": "dialogue",
@@ -17218,7 +17036,9 @@
       ],
       "pdfPage": 77,
       "id": "el-1111",
-      "searchText": "nicky bear, i don’t know why i did that. i just get nervous. i’m sorry. and i know sarah likes you."
+      "searchText": "nicky bear, i don’t know why i did that. i just get nervous. i’m sorry. and i know sarah likes you.",
+      "rawLineStart": 23,
+      "rawLineEnd": 26
     },
     {
       "type": "dialogue",
@@ -17232,8 +17052,8 @@
       "pdfPage": 77,
       "id": "el-1112",
       "searchText": "bear do you like me?",
-      "rawLineStart": 31,
-      "rawLineEnd": 32
+      "rawLineStart": 27,
+      "rawLineEnd": 28
     },
     {
       "type": "dialogue",
@@ -17246,7 +17066,9 @@
       ],
       "pdfPage": 77,
       "id": "el-1113",
-      "searchText": "nicky what do you mean? i love you, bear."
+      "searchText": "nicky what do you mean? i love you, bear.",
+      "rawLineStart": 29,
+      "rawLineEnd": 30
     },
     {
       "type": "dialogue",
@@ -17259,7 +17081,9 @@
       ],
       "pdfPage": 77,
       "id": "el-1114",
-      "searchText": "bear no, like... do you even like me?"
+      "searchText": "bear no, like... do you even like me?",
+      "rawLineStart": 31,
+      "rawLineEnd": 32
     },
     {
       "type": "action",
@@ -17290,9 +17114,7 @@
       "text": "Nicky's expression shifts like a robot on default, her smashed-up face adding to the unsettling nature.",
       "pdfPage": 77,
       "id": "el-1117",
-      "searchText": "nicky's expression shifts like a robot on default, her smashed-up face adding to the unsettling nature.",
-      "rawLineStart": 37,
-      "rawLineEnd": 38
+      "searchText": "nicky's expression shifts like a robot on default, her smashed-up face adding to the unsettling nature."
     },
     {
       "type": "dialogue",
@@ -17483,9 +17305,7 @@
       "text": "Bear's eyes well up. What happened to his friend? Nicky cries, tears streaking pink over dried blood.",
       "pdfPage": 78,
       "id": "el-1130",
-      "searchText": "bear's eyes well up. what happened to his friend? nicky cries, tears streaking pink over dried blood.",
-      "rawLineStart": 32,
-      "rawLineEnd": 33
+      "searchText": "bear's eyes well up. what happened to his friend? nicky cries, tears streaking pink over dried blood."
     },
     {
       "type": "dialogue",
@@ -17556,9 +17376,7 @@
       "text": "Nicky collapses, sobbing. Her words now sound SO GENUINE, making it hard not to comfort her.",
       "pdfPage": 79,
       "id": "el-1135",
-      "searchText": "nicky collapses, sobbing. her words now sound so genuine, making it hard not to comfort her.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "nicky collapses, sobbing. her words now sound so genuine, making it hard not to comfort her."
     },
     {
       "type": "dialogue",
@@ -17781,9 +17599,7 @@
       "text": "She's CONVINCING. A tear falls from Bear's eye, overwhelmed with guilt. Suddenly, Nicky jumps up, startling Bear. We see the bottom of Nicky’s legs as she rem oves her pants and panties.",
       "pdfPage": 79,
       "id": "el-1150",
-      "searchText": "she's convincing. a tear falls from bear's eye, overwhelmed with guilt. suddenly, nicky jumps up, startling bear. we see the bottom of nicky’s legs as she rem oves her pants and panties.",
-      "rawLineStart": 37,
-      "rawLineEnd": 40
+      "searchText": "she's convincing. a tear falls from bear's eye, overwhelmed with guilt. suddenly, nicky jumps up, startling bear. we see the bottom of nicky’s legs as she rem oves her pants and panties."
     },
     {
       "type": "dialogue",
@@ -17844,9 +17660,7 @@
       "text": "Bear glances over to Nicky, now in the hallway leading to the bedroom. She stands half-naked, mostly obscured by shadows.",
       "pdfPage": 80,
       "id": "el-1155",
-      "searchText": "bear glances over to nicky, now in the hallway leading to the bedroom. she stands half-naked, mostly obscured by shadows.",
-      "rawLineStart": 10,
-      "rawLineEnd": 11
+      "searchText": "bear glances over to nicky, now in the hallway leading to the bedroom. she stands half-naked, mostly obscured by shadows."
     },
     {
       "type": "dialogue",
@@ -18008,9 +17822,7 @@
       "text": "She cracks a broken smile through her wounds, TERRIFYING. She moves toward Bear in slow motion, unsettling and inhumane. Her lips don’t match her words.",
       "pdfPage": 80,
       "id": "el-1165",
-      "searchText": "she cracks a broken smile through her wounds, terrifying. she moves toward bear in slow motion, unsettling and inhumane. her lips don’t match her words.",
-      "rawLineStart": 36,
-      "rawLineEnd": 38
+      "searchText": "she cracks a broken smile through her wounds, terrifying. she moves toward bear in slow motion, unsettling and inhumane. her lips don’t match her words."
     },
     {
       "type": "dialogue",
@@ -18055,9 +17867,7 @@
       "text": "She stops. Nicky Bear, what’s a One Wish Willow? Nicky smiles; Checkmate. Bear I...I don’t know.",
       "pdfPage": 81,
       "id": "el-1168",
-      "searchText": "she stops. nicky bear, what’s a one wish willow? nicky smiles; checkmate. bear i...i don’t know.",
-      "rawLineStart": 5,
-      "rawLineEnd": 11
+      "searchText": "she stops. nicky bear, what’s a one wish willow? nicky smiles; checkmate. bear i...i don’t know."
     },
     {
       "type": "dialogue",
@@ -18087,9 +17897,7 @@
       "text": "She grabs Bear’s hand, and he reluctantly follows. We stay on this empty shot as we hear moaning from the other room grow in intensity.",
       "pdfPage": 81,
       "id": "el-1171",
-      "searchText": "she grabs bear’s hand, and he reluctantly follows. we stay on this empty shot as we hear moaning from the other room grow in intensity.",
-      "rawLineStart": 16,
-      "rawLineEnd": 18
+      "searchText": "she grabs bear’s hand, and he reluctantly follows. we stay on this empty shot as we hear moaning from the other room grow in intensity."
     },
     {
       "type": "scene_heading",
@@ -18114,9 +17922,7 @@
       "text": "DING! Bear's phone blares. He quickly silences it and dims the brightness. A text from Sarah: How is she? Bear cautiously replies: She’s okay. Sleeping now. Sarah: How are you? Bear ponders. Bear: pretty good actually. We worked things out. Sarah: I need to tell you something. Sarah: Multiple things... Sarah: I’m at the park. Bear carefully eyes Nicky, still sleeping. He gently removes her arm fro m his shoulder and untangles her leg. Sneaking toward the hallway, he moves one foot at a time.",
       "pdfPage": 81,
       "id": "el-1174",
-      "searchText": "ding! bear's phone blares. he quickly silences it and dims the brightness. a text from sarah: how is she? bear cautiously replies: she’s okay. sleeping now. sarah: how are you? bear ponders. bear: pretty good actually. we worked things out. sarah: i need to tell you something. sarah: multiple things... sarah: i’m at the park. bear carefully eyes nicky, still sleeping. he gently removes her arm fro m his shoulder and untangles her leg. sneaking toward the hallway, he moves one foot at a time.",
-      "rawLineStart": 22,
-      "rawLineEnd": 33
+      "searchText": "ding! bear's phone blares. he quickly silences it and dims the brightness. a text from sarah: how is she? bear cautiously replies: she’s okay. sleeping now. sarah: how are you? bear ponders. bear: pretty good actually. we worked things out. sarah: i need to tell you something. sarah: multiple things... sarah: i’m at the park. bear carefully eyes nicky, still sleeping. he gently removes her arm fro m his shoulder and untangles her leg. sneaking toward the hallway, he moves one foot at a time."
     },
     {
       "type": "dialogue",
@@ -18189,9 +17995,7 @@
       "text": "Bear slowly turns to face her. She lies in the same position. Her eyes seem closed, but it's too dark to tell.",
       "pdfPage": 82,
       "id": "el-1179",
-      "searchText": "bear slowly turns to face her. she lies in the same position. her eyes seem closed, but it's too dark to tell.",
-      "rawLineStart": 9,
-      "rawLineEnd": 10
+      "searchText": "bear slowly turns to face her. she lies in the same position. her eyes seem closed, but it's too dark to tell."
     },
     {
       "type": "dialogue",
@@ -18355,9 +18159,7 @@
       "text": "Bear contemplates his actions. Slowly, he turns and exits the room. Despite her pleas, Bear shows no empathy.",
       "pdfPage": 82,
       "id": "el-1191",
-      "searchText": "bear contemplates his actions. slowly, he turns and exits the room. despite her pleas, bear shows no empathy.",
-      "rawLineStart": 35,
-      "rawLineEnd": 36
+      "searchText": "bear contemplates his actions. slowly, he turns and exits the room. despite her pleas, bear shows no empathy."
     },
     {
       "type": "dialogue",
@@ -18392,9 +18194,7 @@
       "text": "Bear moves CAUTIOUSLY through the house, slipping his shoes on silently. He does not want to wake her.",
       "pdfPage": 83,
       "id": "el-1194",
-      "searchText": "bear moves cautiously through the house, slipping his shoes on silently. he does not want to wake her.",
-      "rawLineStart": 3,
-      "rawLineEnd": 4
+      "searchText": "bear moves cautiously through the house, slipping his shoes on silently. he does not want to wake her."
     },
     {
       "type": "scene_heading",
@@ -18410,9 +18210,7 @@
       "text": "In an empty parking lot, only one SUV sits parked. Bear approaches and slides into the passenger seat.",
       "pdfPage": 83,
       "id": "el-1196",
-      "searchText": "in an empty parking lot, only one suv sits parked. bear approaches and slides into the passenger seat.",
-      "rawLineStart": 6,
-      "rawLineEnd": 7
+      "searchText": "in an empty parking lot, only one suv sits parked. bear approaches and slides into the passenger seat."
     },
     {
       "type": "scene_heading",
@@ -18428,9 +18226,7 @@
       "text": "Sarah and Bear sit in the car. Sarah, in a purple flower dress, her tattoos accentuated by the soft lighting. The car is slightly filled with smoke, enhancing the intimate vibe.",
       "pdfPage": 83,
       "id": "el-1198",
-      "searchText": "sarah and bear sit in the car. sarah, in a purple flower dress, her tattoos accentuated by the soft lighting. the car is slightly filled with smoke, enhancing the intimate vibe.",
-      "rawLineStart": 9,
-      "rawLineEnd": 12
+      "searchText": "sarah and bear sit in the car. sarah, in a purple flower dress, her tattoos accentuated by the soft lighting. the car is slightly filled with smoke, enhancing the intimate vibe."
     },
     {
       "type": "dialogue",
@@ -19191,9 +18987,7 @@
       "text": "Not far behind Sara h, we see NICKY running head-first into the driver-side window. Glass shatters. Nicky wedges a BRICK against the steering wheel, then grabs Sarah by the hair, relentlessly smashing her face in. Each blow triggers the horn, caving Sarah's SKULL deeper inside out. Bear, in TOTAL SHOCK, presses himself against the passenger door. Nicky, without looking up, STOPS. Her hair, covered in brain matter, obs cures her face as she breathes deeply.",
       "pdfPage": 86,
       "id": "el-1243",
-      "searchText": "not far behind sara h, we see nicky running head-first into the driver-side window. glass shatters. nicky wedges a brick against the steering wheel, then grabs sarah by the hair, relentlessly smashing her face in. each blow triggers the horn, caving sarah's skull deeper inside out. bear, in total shock, presses himself against the passenger door. nicky, without looking up, stops. her hair, covered in brain matter, obs cures her face as she breathes deeply.",
-      "rawLineStart": 19,
-      "rawLineEnd": 26
+      "searchText": "not far behind sara h, we see nicky running head-first into the driver-side window. glass shatters. nicky wedges a brick against the steering wheel, then grabs sarah by the hair, relentlessly smashing her face in. each blow triggers the horn, caving sarah's skull deeper inside out. bear, in total shock, presses himself against the passenger door. nicky, without looking up, stops. her hair, covered in brain matter, obs cures her face as she breathes deeply."
     },
     {
       "type": "dialogue",
@@ -19283,9 +19077,7 @@
       "text": "Bear, paralyzed by shock, incapable of a retort. She advances to his side of the car, wrenches the door open. Bear recoils, instinctively bracing for a imminent burst of violence.",
       "pdfPage": 86,
       "id": "el-1249",
-      "searchText": "bear, paralyzed by shock, incapable of a retort. she advances to his side of the car, wrenches the door open. bear recoils, instinctively bracing for a imminent burst of violence.",
-      "rawLineStart": 42,
-      "rawLineEnd": 44
+      "searchText": "bear, paralyzed by shock, incapable of a retort. she advances to his side of the car, wrenches the door open. bear recoils, instinctively bracing for a imminent burst of violence."
     },
     {
       "type": "dialogue",
@@ -19465,7 +19257,7 @@
       "id": "el-1257",
       "searchText": "nicky pulls back from bear, locking eyes. bear, drenched in sarah's blood.",
       "rawLineStart": 36,
-      "rawLineEnd": 38
+      "rawLineEnd": 36
     },
     {
       "type": "dialogue",
@@ -19557,9 +19349,7 @@
       "text": "Nicky exits the store with a giant tuba case. Bear and Nicky fold Sarah's naked body into it, adding sandbags. They place her in the trunk of her SUV. Bear re-enters the store, leaving Nicky alone with the body. She glances inside to confirm Bear's distraction, then back at the body; up to something.",
       "pdfPage": 88,
       "id": "el-1265",
-      "searchText": "nicky exits the store with a giant tuba case. bear and nicky fold sarah's naked body into it, adding sandbags. they place her in the trunk of her suv. bear re-enters the store, leaving nicky alone with the body. she glances inside to confirm bear's distraction, then back at the body; up to something.",
-      "rawLineStart": 4,
-      "rawLineEnd": 9
+      "searchText": "nicky exits the store with a giant tuba case. bear and nicky fold sarah's naked body into it, adding sandbags. they place her in the trunk of her suv. bear re-enters the store, leaving nicky alone with the body. she glances inside to confirm bear's distraction, then back at the body; up to something."
     },
     {
       "type": "scene_heading",
@@ -19575,9 +19365,7 @@
       "text": "Bear sits at the table, dark and quiet. The sound of tape being wrapped around a tuba case fills the air, then stops abruptly as Nicky enters.",
       "pdfPage": 88,
       "id": "el-1267",
-      "searchText": "bear sits at the table, dark and quiet. the sound of tape being wrapped around a tuba case fills the air, then stops abruptly as nicky enters.",
-      "rawLineStart": 12,
-      "rawLineEnd": 14
+      "searchText": "bear sits at the table, dark and quiet. the sound of tape being wrapped around a tuba case fills the air, then stops abruptly as nicky enters."
     },
     {
       "type": "dialogue",
@@ -19625,9 +19413,7 @@
       "text": "A breathtaking sunrise illuminates the foothills. Bear sits in his car, solitary. He retrieves SARAH’S LET TER from his pocket, hesitates, then unfolds it. Dear Sarah Harper, Congratulations! On behalf of the Admissions Committee, it is with great pleasure, I extend to you an offer of admission to the Luther Art School for the upcoming academic year. Bear's tears flow silently. Regret consumes him. After a moment, he lifts his head, resolute, ready to fix mistakes.",
       "pdfPage": 88,
       "id": "el-1271",
-      "searchText": "a breathtaking sunrise illuminates the foothills. bear sits in his car, solitary. he retrieves sarah’s let ter from his pocket, hesitates, then unfolds it. dear sarah harper, congratulations! on behalf of the admissions committee, it is with great pleasure, i extend to you an offer of admission to the luther art school for the upcoming academic year. bear's tears flow silently. regret consumes him. after a moment, he lifts his head, resolute, ready to fix mistakes.",
-      "rawLineStart": 21,
-      "rawLineEnd": 31
+      "searchText": "a breathtaking sunrise illuminates the foothills. bear sits in his car, solitary. he retrieves sarah’s let ter from his pocket, hesitates, then unfolds it. dear sarah harper, congratulations! on behalf of the admissions committee, it is with great pleasure, i extend to you an offer of admission to the luther art school for the upcoming academic year. bear's tears flow silently. regret consumes him. after a moment, he lifts his head, resolute, ready to fix mistakes."
     },
     {
       "type": "scene_heading",
@@ -19643,9 +19429,7 @@
       "text": "Bear zooms down the street with a determined look on his face. He lets out a scream.",
       "pdfPage": 88,
       "id": "el-1274",
-      "searchText": "bear zooms down the street with a determined look on his face. he lets out a scream.",
-      "rawLineStart": 33,
-      "rawLineEnd": 34
+      "searchText": "bear zooms down the street with a determined look on his face. he lets out a scream."
     },
     {
       "type": "scene_heading",
@@ -19681,7 +19465,7 @@
       "id": "el-1278",
       "searchText": "bear heads straight for the one wish willow section. it's empty.",
       "rawLineStart": 3,
-      "rawLineEnd": 4
+      "rawLineEnd": 3
     },
     {
       "type": "dialogue",
@@ -19705,7 +19489,7 @@
       "id": "el-1280",
       "searchText": "bear storms over to the clerk, noticing it's a different worker.",
       "rawLineStart": 7,
-      "rawLineEnd": 8
+      "rawLineEnd": 7
     },
     {
       "type": "dialogue",
@@ -19766,7 +19550,7 @@
       "pdfPage": 89,
       "id": "el-1284",
       "searchText": "willows? harry, 34, oddball, points behind the counter.",
-      "rawLineStart": 18,
+      "rawLineStart": 19,
       "rawLineEnd": 19
     },
     {
@@ -19950,9 +19734,7 @@
       "text": "Bear catches his reflection in an aged, dirty mirror behind the front desk. Bloodied, dirt-streaked, his eyes blaze with madness.",
       "pdfPage": 90,
       "id": "el-1295",
-      "searchText": "bear catches his reflection in an aged, dirty mirror behind the front desk. bloodied, dirt-streaked, his eyes blaze with madness.",
-      "rawLineStart": 7,
-      "rawLineEnd": 9
+      "searchText": "bear catches his reflection in an aged, dirty mirror behind the front desk. bloodied, dirt-streaked, his eyes blaze with madness."
     },
     {
       "type": "dialogue",
@@ -20164,9 +19946,7 @@
       ],
       "pdfPage": 90,
       "id": "el-1307",
-      "searchText": "harry comforting you know you ca n’t do that. you knew that going in, man. you knew you couldn’t-  (cont’d)",
-      "rawLineStart": 38,
-      "rawLineEnd": 45
+      "searchText": "harry comforting you know you ca n’t do that. you knew that going in, man. you knew you couldn’t-  (cont’d)"
     },
     {
       "type": "dialogue",
@@ -20305,7 +20085,7 @@
       "id": "el-1316",
       "searchText": "bear glances from harry to the one wish willow display, an idea sparking.",
       "rawLineStart": 23,
-      "rawLineEnd": 24
+      "rawLineEnd": 23
     },
     {
       "type": "scene_heading",
@@ -20321,9 +20101,7 @@
       "text": "Bear leaves the shop, three One Wish Willow boxes in his shirt, eyes burning with determination and anger.",
       "pdfPage": 91,
       "id": "el-1318",
-      "searchText": "bear leaves the shop, three one wish willow boxes in his shirt, eyes burning with determination and anger.",
-      "rawLineStart": 26,
-      "rawLineEnd": 27
+      "searchText": "bear leaves the shop, three one wish willow boxes in his shirt, eyes burning with determination and anger."
     },
     {
       "type": "scene_heading",
@@ -20864,7 +20642,7 @@
       "id": "el-1353",
       "searchText": "ian grins, casually tossing out his first thought, not serious.",
       "rawLineStart": 38,
-      "rawLineEnd": 39
+      "rawLineEnd": 38
     },
     {
       "type": "dialogue",
@@ -20899,9 +20677,7 @@
       "text": "NOOOO! Stacks of hundred-dollar bills RAIN FROM THE CEILING, covering Bear and Ian. Bear drops to his knees, defeated. Ian's jaw drops in DISBELIEF. Bear, teeth clenched, endures the barrage of bills, flinching yet maintaining eye contact with Ian. Bear stands, a switch flips. Wiping away tears, angry and determined, he leaves the house.",
       "pdfPage": 94,
       "id": "el-1356",
-      "searchText": "noooo! stacks of hundred-dollar bills rain from the ceiling, covering bear and ian. bear drops to his knees, defeated. ian's jaw drops in disbelief. bear, teeth clenched, endures the barrage of bills, flinching yet maintaining eye contact with ian. bear stands, a switch flips. wiping away tears, angry and determined, he leaves the house.",
-      "rawLineStart": 3,
-      "rawLineEnd": 10
+      "searchText": "noooo! stacks of hundred-dollar bills rain from the ceiling, covering bear and ian. bear drops to his knees, defeated. ian's jaw drops in disbelief. bear, teeth clenched, endures the barrage of bills, flinching yet maintaining eye contact with ian. bear stands, a switch flips. wiping away tears, angry and determined, he leaves the house."
     },
     {
       "type": "scene_heading",
@@ -20917,9 +20693,7 @@
       "text": "The door remains open as Bear walks away, money still falling inside the house.",
       "pdfPage": 94,
       "id": "el-1358",
-      "searchText": "the door remains open as bear walks away, money still falling inside the house.",
-      "rawLineStart": 12,
-      "rawLineEnd": 13
+      "searchText": "the door remains open as bear walks away, money still falling inside the house."
     },
     {
       "type": "scene_heading",
@@ -20935,9 +20709,7 @@
       "text": "Bear approaches the house, One Wish Willows in hand, noting the empty driveway with skepticism.",
       "pdfPage": 94,
       "id": "el-1360",
-      "searchText": "bear approaches the house, one wish willows in hand, noting the empty driveway with skepticism.",
-      "rawLineStart": 15,
-      "rawLineEnd": 16
+      "searchText": "bear approaches the house, one wish willows in hand, noting the empty driveway with skepticism."
     },
     {
       "type": "scene_heading",
@@ -20953,9 +20725,7 @@
       "text": "Bear cautiously enters. The room is stark, unsettling. The table is set up like a shrine in his memory -flowers, a prominent photo of Bear and Nicky. Ian and Sarah are CUT from the pictures. A collection of Bear's life -personal items, childhood photos. Bear's gaze sweeps over the eerie homage.",
       "pdfPage": 94,
       "id": "el-1362",
-      "searchText": "bear cautiously enters. the room is stark, unsettling. the table is set up like a shrine in his memory -flowers, a prominent photo of bear and nicky. ian and sarah are cut from the pictures. a collection of bear's life -personal items, childhood photos. bear's gaze sweeps over the eerie homage.",
-      "rawLineStart": 18,
-      "rawLineEnd": 22
+      "searchText": "bear cautiously enters. the room is stark, unsettling. the table is set up like a shrine in his memory -flowers, a prominent photo of bear and nicky. ian and sarah are cut from the pictures. a collection of bear's life -personal items, childhood photos. bear's gaze sweeps over the eerie homage."
     },
     {
       "type": "dialogue",
@@ -20969,8 +20739,8 @@
       "pdfPage": 94,
       "id": "el-1363",
       "searchText": "bear nicky?",
-      "rawLineStart": 23,
-      "rawLineEnd": 24
+      "rawLineStart": 20,
+      "rawLineEnd": 20
     },
     {
       "type": "action",
@@ -21037,18 +20807,14 @@
       "text": "Bear finally looks up from his trance to see, right in the corner ottoman, SA RAH'S LIFELESS AND NAKED BODY sitting upright, eerily stiff.",
       "pdfPage": 94,
       "id": "el-1368",
-      "searchText": "bear finally looks up from his trance to see, right in the corner ottoman, sa rah's lifeless and naked body sitting upright, eerily stiff.",
-      "rawLineStart": 35,
-      "rawLineEnd": 37
+      "searchText": "bear finally looks up from his trance to see, right in the corner ottoman, sa rah's lifeless and naked body sitting upright, eerily stiff."
     },
     {
       "type": "action",
       "text": "He freezes at the sight, then slowly turns around. Nicky stands there, holding the brick she used to kill Sarah.",
       "pdfPage": 95,
       "id": "el-1369",
-      "searchText": "he freezes at the sight, then slowly turns around. nicky stands there, holding the brick she used to kill sarah.",
-      "rawLineStart": 2,
-      "rawLineEnd": 3
+      "searchText": "he freezes at the sight, then slowly turns around. nicky stands there, holding the brick she used to kill sarah."
     },
     {
       "type": "dialogue",
@@ -21070,9 +20836,7 @@
       "text": "Nicky's head, covered in dried blood, has a brownish tint. She's in Sarah's floral dress, with Sarah's tattoos crudely copied onto her arm and chest. Casually, she takes a drag from a joint.",
       "pdfPage": 95,
       "id": "el-1371",
-      "searchText": "nicky's head, covered in dried blood, has a brownish tint. she's in sarah's floral dress, with sarah's tattoos crudely copied onto her arm and chest. casually, she takes a drag from a joint.",
-      "rawLineStart": 7,
-      "rawLineEnd": 10
+      "searchText": "nicky's head, covered in dried blood, has a brownish tint. she's in sarah's floral dress, with sarah's tattoos crudely copied onto her arm and chest. casually, she takes a drag from a joint."
     },
     {
       "type": "dialogue",
@@ -21094,9 +20858,7 @@
       "text": "She inhales over and over again, aggressively sucking the smoke into her lungs. Suddenly, a knock on the door.",
       "pdfPage": 95,
       "id": "el-1373",
-      "searchText": "she inhales over and over again, aggressively sucking the smoke into her lungs. suddenly, a knock on the door.",
-      "rawLineStart": 13,
-      "rawLineEnd": 14
+      "searchText": "she inhales over and over again, aggressively sucking the smoke into her lungs. suddenly, a knock on the door."
     },
     {
       "type": "dialogue",
@@ -21118,9 +20880,7 @@
       "text": "She starts to cough. Instead of putting it out, she slides the lit joint into her mouth, wincing at the brief pain and swallowing the joint.",
       "pdfPage": 95,
       "id": "el-1375",
-      "searchText": "she starts to cough. instead of putting it out, she slides the lit joint into her mouth, wincing at the brief pain and swallowing the joint.",
-      "rawLineStart": 17,
-      "rawLineEnd": 19
+      "searchText": "she starts to cough. instead of putting it out, she slides the lit joint into her mouth, wincing at the brief pain and swallowing the joint."
     },
     {
       "type": "dialogue",
@@ -21204,9 +20964,7 @@
       "text": "WHY CAN’T YOU LOVE ME?! Nicky takes the brick and SMASHES HER HEAD in the same way she killed Sarah.",
       "pdfPage": 95,
       "id": "el-1381",
-      "searchText": "why can’t you love me?! nicky takes the brick and smashes her head in the same way she killed sarah.",
-      "rawLineStart": 32,
-      "rawLineEnd": 38
+      "searchText": "why can’t you love me?! nicky takes the brick and smashes her head in the same way she killed sarah."
     },
     {
       "type": "action",
@@ -21239,9 +20997,7 @@
       "text": "Nicky draws a tiny silver revolver from her underwear — the same one from the music shop.",
       "pdfPage": 96,
       "id": "el-1384",
-      "searchText": "nicky draws a tiny silver revolver from her underwear — the same one from the music shop.",
-      "rawLineStart": 5,
-      "rawLineEnd": 6
+      "searchText": "nicky draws a tiny silver revolver from her underwear — the same one from the music shop."
     },
     {
       "type": "dialogue",
@@ -21278,9 +21034,7 @@
       "text": "Nicky SHOOTS IAN IN THE HEAD and gets right in Bear’s face. So close she could kiss him.",
       "pdfPage": 96,
       "id": "el-1387",
-      "searchText": "nicky shoots ian in the head and gets right in bear’s face. so close she could kiss him.",
-      "rawLineStart": 11,
-      "rawLineEnd": 12
+      "searchText": "nicky shoots ian in the head and gets right in bear’s face. so close she could kiss him."
     },
     {
       "type": "dialogue",
@@ -21306,9 +21060,7 @@
       "text": "PUSSY, BEAR! Bear falls back onto the couch. Nicky VOMITS ON BEAR, mostly stomach acid from the lack of food.",
       "pdfPage": 96,
       "id": "el-1389",
-      "searchText": "pussy, bear! bear falls back onto the couch. nicky vomits on bear, mostly stomach acid from the lack of food.",
-      "rawLineStart": 16,
-      "rawLineEnd": 19
+      "searchText": "pussy, bear! bear falls back onto the couch. nicky vomits on bear, mostly stomach acid from the lack of food."
     },
     {
       "type": "dialogue",
@@ -21336,7 +21088,7 @@
       "id": "el-1391",
       "searchText": "nicky screams in bear's face, blood and spit flying from her mouth.",
       "rawLineStart": 23,
-      "rawLineEnd": 24
+      "rawLineEnd": 23
     },
     {
       "type": "action",
@@ -21352,9 +21104,7 @@
       "text": "I LOVE YOU! I LOVE YOU! Nicky falls on top of Bear, crying.",
       "pdfPage": 96,
       "id": "el-1393",
-      "searchText": "i love you! i love you! nicky falls on top of bear, crying.",
-      "rawLineStart": 28,
-      "rawLineEnd": 29
+      "searchText": "i love you! i love you! nicky falls on top of bear, crying."
     },
     {
       "type": "dialogue",
@@ -21638,7 +21388,7 @@
       "id": "el-1411",
       "searchText": "he quickly shuts the bathroom door behind him, locking nicky out.",
       "rawLineStart": 31,
-      "rawLineEnd": 32
+      "rawLineEnd": 31
     },
     {
       "type": "dialogue",
@@ -21675,9 +21425,7 @@
       "text": "Nicky hammers on the door, relentless and fierce. Bear slumps over the sink, a picture of defeat, staring down.",
       "pdfPage": 97,
       "id": "el-1414",
-      "searchText": "nicky hammers on the door, relentless and fierce. bear slumps over the sink, a picture of defeat, staring down.",
-      "rawLineStart": 37,
-      "rawLineEnd": 38
+      "searchText": "nicky hammers on the door, relentless and fierce. bear slumps over the sink, a picture of defeat, staring down."
     },
     {
       "type": "dialogue",
@@ -21727,9 +21475,7 @@
       "text": "Bear lacks the energy to cry. He stares at his reflection; a stranger. Digging into his pocket, he retrieves Nicky’s tiger's eye, gripping it as guilt engulfs him. A second reach finds Nicky’s gun. He points it at his chest, pondering the pain. His fingers search for bone; something feels wrong. He lowers the weapon, yet despair remains. He places it in his mouth, checking his aim by touching the back of his head, then tilts the gun upward, aiming for the brain. NO. He places the gun on the cabinet, eyes the door, then, with a thought, slips it back into his pocket—just in case. He glances at his reflection, opens the medicine cabinet, and grabs the pills. He swallows as many as he can, then one more for good measure. Sitting on the toilet, he realizes there's no turning back. Suddenly, a spark ignites within him, the world snapping into focus. It's as if a SPELL has been cast. His eyes widen, and he rises from the toilet, staring at the bathroom door with fierce determination, desperate to reach something beyond it.",
       "pdfPage": 98,
       "id": "el-1418",
-      "searchText": "bear lacks the energy to cry. he stares at his reflection; a stranger. digging into his pocket, he retrieves nicky’s tiger's eye, gripping it as guilt engulfs him. a second reach finds nicky’s gun. he points it at his chest, pondering the pain. his fingers search for bone; something feels wrong. he lowers the weapon, yet despair remains. he places it in his mouth, checking his aim by touching the back of his head, then tilts the gun upward, aiming for the brain. no. he places the gun on the cabinet, eyes the door, then, with a thought, slips it back into his pocket—just in case. he glances at his reflection, opens the medicine cabinet, and grabs the pills. he swallows as many as he can, then one more for good measure. sitting on the toilet, he realizes there's no turning back. suddenly, a spark ignites within him, the world snapping into focus. it's as if a spell has been cast. his eyes widen, and he rises from the toilet, staring at the bathroom door with fierce determination, desperate to reach something beyond it.",
-      "rawLineStart": 9,
-      "rawLineEnd": 28
+      "searchText": "bear lacks the energy to cry. he stares at his reflection; a stranger. digging into his pocket, he retrieves nicky’s tiger's eye, gripping it as guilt engulfs him. a second reach finds nicky’s gun. he points it at his chest, pondering the pain. his fingers search for bone; something feels wrong. he lowers the weapon, yet despair remains. he places it in his mouth, checking his aim by touching the back of his head, then tilts the gun upward, aiming for the brain. no. he places the gun on the cabinet, eyes the door, then, with a thought, slips it back into his pocket—just in case. he glances at his reflection, opens the medicine cabinet, and grabs the pills. he swallows as many as he can, then one more for good measure. sitting on the toilet, he realizes there's no turning back. suddenly, a spark ignites within him, the world snapping into focus. it's as if a spell has been cast. his eyes widen, and he rises from the toilet, staring at the bathroom door with fierce determination, desperate to reach something beyond it."
     },
     {
       "type": "scene_heading",
@@ -21745,9 +21491,7 @@
       "text": "Bear slowly walks out into the hallway with vigor and desperation. He sees Nicky from across the house smiling at him. He smiles back. They laugh together. It’s a total “Rom-Com” moment... minus the blood, wounds, and terrifying undertones. He slowly approaches and she extends her arms like a child. He leans in and kisses her. A longing for togetherness. His face becomes covered in blood as he kisses her broken jaw. We slowly pan over to reveal, on the table, a freshly used ONE WISH WILLOW. We can tell by its placement that NICKY used it. Bear collapses onto the couch.",
       "pdfPage": 98,
       "id": "el-1420",
-      "searchText": "bear slowly walks out into the hallway with vigor and desperation. he sees nicky from across the house smiling at him. he smiles back. they laugh together. it’s a total “rom-com” moment... minus the blood, wounds, and terrifying undertones. he slowly approaches and she extends her arms like a child. he leans in and kisses her. a longing for togetherness. his face becomes covered in blood as he kisses her broken jaw. we slowly pan over to reveal, on the table, a freshly used one wish willow. we can tell by its placement that nicky used it. bear collapses onto the couch.",
-      "rawLineStart": 30,
-      "rawLineEnd": 40
+      "searchText": "bear slowly walks out into the hallway with vigor and desperation. he sees nicky from across the house smiling at him. he smiles back. they laugh together. it’s a total “rom-com” moment... minus the blood, wounds, and terrifying undertones. he slowly approaches and she extends her arms like a child. he leans in and kisses her. a longing for togetherness. his face becomes covered in blood as he kisses her broken jaw. we slowly pan over to reveal, on the table, a freshly used one wish willow. we can tell by its placement that nicky used it. bear collapses onto the couch."
     },
     {
       "type": "dialogue",
@@ -21777,9 +21521,7 @@
       "text": "Music starts to play, offering a creepy optimistic feel in juxtaposition to the terror in front of us. Nicky, now clutching Bear’s lifeless form, cradles him with profound sorrow.",
       "pdfPage": 99,
       "id": "el-1422",
-      "searchText": "music starts to play, offering a creepy optimistic feel in juxtaposition to the terror in front of us. nicky, now clutching bear’s lifeless form, cradles him with profound sorrow.",
-      "rawLineStart": 6,
-      "rawLineEnd": 9
+      "searchText": "music starts to play, offering a creepy optimistic feel in juxtaposition to the terror in front of us. nicky, now clutching bear’s lifeless form, cradles him with profound sorrow."
     },
     {
       "type": "dialogue",
@@ -21828,9 +21570,7 @@
       "text": "These final words hit Nicky. She takes Bear’s gun and, with finality, shoots herself in the head. We remain fixed on this shot, capturing the blood slowly dripping, a haunting and somber testament to this tragic love story.",
       "pdfPage": 99,
       "id": "el-1425",
-      "searchText": "these final words hit nicky. she takes bear’s gun and, with finality, shoots herself in the head. we remain fixed on this shot, capturing the blood slowly dripping, a haunting and somber testament to this tragic love story.",
-      "rawLineStart": 18,
-      "rawLineEnd": 21
+      "searchText": "these final words hit nicky. she takes bear’s gun and, with finality, shoots herself in the head. we remain fixed on this shot, capturing the blood slowly dripping, a haunting and somber testament to this tragic love story."
     }
   ],
   "beats": [
