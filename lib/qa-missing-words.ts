@@ -36,8 +36,8 @@ export function findLineIndicesForWord(page: QaRawPage, word: string): number[] 
   return indices;
 }
 
-export function mapMissingWordsToLines(page: QaRawPage, missingWords: string[]): MissingWordHit[] {
-  const unique = [...new Set(missingWords)];
+export function mapWordsToLines(page: QaRawPage, words: string[]): MissingWordHit[] {
+  const unique = [...new Set(words)];
 
   return unique
     .map((word) => {
@@ -49,6 +49,15 @@ export function mapMissingWordsToLines(page: QaRawPage, missingWords: string[]):
       return { word, lineIndices, rects };
     })
     .filter((hit) => hit.lineIndices.length > 0);
+}
+
+/** @deprecated use mapWordsToLines */
+export function mapMissingWordsToLines(page: QaRawPage, missingWords: string[]): MissingWordHit[] {
+  return mapWordsToLines(page, missingWords);
+}
+
+export function rectsForGapHits(hits: MissingWordHit[]): QaLineBBox[] {
+  return rectsForMissingWords(hits);
 }
 
 export function rectsForMissingWords(hits: MissingWordHit[]): QaLineBBox[] {

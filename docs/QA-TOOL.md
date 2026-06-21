@@ -35,7 +35,7 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 
 **Deep link:** `/qa?page=16` jumps to a flagged page.
 
-**Word hunt:** When a page is below 100%, a red **Word hunt** bar lists missing tokens. Click a word to highlight its raw PDF line(s) in red; **Show all** highlights every gap at once. Amber = selected element; red = missing word location. Page numbers (`2.`) are excluded from scoring noise.
+**Suspected gaps:** After normalization (hyphens, PDF line-break splits like `wonde red` → `wondered`), remaining token diffs appear as **Suspected gaps**. Each gap has **Show on PDF** (red) and **Looks fine** (dismiss for this browser). Dismissals live in `localStorage` only.
 
 **Linked highlighting:** Click an extracted card → amber fill on the matching PDF region. Each element stores `rawLineStart` / `rawLineEnd` (indices into `obsession.raw.json` page lines), refreshed automatically on **`pnpm extract`** and **QA Save**. Falls back to sequential fuzzy match when anchors are missing. PDF overlay uses percentage positioning so highlights track CSS-scaled canvas (`max-w-full`).
 

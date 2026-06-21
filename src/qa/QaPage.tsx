@@ -3,14 +3,17 @@ import { Link, useSearch } from "@tanstack/react-router";
 import {
   analyzeAllPages,
   analyzeQaPage,
+  extractElementText,
   formatWordList,
   reviewPageNumbers,
   type QaPageReport,
   type QaRawPage,
 } from "../../lib/qa-compare";
+import { buildSuspectedGaps, filterActiveGaps, type QaSuspectedGap } from "../../lib/qa-gaps";
+import { mapWordsToLines, rectsForMissingWords } from "../../lib/qa-missing-words";
 import { resolveElementHighlight } from "../../lib/qa-provenance";
-import { mapMissingWordsToLines, rectsForMissingWords } from "../../lib/qa-missing-words";
 import type { ScreenplayData, ScreenplayElement } from "../types";
+import { dismissGap, getDismissedGapIds } from "./qa-dismissals";
 import { ElementEditor } from "./ElementEditor";
 import { ExtractedPane } from "./ExtractedPane";
 import { PdfPane } from "./PdfPane";
@@ -74,7 +77,8 @@ export function QaPage() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPageState] = useState(() => clampPage(search.page ?? 1, 99));
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [focusMissingWord, setFocusMissingWord] = useState<string | null>(null);
+  const [focusGapId, setFocusGapId] = useState<string | null>(null);
+  const [dismissedRevision, setDismissedRevision] = useState(0);
   const [isDirty, setIsDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
@@ -140,31 +144,69 @@ export function QaPage() {
     return resolveElementHighlight(selectedElement, currentRawPage, pageElements);
   }, [selectedElement, currentRawPage, data, page]);
 
-  const missingHits = useMemo(() => {
-    if (!currentRawPage || !currentReport) {
+  const pageElementText = useMemo(() => {
+    if (!data) {
+      return "";
+    }
+    return data.elements
+      .filter((element) => element.pdfPage === page)
+      .map(extractElementText)
+      .filter(Boolean)
+      .join(" ");
+  }, [data, page]);
+
+  const suspectedGaps = useMemo(() => {
+    if (!currentReport) {
       return [];
     }
-    return mapMissingWordsToLines(currentRawPage, currentReport.missingWords);
-  }, [currentRawPage, currentReport]);
+    return buildSuspectedGaps(page, currentReport.missingWords, pageElementText);
+  }, [currentReport, page, pageElementText]);
 
-  const uniqueMissingWords = useMemo(
-    () => [...new Set(currentReport?.missingWords ?? [])],
-    [currentReport],
+  const dismissedGapIds = useMemo(() => {
+    void dismissedRevision;
+    return getDismissedGapIds(page);
+  }, [page, dismissedRevision]);
+
+  const activeGaps = useMemo(
+    () => filterActiveGaps(suspectedGaps, dismissedGapIds),
+    [suspectedGaps, dismissedGapIds],
   );
 
-  const missingHighlightRects = useMemo(() => {
-    if (missingHits.length === 0) {
+  const gapHighlightRects = useMemo(() => {
+    if (!currentRawPage || activeGaps.length === 0) {
       return [];
     }
-    if (focusMissingWord) {
-      return missingHits.find((hit) => hit.word === focusMissingWord)?.rects ?? [];
+
+    const focusedGap = focusGapId
+      ? activeGaps.find((gap) => gap.id === focusGapId)
+      : activeGaps[0];
+
+    if (!focusedGap) {
+      return [];
     }
-    return rectsForMissingWords(missingHits);
-  }, [missingHits, focusMissingWord]);
+
+    const hits = mapWordsToLines(currentRawPage, focusedGap.highlightWords);
+    return rectsForMissingWords(hits);
+  }, [activeGaps, currentRawPage, focusGapId]);
 
   useEffect(() => {
-    setFocusMissingWord(uniqueMissingWords[0] ?? null);
-  }, [page, uniqueMissingWords.join("|")]);
+    setFocusGapId(null);
+  }, [page]);
+
+  useEffect(() => {
+    if (activeGaps.length === 0) {
+      setFocusGapId(null);
+      return;
+    }
+    if (!focusGapId || !activeGaps.some((gap) => gap.id === focusGapId)) {
+      setFocusGapId(activeGaps[0]!.id);
+    }
+  }, [activeGaps, focusGapId]);
+
+  function handleDismissGap(gap: QaSuspectedGap) {
+    dismissGap(page, gap.id);
+    setDismissedRevision((value) => value + 1);
+  }
 
   function setPage(nextPage: number) {
     setPageState(clampPage(nextPage, maxPage));
@@ -427,43 +469,58 @@ export function QaPage() {
         </div>
       ) : null}
 
-      {currentReport && uniqueMissingWords.length > 0 ? (
-        <div className="shrink-0 border-b border-red-200 bg-red-50 px-4 py-2 text-sm text-red-950">
-          <div className="flex flex-wrap items-center gap-2">
+      {activeGaps.length > 0 ? (
+        <div className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-950">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
             <span className="font-semibold">
-              Word hunt — {uniqueMissingWords.length} missing on this page
+              Suspected gaps — {activeGaps.length} on this page
             </span>
-            <span className="text-red-800">
-              ({currentReport.matchedWords}/{currentReport.totalRawWords} words matched)
+            <span className="text-amber-800">
+              ({currentReport?.matchedWords}/{currentReport?.totalRawWords} words matched after
+              normalization)
             </span>
-            <button
-              type="button"
-              className={`reader-chrome-button text-xs ${focusMissingWord === null ? "font-semibold" : ""}`}
-              onClick={() => setFocusMissingWord(null)}
-            >
-              Show all
-            </button>
           </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {uniqueMissingWords.map((word) => (
-              <button
-                key={word}
-                type="button"
-                className={`rounded border px-2 py-0.5 font-label text-xs ${
-                  focusMissingWord === word
-                    ? "border-red-500 bg-red-200 font-semibold text-red-950"
-                    : "border-red-300 bg-white text-red-900 hover:bg-red-100"
+          <ul className="space-y-2">
+            {activeGaps.map((gap) => (
+              <li
+                key={gap.id}
+                className={`flex flex-wrap items-start gap-2 rounded border px-2 py-1.5 ${
+                  focusGapId === gap.id
+                    ? "border-amber-500 bg-amber-100"
+                    : "border-amber-200 bg-white"
                 }`}
-                onClick={() => setFocusMissingWord(word)}
               >
-                {word}
-              </button>
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium text-amber-950">{gap.label}</p>
+                  <p className="text-xs text-amber-800">{gap.reason}</p>
+                </div>
+                <button
+                  type="button"
+                  className="reader-chrome-button text-xs"
+                  onClick={() => setFocusGapId(gap.id)}
+                >
+                  Show on PDF
+                </button>
+                <button
+                  type="button"
+                  className="reader-chrome-button text-xs text-stone-700"
+                  onClick={() => handleDismissGap(gap)}
+                >
+                  Looks fine
+                </button>
+              </li>
             ))}
-          </div>
-          <p className="mt-1 text-xs text-red-800">
-            Click a word to locate it on the PDF (red highlight). Fix the extracted JSON, Save, and
-            watch the score climb.
+          </ul>
+          <p className="mt-2 text-xs text-amber-800">
+            We normalize hyphen/split-word artifacts before scoring. Dismiss anything you’ve verified
+            — stored in this browser only.
           </p>
+        </div>
+      ) : null}
+
+      {suspectedGaps.length > 0 && activeGaps.length === 0 ? (
+        <div className="shrink-0 border-b border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900">
+          All suspected gaps dismissed for this page — treat as reviewed.
         </div>
       ) : null}
 
@@ -482,7 +539,7 @@ export function QaPage() {
         <PdfPane
           pdfPage={page}
           highlightRects={elementHighlight.rects}
-          missingHighlightRects={missingHighlightRects}
+          missingHighlightRects={gapHighlightRects}
         />
         <ExtractedPane
           pdfPage={page}

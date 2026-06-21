@@ -4,6 +4,7 @@ import {
   ensureTrackSegments,
   flattenSegments,
 } from "./dialogue-segments.js";
+import { normalizeForQaCompare } from "./qa-normalize.js";
 
 export const QA_OK_THRESHOLD = 0.95;
 export const QA_WARN_THRESHOLD = 0.8;
@@ -134,8 +135,8 @@ export function collectRawPageText(page: QaRawPage): string {
 }
 
 export function compareWordSets(rawText: string, elementText: string) {
-  const rawWords = tokenize(rawText);
-  const elementWords = tokenize(elementText);
+  const rawWords = tokenize(normalizeForQaCompare(rawText));
+  const elementWords = tokenize(normalizeForQaCompare(elementText));
   const rawFreq = wordFrequency(rawWords);
   const elementFreq = wordFrequency(elementWords);
 
