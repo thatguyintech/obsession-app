@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { DialogueSegment, SceneTocEntry, ScreenplayElement } from "../types";
 import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
+import { splitActionParagraphs } from "../../lib/text-paragraphs";
 import { getCharacterColor } from "../lib/character-colors";
 import { isContinuousSceneHeading } from "../lib/display";
 import { InlineText } from "./InlineText";
@@ -144,12 +145,16 @@ export function ElementView({
   }
 
   if (element.type === "action") {
+    const paragraphs = splitActionParagraphs(element.text ?? "");
+
     return (
       <ElementWrapper elementId={element.id} highlight={highlight}>
         <div className="action-block">
-          <p className="text-action">
-            <InlineText text={element.text ?? ""} />
-          </p>
+          {paragraphs.map((paragraph, index) => (
+            <p key={`${element.id}-p-${index}`} className="text-action">
+              <InlineText text={paragraph} />
+            </p>
+          ))}
         </div>
       </ElementWrapper>
     );

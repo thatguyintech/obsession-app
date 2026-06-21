@@ -108,7 +108,7 @@ body {
 
   /* Action — connective tissue, quiet relative to scene headings */
   .action-block {
-    @apply mb-5;
+    @apply mb-5 space-y-3;
   }
 
   .text-action {

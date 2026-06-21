@@ -367,7 +367,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 
 | # | ID | Why now |
 |---|-----|---------|
-| 1 | **READ-004** (display) | `el-003` already has `\n\n` in JSON; reader still collapses to one block. Small win — split `action.text` on `\n\n` in `ElementView`. |
+| 1 | **READ-004** | ✅ Done — action `\n\n` → separate paragraphs in reader + QA |
 | 2 | *(ops)* | WARN page review — 9 pages left (16, 35, 49, 63, 64, 70, 87, 90, 93). |
 | — | **READ-002** | ✅ Done — `transition` element type, classifier, migrate script, reader + QA editor. |
 | — | **READ-003** | ✅ Done — scene heading hierarchy (bold/prominent slugs, quieter action). |
@@ -399,7 +399,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 ### Suggested sequence
 
 ```
-READ-004 display → Phase D → READ-001
+READ-001 editor buttons → Phase D
 ```
 
 **Dependencies:** EXTRACT-001 waits on stable hand-fixes + backup strategy. READ-004 is independent.
@@ -413,7 +413,7 @@ READ-004 display → Phase D → READ-001
 | **READ-001** | Reader + QA + extract | **Inline emphasis — `*italic*` + `_underline_` + `**bold**`**. Convention: `*` italic, `_` underline (project-specific). **Done:** `InlineText` component in reader + QA preview; strip delimiters in QA compare + `rebuildSearchText`. **Todo:** QA editor wrap buttons; extract auto-wrap from pdf.js font flags. |
 | **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
 | **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
-| **READ-004** | Reader + QA editor / action styling | **Paragraph breaks in action blocks** — PDF often has two separate action paragraphs (blank line between). JSON stores one `action.text` string; reader and QA preview collapse to a single block. **Goal:** treat `\n\n` (double newline) as a paragraph break in display — mirror screenplay spacing. Example: `el-003` on page 2 — house/exterior description, then a gap, then Bear fixating on the romance film. QA editor already allows typing two newlines; need render path (reader `ElementView`, QA extracted pane) to split and style as separate `<p>` blocks. Open questions: also support in extract? Split into two elements vs inline `\n\n` in one? Dialogue/action only or scene headings too? |
+| **READ-004** | Reader + QA | ✅ Done — **Action paragraph breaks** — `splitActionParagraphs()` splits `action.text` on `\n\n`; `ElementView` renders one `<p>` per block with `space-y-3`. Action only (v1). |
 | **QA-006** | QA tool | ✅ Done — **Change / add element type** — see [QA-TOOL.md](./QA-TOOL.md). |
 | **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Shipped v7 tooling / v11 data; page 3 el-015/el-017 fixed. Full spec below. |
