@@ -35,7 +35,9 @@ Verify the full screenplay is present and correctly structured — nothing dropp
 
 **Deep link:** `/qa?page=16` jumps to a flagged page.
 
-**Linked highlighting:** Click an extracted card → amber fill on the matching PDF region. Mapping uses fuzzy word match against raw line text + bboxes from `obsession.raw.json` (loaded in memory for scoring; not shown in UI). PDF overlay uses percentage positioning so highlights track CSS-scaled canvas (`max-w-full`).
+**Linked highlighting:** Click an extracted card → amber fill on the matching PDF region. Each element stores `rawLineStart` / `rawLineEnd` (indices into `obsession.raw.json` page lines), refreshed automatically on **`pnpm extract`** and **QA Save**. Falls back to sequential fuzzy match when anchors are missing. PDF overlay uses percentage positioning so highlights track CSS-scaled canvas (`max-w-full`).
+
+**Refresh manually:** `pnpm refresh-highlights` — re-anchors all elements without re-extracting.
 
 **Key files:**
 
@@ -118,7 +120,8 @@ Pipe CLI to file: `pnpm qa > qa-report.txt`
 
 **Highlight caveats:**
 
-- Match is fuzzy (75% element word coverage); fails if edited text drifts far from raw
+- Anchors are recomputed on extract/save; unsaved QA edits still highlight the PDF source region (stored or sequential fuzzy)
+- Match fallback is fuzzy (75% element word coverage) when anchors cannot be resolved
 - Orphan raw lines without a matching element are rare after READ-002 (transitions captured)
 - Long-term improvement: store `rawLineStart`/`rawLineEnd` at extract time
 
@@ -212,7 +215,6 @@ public/data/obsession.json → reader app (prod)
 - Auto-strip printed page numbers from raw compare (reduce false WARN noise)?
 - Type heuristic: flag `action` blocks that start mid-sentence lowercase after dialogue?
 - Export QA session log (which pages reviewed, what changed)?
-- Extract-time raw line provenance for bulletproof highlighting after edits?
 
 ---
 

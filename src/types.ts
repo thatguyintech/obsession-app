@@ -32,6 +32,9 @@ export interface ScreenplayElement {
   pdfPage?: number;
   printedPage?: number;
   searchText?: string;
+  /** Inclusive index into obsession.raw.json page.lines for QA PDF highlights */
+  rawLineStart?: number;
+  rawLineEnd?: number;
 }
 
 export interface Moment {

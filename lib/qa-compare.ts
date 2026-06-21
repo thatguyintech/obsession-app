@@ -38,6 +38,8 @@ export interface QaElementLike {
   lines?: string[];
   left?: { character?: string; segments?: DialogueSegment[]; parenthetical?: string; lines?: string[] }[];
   right?: { character?: string; segments?: DialogueSegment[]; parenthetical?: string; lines?: string[] }[];
+  rawLineStart?: number;
+  rawLineEnd?: number;
 }
 
 export interface QaPageReport {

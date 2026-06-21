@@ -27,6 +27,13 @@ export interface QaRawLineWithBBox extends QaRawLine {
   y1?: number;
 }
 
+export interface MapElementOptions {
+  /** Only match raw lines at or after this page.lines index. */
+  minLineIndex?: number;
+  /** Use element.rawLineStart/End when present (default true). */
+  useStoredProvenance?: boolean;
+}
+
 function wordFrequency(words: string[]): Map<string, number> {
   const freq = new Map<string, number>();
   for (const word of words) {
@@ -68,22 +75,63 @@ function lineBBox(line: QaRawLineWithBBox): QaLineBBox | null {
   return { x0: line.x0, y0: line.y0, x1: line.x1, y1: line.y1 };
 }
 
+function indicesFromProvenance(
+  element: QaElementLike,
+  page: QaRawPage,
+): number[] | null {
+  if (element.rawLineStart === undefined || element.rawLineEnd === undefined) {
+    return null;
+  }
+  if (element.rawLineEnd < element.rawLineStart) {
+    return null;
+  }
+
+  const indices: number[] = [];
+  for (let index = element.rawLineStart; index <= element.rawLineEnd; index += 1) {
+    const line = page.lines[index];
+    if (!line || !isContentLine(line)) {
+      continue;
+    }
+    indices.push(index);
+  }
+
+  return indices.length > 0 ? indices : null;
+}
+
+function rectsForIndices(page: QaRawPage, indices: number[]): QaLineBBox[] {
+  return indices
+    .map((index) => lineBBox(page.lines[index] as QaRawLineWithBBox))
+    .filter((box): box is QaLineBBox => box !== null);
+}
+
 /**
- * Fuzzy-match an extracted element to contiguous raw PDF lines on the same page.
- * Returns original line indices (into page.lines) and PDF-space bboxes.
+ * Map an extracted element to contiguous raw PDF lines on the same page.
+ * Prefers stored rawLineStart/End when available; otherwise fuzzy-matches text.
  */
 export function mapElementToRawLines(
   element: QaElementLike,
   page: QaRawPage,
+  options: MapElementOptions = {},
 ): { lineIndices: number[]; rects: QaLineBBox[] } {
+  const useStoredProvenance = options.useStoredProvenance ?? true;
+
+  if (useStoredProvenance) {
+    const stored = indicesFromProvenance(element, page);
+    if (stored) {
+      return { lineIndices: stored, rects: rectsForIndices(page, stored) };
+    }
+  }
+
   const elementText = extractElementText(element);
   if (!elementText.trim()) {
     return { lineIndices: [], rects: [] };
   }
 
+  const minLineIndex = options.minLineIndex ?? 0;
+
   const candidates = page.lines
     .map((line, index) => ({ line, index }))
-    .filter(({ line }) => isContentLine(line));
+    .filter(({ line, index }) => isContentLine(line) && index >= minLineIndex);
 
   let bestIndices: number[] = [];
   let bestScore = 0;
@@ -116,9 +164,5 @@ export function mapElementToRawLines(
     return { lineIndices: [], rects: [] };
   }
 
-  const rects = bestIndices
-    .map((index) => lineBBox(page.lines[index] as QaRawLineWithBBox))
-    .filter((box): box is QaLineBBox => box !== null);
-
-  return { lineIndices: bestIndices, rects };
+  return { lineIndices: bestIndices, rects: rectsForIndices(page, bestIndices) };
 }

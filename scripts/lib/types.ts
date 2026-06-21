@@ -32,6 +32,8 @@ export interface ScreenplayElementDraft {
   printedPage?: number;
   id?: string;
   searchText?: string;
+  rawLineStart?: number;
+  rawLineEnd?: number;
 }
 
 export interface RawPage {

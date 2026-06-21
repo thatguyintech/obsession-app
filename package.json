@@ -10,6 +10,7 @@
     "validate": "tsx scripts/validate.ts",
     "migrate-dialogue-segments": "tsx scripts/migrate-dialogue-segments.ts",
     "migrate-transitions": "tsx scripts/migrate-transitions.ts",
+    "refresh-highlights": "tsx scripts/refresh-highlights.ts",
     "qa": "tsx scripts/qa.ts",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

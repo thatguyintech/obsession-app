@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { countProvenanceCoverage } from "../lib/qa-provenance.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = join(__dirname, "..", "data", "obsession.json");
@@ -27,9 +28,12 @@ function fail(message: string): never {
 interface Element {
   id: string;
   type: string;
+  pdfPage?: number;
   character?: string;
   segments?: { kind: string; text: string }[];
   searchText?: string;
+  rawLineStart?: number;
+  rawLineEnd?: number;
 }
 
 interface Moment {
@@ -136,9 +140,11 @@ for (const term of SEARCH_TERMS) {
 }
 
 const dualCount = elements.filter((element) => element.type === "dual_dialogue").length;
+const provenance = countProvenanceCoverage(elements);
 console.log("OK");
 console.log(`  elements: ${elements.length}`);
 console.log(`  moments: ${moments.length}`);
 console.log(`  dual_dialogue elements: ${dualCount}`);
 console.log(`  transitions: ${transitionCount}`);
 console.log(`  scene headings: ${sceneHeadingCount}`);
+console.log(`  highlight anchors: ${provenance.anchored}/${provenance.total}`);

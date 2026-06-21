@@ -8,7 +8,7 @@ import {
   type QaPageReport,
   type QaRawPage,
 } from "../../lib/qa-compare";
-import { mapElementToRawLines } from "../../lib/qa-element-lines";
+import { resolveElementHighlight } from "../../lib/qa-provenance";
 import type { ScreenplayData, ScreenplayElement } from "../types";
 import { ElementEditor } from "./ElementEditor";
 import { ExtractedPane } from "./ExtractedPane";
@@ -131,11 +131,12 @@ export function QaPage() {
     : null;
 
   const elementHighlight = useMemo(() => {
-    if (!selectedElement || !currentRawPage) {
+    if (!selectedElement || !currentRawPage || !data) {
       return { lineIndices: [] as number[], rects: [] };
     }
-    return mapElementToRawLines(selectedElement, currentRawPage);
-  }, [selectedElement, currentRawPage]);
+    const pageElements = data.elements.filter((element) => element.pdfPage === page);
+    return resolveElementHighlight(selectedElement, currentRawPage, pageElements);
+  }, [selectedElement, currentRawPage, data, page]);
 
   function setPage(nextPage: number) {
     setPageState(clampPage(nextPage, maxPage));
