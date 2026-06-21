@@ -159,6 +159,8 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 
 **Convert workflow (QA-006):** select element → **Element type** dropdown → confirm → fill character/segments → Save. Text is preserved when converting action ↔ dialogue ↔ scene_heading ↔ transition.
 
+**Reorder (QA-007):** drag **⋮⋮** on extracted cards to reorder elements on the current page; drag segment handles in the dialogue editor to reorder speech/parenthetical blocks. Save to persist — beats/moments follow element order.
+
 ---
 
 ## Backlog (QA / extract)
@@ -167,6 +169,7 @@ See [PLAN.md — Current priorities](./PLAN.md#current-priorities-jun-2026) for 
 |----|--------|--------|
 | **QA-005** | ✅ Done | **Delete element** — confirmation in editor; removed on Save |
 | **QA-006** | ✅ Done | **Change / add element type** — type dropdown in editor (action, dialogue, scene_heading, transition); **Add** menu in extracted pane inserts after selection or end of page. Save regenerates beats/moments. |
+| **QA-007** | ✅ Done | **Drag to reorder** — ⋮⋮ handle on extracted pane cards (within page) and dialogue segments in editor. Save persists new order. |
 | **EXTRACT-001** | ✅ Done | **Dialogue wrap** — same-row left+right speech merge; `endsDialogueForAction` for action column. `pnpm extract` auto-backs up prior JSON. |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — `segments: [{ kind: speech \| parenthetical, text }]`. Run `pnpm migrate-dialogue-segments` on legacy JSON. |
 | **READ-002** | ✅ Done | **Transition directions** — `transition` element type; edit via scene heading QA field. Run `pnpm migrate-transitions`. |

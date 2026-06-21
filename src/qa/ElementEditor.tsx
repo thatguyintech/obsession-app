@@ -1,6 +1,7 @@
 import type { DialogueSegment, ScreenplayElement } from "../types";
 import type { DialogueTrack } from "../types";
 import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
+import { moveArrayItem } from "../../lib/qa-reorder";
 import {
   convertElementType,
   extractElementPlainText,
@@ -8,6 +9,7 @@ import {
   QA_EDITABLE_ELEMENT_TYPES,
   type QaEditableElementType,
 } from "../../lib/qa-element-transform";
+import { DragHandle, ReorderableRow, useListReorder } from "./list-reorder";
 
 interface ElementEditorProps {
   element: ScreenplayElement;
@@ -76,6 +78,12 @@ function SegmentEditor({
   segments: DialogueSegment[];
   onChange: (segments: DialogueSegment[]) => void;
 }) {
+  const reorder = useListReorder({
+    onReorder: (fromIndex, toIndex) => {
+      onChange(moveArrayItem(segments, fromIndex, toIndex));
+    },
+  });
+
   function updateSegment(index: number, next: DialogueSegment) {
     onChange(segments.map((segment, segmentIndex) => (segmentIndex === index ? next : segment)));
   }
@@ -90,37 +98,59 @@ function SegmentEditor({
 
   return (
     <div className="space-y-2">
+      {segments.length > 1 ? (
+        <p className="text-xs text-stone-500">Drag ⋮⋮ to reorder segments</p>
+      ) : null}
       {segments.map((segment, index) => (
-        <div key={index} className="flex flex-wrap items-start gap-2 rounded border border-stone-200 bg-stone-50 p-2">
-          <select
-            value={segment.kind}
-            onChange={(event) =>
-              updateSegment(index, {
-                ...segment,
-                kind: event.target.value as DialogueSegment["kind"],
-              })
-            }
-            className="rounded border border-stone-300 px-2 py-1 font-label text-xs text-stone-800"
-          >
-            <option value="speech">Speech</option>
-            <option value="parenthetical">Parenthetical</option>
-          </select>
-          <div className="min-w-0 flex-1">
-            <TextArea
-              value={segment.text}
-              onChange={(text) => updateSegment(index, { ...segment, text })}
-              rows={segment.kind === "parenthetical" ? 2 : 4}
-              placeholder={segment.kind === "parenthetical" ? "some movement" : "Dialogue line"}
-            />
+        <ReorderableRow
+          key={`${index}-${segment.kind}`}
+          index={index}
+          isDragging={reorder.draggingIndex === index}
+          isDropTarget={reorder.dropTargetIndex === index}
+          onDragOver={(event) => reorder.handleDragOver(index, event)}
+          onDrop={(event) => reorder.handleDrop(index, event)}
+          dragHandle={
+            segments.length > 1 ? (
+              <DragHandle
+                label={`Reorder segment ${index + 1}`}
+                onDragStart={(event) => reorder.handleDragStart(index, event)}
+                onDragEnd={reorder.handleDragEnd}
+              />
+            ) : null
+          }
+          className="rounded border border-stone-200 bg-stone-50 p-2"
+        >
+          <div className="flex min-w-0 flex-1 flex-wrap items-start gap-2">
+            <select
+              value={segment.kind}
+              onChange={(event) =>
+                updateSegment(index, {
+                  ...segment,
+                  kind: event.target.value as DialogueSegment["kind"],
+                })
+              }
+              className="rounded border border-stone-300 px-2 py-1 font-label text-xs text-stone-800"
+            >
+              <option value="speech">Speech</option>
+              <option value="parenthetical">Parenthetical</option>
+            </select>
+            <div className="min-w-0 flex-1">
+              <TextArea
+                value={segment.text}
+                onChange={(text) => updateSegment(index, { ...segment, text })}
+                rows={segment.kind === "parenthetical" ? 2 : 4}
+                placeholder={segment.kind === "parenthetical" ? "some movement" : "Dialogue line"}
+              />
+            </div>
+            <button
+              type="button"
+              className="reader-chrome-button text-xs text-stone-600"
+              onClick={() => removeSegment(index)}
+            >
+              Remove
+            </button>
           </div>
-          <button
-            type="button"
-            className="reader-chrome-button text-xs text-stone-600"
-            onClick={() => removeSegment(index)}
-          >
-            Remove
-          </button>
-        </div>
+        </ReorderableRow>
       ))}
       <div className="flex flex-wrap gap-2">
         <button

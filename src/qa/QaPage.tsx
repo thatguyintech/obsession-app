@@ -18,6 +18,7 @@ import {
   nextElementId,
   type QaEditableElementType,
 } from "../../lib/qa-element-transform";
+import { reorderPageElements } from "../../lib/qa-reorder";
 import type { ScreenplayData, ScreenplayElement } from "../types";
 import { dismissGap, getDismissedGapIds } from "./qa-dismissals";
 import { ElementEditor } from "./ElementEditor";
@@ -330,6 +331,17 @@ export function QaPage() {
     setSaveMessage(null);
   }
 
+  function reorderElementsOnPage(fromIndex: number, toIndex: number) {
+    setData((current) => {
+      if (!current) return current;
+      return {
+        ...current,
+        elements: reorderPageElements(current.elements, page, fromIndex, toIndex) as ScreenplayElement[],
+      };
+    });
+    setSaveMessage(null);
+  }
+
   async function handleSave() {
     if (!data || saving) return;
 
@@ -566,6 +578,7 @@ export function QaPage() {
           selectedId={selectedId}
           onSelect={setSelectedId}
           onAddElement={addElement}
+          onReorderElements={reorderElementsOnPage}
         />
       </div>
 

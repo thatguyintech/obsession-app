@@ -221,4 +221,24 @@ body {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
+
+  .qa-drag-handle {
+    @apply rounded border border-transparent px-1 py-0.5 font-label text-sm leading-none text-stone-400;
+  }
+
+  .qa-drag-handle:hover {
+    @apply border-stone-200 bg-stone-100 text-stone-600;
+  }
+
+  .qa-reorder-row {
+    @apply flex items-start gap-2;
+  }
+
+  .qa-reorder-row-dragging {
+    @apply opacity-50;
+  }
+
+  .qa-reorder-row-target {
+    @apply rounded-md ring-2 ring-amber-300 ring-offset-1;
+  }
 }
