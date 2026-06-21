@@ -44,7 +44,7 @@ export function MomentView({
   }, [moment.id, scrollRootRef, scrollY, scrollToElementId]);
 
   return (
-    <div className="reader-column mx-auto w-full max-w-prose px-5 pb-16 pt-6 text-left md:px-10 md:pt-8">
+    <div className="reader-column mx-auto w-full max-w-none px-4 pb-16 pt-6 text-left sm:max-w-prose md:px-10 md:pt-8">
       {moment.elementIds.map((elementId) => {
         const element = elementMap.get(elementId);
         if (!element) return null;

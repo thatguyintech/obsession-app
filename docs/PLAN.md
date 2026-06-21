@@ -171,12 +171,13 @@ Mobile-first, comfortable for extended reading. Warm paper background (`#faf8f5`
 
 | Role | Treatment |
 |------|-----------|
-| **Dialogue body** | 20px mono, near-black |
-| **Character name** | 16px bold caps, **per-character accent color** |
-| **Dialogue block** | 3px left border + subtle tint in character color |
-| **Parenthetical** | 14px italic, stone gray |
-| **Action** | 18px serif, gray-brown, left rule |
-| **Scene opener** | Tinted band, slate caps, letter-spaced |
+| **Dialogue body** | 18–20px serif (`clamp`), near-black, line-height 1.7 |
+| **Character name** | 13–14px bold caps, **per-character accent color** |
+| **Dialogue block** | 2px left border + subtle tint in character color |
+| **Parenthetical** | 13–14px italic, stone gray |
+| **Action** | 17–19px serif, ~76% ink, neutral stone left rule (READ-005) |
+| **Transition** | 13–14px semibold caps, rule above, right-aligned (READ-005) |
+| **Scene opener** | 14–15px caps, tinted band, letter-spaced |
 | **Scene `- CONTINUOUS`** | Divider line, small muted caps |
 
 Per-character colors defined in `src/lib/character-colors.ts` (core cast mapped; minor characters hashed to extended palette).
@@ -393,6 +394,7 @@ Ordered stack for what to build next. **Ops work in parallel:** finish QA pass o
 | ID | Notes |
 |----|--------|
 | **READ-001** | Inline emphasis — render ✅; QA editor buttons + extract todo |
+| **READ-005** | ✅ Done — mobile typography & lane balance (action/transition presence) |
 | **Later** (build order) | Dual font tuning, Type B dual re-pair, split long scenes |
 | *(un ticketed)* | CLI page-number noise, mis-split heuristics, QA session log, extract line provenance |
 
@@ -413,7 +415,8 @@ READ-001 editor buttons → Phase D
 | **READ-001** | Reader + QA + extract | **Inline emphasis — `*italic*` + `_underline_` + `**bold**`**. Convention: `*` italic, `_` underline (project-specific). **Done:** `InlineText` component in reader + QA preview; strip delimiters in QA compare + `rebuildSearchText`. **Todo:** QA editor wrap buttons; extract auto-wrap from pdf.js font flags. |
 | **READ-002** | ✅ Done | **Capture transition directions** — `transition` element type; 5 instances migrated; classifier + `pnpm migrate-transitions`. |
 | **READ-003** | ✅ Done | **Scene heading visual hierarchy** — bold/prominent slugs, quieter action body. |
-| **READ-004** | Reader + QA | ✅ Done — **Action paragraph breaks** — `splitActionParagraphs()` splits `action.text` on `\n\n`; `ElementView` renders one `<p>` per block with `space-y-3`. Action only (v1). |
+| **READ-004** | Reader + QA | ✅ Done — action `\n\n` paragraph breaks |
+| **READ-005** | Reader CSS | ✅ Done — **Mobile typography & lane balance** — raised mobile `clamp()` floors; action 17–19px + 76% ink + stone left rule; transitions 13–14px semibold + top rule; scene headings bumped; dual dialogue slightly smaller; `px-4` / full width on phone. |
 | **QA-006** | QA tool | ✅ Done — **Change / add element type** — see [QA-TOOL.md](./QA-TOOL.md). |
 | **EXTRACT-001** | Extract pipeline | **Dialogue wrap at left margin** — classifier splits Nicky-style voicemail when wrapped lines hit left margin (`parseDialogue` `x0 < 120` break). Causes el-015/el-016-style bugs. Fix in `scripts/lib/classifier.ts` for future `pnpm extract` only — re-extract overwrites QA hand fixes unless coordinated. See [QA-TOOL.md](./QA-TOOL.md). |
 | **SCHEMA-001** | ✅ Done | **Dialogue segments** — ordered speech/parenthetical blocks within one dialogue element. Shipped v7 tooling / v11 data; page 3 el-015/el-017 fixed. Full spec below. |
