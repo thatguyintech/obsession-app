@@ -12,6 +12,10 @@ interface MomentViewProps {
   scrollToElementId?: string | null;
   sceneToc?: SceneTocEntry[];
   onGoToScene?: (momentIndex: number) => void;
+  canGoPrevious: boolean;
+  canGoNext: boolean;
+  onPrevious: () => void;
+  onNext: () => void;
 }
 
 export function MomentView({
@@ -22,6 +26,10 @@ export function MomentView({
   scrollToElementId,
   sceneToc,
   onGoToScene,
+  canGoPrevious,
+  canGoNext,
+  onPrevious,
+  onNext,
 }: MomentViewProps) {
   const previousMomentId = useRef<string | null>(null);
   const elementMap = new Map(data.elements.map((element) => [element.id, element]));
@@ -81,6 +89,26 @@ export function MomentView({
           />
         );
       })}
+      <nav className="reader-moment-nav" aria-label="Scene navigation">
+        <button
+          type="button"
+          className="reader-moment-nav-button"
+          aria-label="Previous scene"
+          disabled={!canGoPrevious}
+          onClick={onPrevious}
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          className="reader-moment-nav-button"
+          aria-label="Next scene"
+          disabled={!canGoNext}
+          onClick={onNext}
+        >
+          →
+        </button>
+      </nav>
     </div>
   );
 }

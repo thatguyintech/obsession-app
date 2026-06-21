@@ -64,16 +64,20 @@ body {
     @apply rounded px-2 py-1 text-stone-600 transition-colors hover:bg-stone-200/60 hover:text-stone-900;
   }
 
-  .reader-chrome-nav {
-    @apply reader-chrome-button min-w-[1.75rem] px-2 text-center font-label text-sm leading-none;
-  }
-
   .reader-chrome-home {
     @apply reader-chrome-button mr-0.5 flex items-center justify-center p-1.5 text-stone-700;
   }
 
-  .reader-chrome-nav:disabled {
-    @apply pointer-events-none opacity-30;
+  .reader-moment-nav {
+    @apply mt-10 flex items-center justify-between pb-4;
+  }
+
+  .reader-moment-nav-button {
+    @apply flex h-11 min-w-[3.25rem] items-center justify-center rounded-lg border border-stone-200 bg-white font-label text-lg leading-none text-stone-700 shadow-sm transition-colors hover:border-stone-300 hover:bg-stone-50 hover:text-stone-900;
+  }
+
+  .reader-moment-nav-button:disabled {
+    @apply pointer-events-none border-stone-100 bg-stone-50 text-stone-300 shadow-none;
   }
 
   .overlay-backdrop {

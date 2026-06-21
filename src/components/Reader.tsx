@@ -227,36 +227,11 @@ export function Reader({ data }: ReaderProps) {
                 Restart (R)
               </button>
             </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <div className="hidden items-center gap-0.5 sm:flex">
-                <button
-                  type="button"
-                  className="reader-chrome-nav"
-                  aria-label="Previous scene"
-                  disabled={momentIndex === 0}
-                  onClick={goToPrevious}
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  className="reader-chrome-nav"
-                  aria-label="Next scene"
-                  disabled={momentIndex >= lastMomentIndex}
-                  onClick={goToNext}
-                >
-                  →
-                </button>
-              </div>
-              <span className="sm:hidden text-stone-500" aria-hidden="true">
-                Tap ← →
-              </span>
-              <span className="text-right text-stone-600">
-                Scene {momentIndex}
-                {lastMomentIndex > 0 ? ` / ${lastMomentIndex}` : ""}
-                {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
-              </span>
-            </div>
+            <span className="shrink-0 text-right text-stone-600">
+              Scene {momentIndex}
+              {lastMomentIndex > 0 ? ` / ${lastMomentIndex}` : ""}
+              {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
+            </span>
           </header>
         </div>
       </div>
@@ -274,6 +249,10 @@ export function Reader({ data }: ReaderProps) {
           scrollToElementId={scrollToElementId}
           sceneToc={sceneToc}
           onGoToScene={goToMoment}
+          canGoPrevious={momentIndex > 0}
+          canGoNext={momentIndex < lastMomentIndex}
+          onPrevious={goToPrevious}
+          onNext={goToNext}
         />
       </main>
 
