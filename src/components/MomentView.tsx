@@ -53,9 +53,6 @@ export function MomentView({
   }, [moment.id, scrollRootRef, scrollY, scrollToElementId]);
 
   const momentLabel = getMomentLabel(moment.id);
-  const sceneHeading = moment.sceneHeadingId
-    ? elementMap.get(moment.sceneHeadingId)?.text
-    : undefined;
 
   return (
     <div className="reader-column mx-auto w-full max-w-none px-4 pb-16 pt-6 text-left sm:max-w-prose md:px-10 md:pt-8">
@@ -65,14 +62,9 @@ export function MomentView({
             Scene {moment.index}
             {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
           </p>
-          <h2 className="mt-1.5 font-reading text-[1.0625rem] leading-snug text-stone-800">
+          <h2 className="mt-1.5 font-reading text-[1.125rem] leading-snug text-stone-800">
             {momentLabel}
           </h2>
-          {sceneHeading ? (
-            <p className="mt-1 font-label text-[0.65rem] leading-snug tracking-wide text-stone-400 uppercase">
-              {sceneHeading}
-            </p>
-          ) : null}
         </header>
       ) : null}
       {moment.elementIds.map((elementId) => {

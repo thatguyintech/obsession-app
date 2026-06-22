@@ -57,10 +57,14 @@ export function getCharacterColor(raw: string): string {
   return EXTENDED_PALETTE[index];
 }
 
-export function characterColorStyle(color: string): { color: string; borderColor: string; backgroundColor: string } {
+export function characterColorStyle(color: string): {
+  color: string;
+  borderColor: string;
+  backgroundColor: string;
+} {
   return {
     color,
     borderColor: color,
-    backgroundColor: `color-mix(in srgb, ${color} 10%, white)`,
+    backgroundColor: `color-mix(in srgb, ${color} 8%, var(--bg-page))`,
   };
 }

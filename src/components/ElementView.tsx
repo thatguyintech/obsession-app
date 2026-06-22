@@ -1,8 +1,8 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { DialogueSegment, SceneTocEntry, ScreenplayElement } from "../types";
 import { ensureDialogueSegments, ensureTrackSegments } from "../../lib/dialogue-segments";
 import { splitActionParagraphs } from "../../lib/text-paragraphs";
-import { getCharacterColor } from "../lib/character-colors";
+import { getCharacterColor, characterColorStyle } from "../lib/character-colors";
 import { isContinuousSceneHeading } from "../lib/display";
 import { InlineText } from "./InlineText";
 import { SceneTableOfContents } from "./SceneTableOfContents";
@@ -36,13 +36,12 @@ function SegmentList({ segments }: { segments: DialogueSegment[] }) {
 
 function TrackBlock({ track }: { track: DialogueTrack }) {
   const character = track.character.trim();
-  const color = getCharacterColor(character);
-  const blockStyle: CSSProperties = { borderLeftColor: color };
+  const blockStyle = characterColorStyle(getCharacterColor(character));
   const segments = ensureTrackSegments(track);
 
   return (
     <div className="dual-column-block min-w-0 text-left" style={blockStyle}>
-      <p className="text-character break-words" style={{ color }}>
+      <p className="text-character break-words" style={{ color: blockStyle.color }}>
         {character}
       </p>
       <SegmentList segments={segments} />
@@ -73,12 +72,11 @@ function DialogueBlock({
   character: string;
   segments: DialogueSegment[];
 }) {
-  const color = getCharacterColor(character);
-  const blockStyle: CSSProperties = { borderLeftColor: color };
+  const blockStyle = characterColorStyle(getCharacterColor(character));
 
   return (
     <div className="dialogue-block" style={blockStyle}>
-      <p className="text-character break-words" style={{ color }}>
+      <p className="text-character break-words" style={{ color: blockStyle.color }}>
         {character}
       </p>
       <SegmentList segments={segments} />
