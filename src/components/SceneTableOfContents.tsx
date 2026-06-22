@@ -51,7 +51,7 @@ function SceneList({
                 {entry.label ? (
                   <>
                     <span
-                      className={`block font-reading text-sm leading-snug normal-case tracking-normal transition-colors group-hover:text-stone-900 ${
+                      className={`block font-reading text-sm italic leading-snug normal-case tracking-normal transition-colors group-hover:text-stone-900 ${
                         isActive ? "text-stone-900" : "text-stone-800"
                       }`}
                     >

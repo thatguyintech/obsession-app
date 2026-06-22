@@ -62,7 +62,7 @@ export function MomentView({
             Scene {moment.index}
             {moment.printedPage ? ` · p.${moment.printedPage}` : ""}
           </p>
-          <h2 className="mt-1.5 font-reading text-[1.125rem] leading-snug text-stone-800">
+          <h2 className="mt-1.5 font-reading text-[1.125rem] italic leading-snug text-stone-800">
             {momentLabel}
           </h2>
         </header>
