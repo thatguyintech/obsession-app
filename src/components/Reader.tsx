@@ -158,6 +158,16 @@ export function Reader({ data }: ReaderProps) {
         event.preventDefault();
         scrollRef.current?.scrollBy({ top: -Math.round(window.innerHeight * 0.65), behavior: "smooth" });
       }
+      if (event.key === "PageDown") {
+        event.preventDefault();
+        const page = scrollRef.current?.clientHeight ?? window.innerHeight;
+        scrollRef.current?.scrollBy({ top: page, behavior: "smooth" });
+      }
+      if (event.key === "PageUp") {
+        event.preventDefault();
+        const page = scrollRef.current?.clientHeight ?? window.innerHeight;
+        scrollRef.current?.scrollBy({ top: -page, behavior: "smooth" });
+      }
       if (event.key === "r" || event.key === "R") {
         event.preventDefault();
         requestRestart();

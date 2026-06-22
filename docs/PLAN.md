@@ -277,7 +277,7 @@ Automated checks (`pnpm validate`):
 | Input | Behavior |
 |-------|----------|
 | ← → buttons, keys, or tap left/right edges (mobile) | Previous / next **moment** |
-| Vertical scroll or ↑ ↓ keys | Within current moment |
+| Vertical scroll or ↑ ↓ / PgUp PgDn keys | Within current moment |
 | Home icon or J / Home key | Title page (moment 0) |
 | K / End key | Last moment |
 | `/` | Search |

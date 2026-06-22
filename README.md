@@ -33,7 +33,7 @@ See [docs/QA-TOOL.md](docs/QA-TOOL.md) for the visual reviewer (PDF vs JSON, edi
 
 - **← →** buttons below the moment (or **← →** keys) — previous / next moment
 - **Tap left / right edges** (mobile) — same prev/next moment
-- **Scroll vertically** (or **↑ ↓** keys) — within the current moment
+- **Scroll vertically** (or **↑ ↓** / **PgUp PgDn** keys) — within the current moment
 - **Home** icon or **J** / **Home** key — jump to title page
 - **K** / **End** — jump to last moment
 - **/** — search · **T** — scene list · **Esc** — close overlay
