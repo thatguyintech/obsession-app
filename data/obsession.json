@@ -2479,12 +2479,12 @@
       "segments": [
         {
           "kind": "speech",
-          "text": "What di d she say to that?"
+          "text": "What did she say to that?"
         }
       ],
       "pdfPage": 12,
       "id": "el-144",
-      "searchText": "bear what di d she say to that?",
+      "searchText": "bear what did she say to that?",
       "rawLineStart": 36,
       "rawLineEnd": 37
     },
@@ -23968,7 +23968,7 @@
       "segments": [
         {
           "kind": "speech",
-          "text": "What di d she say to that?"
+          "text": "What did she say to that?"
         }
       ],
       "pdfPage": 12
