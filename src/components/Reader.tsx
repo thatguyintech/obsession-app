@@ -47,7 +47,6 @@ export function Reader({ data }: ReaderProps) {
   const [tocOpen, setTocOpen] = useState(false);
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [edgeFlash, setEdgeFlash] = useState<{ side: "left" | "right"; key: number } | null>(null);
   const scrollSaveTimer = useRef<number | null>(null);
   const scrollRef = useRef<HTMLElement>(null);
 
@@ -100,20 +99,6 @@ export function Reader({ data }: ReaderProps) {
     goToMoment(Math.min(momentIndex + 1, lastMomentIndex));
   }, [goToMoment, lastMomentIndex, momentIndex]);
 
-  const flashEdge = useCallback((side: "left" | "right") => {
-    setEdgeFlash({ side, key: Date.now() });
-  }, []);
-
-  const handleEdgePrevious = useCallback(() => {
-    flashEdge("left");
-    goToPrevious();
-  }, [flashEdge, goToPrevious]);
-
-  const handleEdgeNext = useCallback(() => {
-    flashEdge("right");
-    goToNext();
-  }, [flashEdge, goToNext]);
-
   const handleScroll = useCallback((nextScrollY: number) => {
     if (scrollSaveTimer.current) {
       window.clearTimeout(scrollSaveTimer.current);
@@ -159,11 +144,11 @@ export function Reader({ data }: ReaderProps) {
 
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        handleEdgeNext();
+        goToNext();
       }
       if (event.key === "ArrowLeft") {
         event.preventDefault();
-        handleEdgePrevious();
+        goToPrevious();
       }
       if (event.key === "ArrowDown") {
         event.preventDefault();
@@ -205,7 +190,7 @@ export function Reader({ data }: ReaderProps) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [goToEnd, goToStart, goToMoment, handleEdgeNext, handleEdgePrevious, lastMomentIndex, momentIndex, requestRestart, restart, restartConfirmOpen, searchOpen, tocOpen]);
+  }, [goToEnd, goToNext, goToPrevious, goToStart, goToMoment, lastMomentIndex, momentIndex, requestRestart, restart, restartConfirmOpen, searchOpen, tocOpen]);
 
   if (!moment) {
     return <div className="flex h-full items-center justify-center text-stone-500">No moments found.</div>;
@@ -266,8 +251,8 @@ export function Reader({ data }: ReaderProps) {
           onGoToScene={goToMoment}
           canGoPrevious={momentIndex > 0}
           canGoNext={momentIndex < lastMomentIndex}
-          onPrevious={handleEdgePrevious}
-          onNext={handleEdgeNext}
+          onPrevious={goToPrevious}
+          onNext={goToNext}
         />
       </main>
 
@@ -275,23 +260,14 @@ export function Reader({ data }: ReaderProps) {
         type="button"
         aria-label="Previous moment"
         className="absolute bottom-0 left-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent sm:hidden"
-        onClick={handleEdgePrevious}
+        onClick={goToPrevious}
       />
       <button
         type="button"
         aria-label="Next moment"
         className="absolute bottom-0 right-0 top-[var(--reader-chrome-height)] z-10 w-14 bg-transparent sm:hidden"
-        onClick={handleEdgeNext}
+        onClick={goToNext}
       />
-
-      {edgeFlash ? (
-        <div
-          key={edgeFlash.key}
-          className={`reader-edge-flash reader-edge-flash-${edgeFlash.side}`}
-          aria-hidden
-          onAnimationEnd={() => setEdgeFlash(null)}
-        />
-      ) : null}
 
       {restartConfirmOpen ? (
         <div className="overlay-backdrop absolute inset-0 z-30 flex items-center justify-center p-4">

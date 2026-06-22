@@ -80,45 +80,6 @@ body {
     @apply pointer-events-none border-stone-100 bg-stone-50 text-stone-300 shadow-none;
   }
 
-  /* Mobile edge-tap feedback — brief side gradient flash */
-  .reader-edge-flash {
-    pointer-events: none;
-    position: fixed;
-    top: var(--reader-chrome-height);
-    bottom: 0;
-    z-index: 15;
-    width: min(32vw, 7.5rem);
-  }
-
-  .reader-edge-flash-left {
-    left: 0;
-    background: linear-gradient(90deg, rgb(28 25 23 / 0.16) 0%, rgb(28 25 23 / 0.04) 45%, transparent 100%);
-    animation: reader-edge-flash 0.45s ease-out forwards;
-  }
-
-  .reader-edge-flash-right {
-    right: 0;
-    background: linear-gradient(270deg, rgb(28 25 23 / 0.16) 0%, rgb(28 25 23 / 0.04) 45%, transparent 100%);
-    animation: reader-edge-flash 0.45s ease-out forwards;
-  }
-
-  @keyframes reader-edge-flash {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reader-edge-flash-left,
-    .reader-edge-flash-right {
-      animation: none;
-      opacity: 0;
-    }
-  }
-
   .overlay-backdrop {
     background: var(--bg-overlay);
   }
