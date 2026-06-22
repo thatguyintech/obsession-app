@@ -276,10 +276,13 @@ Automated checks (`pnpm validate`):
 
 | Input | Behavior |
 |-------|----------|
-| Tap left / right (or ← / →) | Previous / next **moment** |
-| Vertical scroll | Within current moment |
+| ← → buttons, keys, or tap left/right edges (mobile) | Previous / next **moment** |
+| Vertical scroll or ↑ ↓ keys | Within current moment |
+| Home icon or J / Home key | Title page (moment 0) |
+| K / End key | Last moment |
 | `/` | Search |
-| `Esc` | Close search |
+| `T` | Scene list |
+| `Esc` | Close overlay |
 
 Progress displays **moment index** (e.g. `Scene 12 / 59 · p.16`). Each moment shows an optional **reference label** (`Location — beat`) for out-loud discussion — see `src/lib/moment-labels.ts`.
 
@@ -342,7 +345,7 @@ obsession-app/
 
 **Reader:** Moment navigation + in-moment scroll, search, localStorage progress, left-aligned layout, dual dialogue columns, line reflow, mobile typography (`clamp()` scales), scene heading hierarchy, transition elements, action paragraph breaks, inline emphasis rendering, per-character colors, moment reference labels (`Location — beat`).
 
-**Data quality:** Full QA pass complete — **98 OK · 0 WARN · 0 FAIL · 1 SKIP** (title page). Hand-fixes through `meta.version` 121. Dialogue `segments[]`, transition type, classifier wrap-row fix.
+**Data quality:** Full QA pass complete — **98 OK · 0 WARN · 0 FAIL · 1 SKIP** (title page). Hand-fixes through `meta.version` 124. Dialogue `segments[]`, transition type, classifier wrap-row fix.
 
 **QA tool (dev-only):** CLI report, visual split-pane editor, linked PDF highlighting, suspected-gap dismissals, delete/convert/add elements, drag reorder. See [QA-TOOL.md](./QA-TOOL.md).
 

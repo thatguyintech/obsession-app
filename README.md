@@ -29,11 +29,11 @@ See [docs/QA-TOOL.md](docs/QA-TOOL.md) for the visual reviewer (PDF vs JSON, edi
 
 ## Controls
 
-- Tap **left / right** edges to go to prev/next **moment**
-- **Scroll vertically** within a moment
-- **← →** or **↑ ↓** — prev/next moment
-- **J** — jump to start · **K** — jump to end
-- **Home** / **End** — start / end (also works on laptop)
+- **← →** buttons below the moment (or **← →** keys) — previous / next moment
+- **Tap left / right edges** (mobile) — same prev/next moment
+- **Scroll vertically** (or **↑ ↓** keys) — within the current moment
+- **Home** icon or **J** / **Home** key — jump to title page
+- **K** / **End** — jump to last moment
 - **/** — search · **T** — scene list · **Esc** — close overlay
 - Scene list also appears on the title screen at the start
 - Progress saves automatically in `localStorage` (moment + scroll position)
