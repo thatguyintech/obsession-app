@@ -1,14 +1,13 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isTransitionLine, isTransitionText } from "../lib/transitions.js";
+import { DATA_PATH, writeScreenplay } from "../lib/screenplay-data.js";
 import { prepareScreenplaySave, type QaSavePayload } from "./qa-save.js";
 import type { ScreenplayElementDraft } from "./lib/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const DATA_PATH = join(ROOT, "data", "obsession.json");
-const PUBLIC_DATA_PATH = join(ROOT, "public", "data", "obsession.json");
 const RAW_PATH = join(ROOT, "data", "obsession.raw.json");
 
 interface RawPage {
@@ -124,9 +123,7 @@ function main(): void {
     },
   });
 
-  const serialized = JSON.stringify(prepared, null, 2);
-  writeFileSync(DATA_PATH, serialized);
-  writeFileSync(PUBLIC_DATA_PATH, serialized);
+  writeScreenplay(prepared);
 
   console.log(`Inserted ${inserts.length} transition element(s)`);
   for (const insert of inserts) {

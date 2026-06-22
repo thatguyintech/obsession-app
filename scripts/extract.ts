@@ -15,6 +15,7 @@ import { groupTextItemsIntoLines } from "./lib/pdf-lines.js";
 import type { RawPage, ScreenplayElementDraft } from "./lib/types.js";
 import { normalizeDialogueElement } from "../lib/dialogue-segments.js";
 import { refreshElementProvenance } from "../lib/qa-provenance.js";
+import { readExistingScreenplayMeta, writeScreenplay } from "../lib/screenplay-data.js";
 
 const SCHEMA_VERSION = 2;
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -121,6 +122,30 @@ async function extract(): Promise<{ payload: ExtractResult; rawPages: RawPage[] 
   };
 }
 
+const force = process.argv.includes("--force");
+const existingMeta = readExistingScreenplayMeta();
+
+if (existingMeta && !force) {
+  console.error("ABORT: data/obsession.json already exists.");
+  console.error(`  Current version: ${existingMeta.version ?? "unknown"}`);
+  console.error(`  Elements: ${existingMeta.elementCount ?? "unknown"}`);
+  console.error(`  Moments: ${existingMeta.momentCount ?? "unknown"}`);
+  console.error("");
+  console.error("Re-extracting replaces hand-tuned QA fixes and bumps meta.version");
+  console.error("(which resets reader localStorage progress).");
+  console.error("");
+  console.error("If you intend to re-extract from PDF:");
+  console.error("  1. A backup will be saved to data/obsession.v{N}.backup.json");
+  console.error("  2. Run: pnpm extract --force");
+  process.exit(1);
+}
+
+if (existingMeta && force) {
+  console.warn(
+    `Force re-extract: overwriting screenplay JSON (version ${existingMeta.version ?? "?"})…`,
+  );
+}
+
 const { payload, rawPages } = await extract();
 
 function readPreviousVersion(): number {
@@ -148,12 +173,11 @@ if (existsSync(OUT_PATH)) {
 }
 
 writeFileSync(RAW_PATH, JSON.stringify({ pages: rawPages }, null, 2));
-writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2));
-writeFileSync(join(PUBLIC_DATA_DIR, "obsession.json"), JSON.stringify(payload, null, 2));
+writeScreenplay(payload);
 
 console.log(`Wrote ${RAW_PATH}`);
 console.log(`Wrote ${OUT_PATH}`);
-console.log(`Wrote ${join(PUBLIC_DATA_DIR, "obsession.json")}`);
+console.log(`Wrote ${join(PUBLIC_DATA_DIR, "obsession.json")} (synced)`);
 console.log(
   `${payload.meta.elementCount} elements, ${payload.meta.momentCount} moments, ${payload.meta.pageCount} pdf pages, version ${payload.meta.version}`,
 );

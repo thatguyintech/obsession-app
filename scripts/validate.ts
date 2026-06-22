@@ -2,9 +2,9 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { countProvenanceCoverage } from "../lib/qa-provenance.js";
+import { assertScreenplayDataInSync, DATA_PATH } from "../lib/screenplay-data.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_PATH = join(__dirname, "..", "data", "obsession.json");
 
 const SEARCH_TERMS = [
   "tiny silver revolver",
@@ -23,6 +23,12 @@ function normalizeText(value: string): string {
 function fail(message: string): never {
   console.error(`FAIL: ${message}`);
   process.exit(1);
+}
+
+try {
+  assertScreenplayDataInSync();
+} catch (cause) {
+  fail(cause instanceof Error ? cause.message : "Screenplay data out of sync");
 }
 
 interface Element {

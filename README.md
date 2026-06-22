@@ -5,10 +5,12 @@ See [docs/PLAN.md](docs/PLAN.md) for architecture, data model, and shipped statu
 ## Quick start
 
 ```bash
-# 1. Extract screenplay JSON from PDF (once)
+# 1. Extract screenplay JSON from PDF (once; requires --force if data already exists)
 pnpm install
-pnpm extract
+pnpm extract          # first time only
+pnpm extract --force  # re-extract from PDF (overwrites hand-tuned fixes)
 pnpm validate
+pnpm sync-data        # copy data/ → public/data/ (also runs before dev/build)
 
 # 2. Run the reader
 pnpm dev

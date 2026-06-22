@@ -160,7 +160,9 @@ public/data/obsession.json → reader app (prod)
 
 **Source of truth for fixes:** `data/obsession.json` only. Never edit `obsession.raw.json` by hand (regenerate via extract).
 
-**Re-extract:** `pnpm extract` overwrites structured JSON but saves `data/obsession.v{N}.backup.json` first and bumps `meta.version`. Re-extract overwrites QA hand fixes — coordinate before running on a hand-tuned JSON.
+**Re-extract:** `pnpm extract --force` overwrites structured JSON but saves `data/obsession.v{N}.backup.json` first and bumps `meta.version`. Without `--force`, extract aborts if `data/obsession.json` already exists. Re-extract overwrites QA hand fixes — coordinate before running on a hand-tuned JSON.
+
+**Data sync:** `data/obsession.json` is the source of truth. `pnpm sync-data` copies it to `public/data/` (also runs automatically before `dev` and `build`). `pnpm validate` fails if the two files differ.
 
 ---
 

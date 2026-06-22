@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { denormalizeBeat } from "./lib/classifier.js";
@@ -7,13 +7,12 @@ import { rebuildSearchText } from "./lib/cleanup.js";
 import { generateMoments } from "./lib/moments.js";
 import { normalizeDialogueElement } from "../lib/dialogue-segments.js";
 import { refreshElementProvenance } from "../lib/qa-provenance.js";
+import { writeScreenplay } from "../lib/screenplay-data.js";
 import type { QaRawPage } from "../lib/qa-compare.js";
 import type { ScreenplayElementDraft } from "./lib/types.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const DATA_PATH = join(ROOT, "data", "obsession.json");
-const PUBLIC_DATA_PATH = join(ROOT, "public", "data", "obsession.json");
 const RAW_PATH = join(ROOT, "data", "obsession.raw.json");
 
 export interface QaSavePayload {
@@ -109,10 +108,7 @@ export function saveScreenplayFromQa(input: QaSavePayload): QaSaveResult {
   try {
     const prepared = prepareScreenplaySave(input);
 
-    mkdirSync(dirname(PUBLIC_DATA_PATH), { recursive: true });
-    const serialized = JSON.stringify(prepared, null, 2);
-    writeFileSync(DATA_PATH, serialized);
-    writeFileSync(PUBLIC_DATA_PATH, serialized);
+    writeScreenplay(prepared);
 
     const validation = runValidate();
     if (!validation.ok) {

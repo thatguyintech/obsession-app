@@ -12,7 +12,10 @@
     "migrate-transitions": "tsx scripts/migrate-transitions.ts",
     "refresh-highlights": "tsx scripts/refresh-highlights.ts",
     "qa": "tsx scripts/qa.ts",
+    "sync-data": "tsx scripts/sync-data.ts",
+    "predev": "pnpm sync-data",
     "dev": "vite",
+    "prebuild": "pnpm sync-data",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },

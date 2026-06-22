@@ -415,5 +415,6 @@ When picking up a new session:
 4. Nav is **moments + scroll** — beats in JSON are legacy only
 5. User progress: `localStorage` key `obsession-reader-state` (`currentMomentId`, `scrollY`)
 6. Dual dialogue: Type A = `dual_dialogue` element; Type B = sequential `dialogue` in scroll
-7. Data fixes via `/qa` (dev) or hand-edit `data/obsession.json`; run `pnpm validate` before commit
+7. Data fixes via `/qa` (dev) or hand-edit `data/obsession.json`; run `pnpm validate` before commit; `pnpm sync-data` if only `data/` was edited
 8. QA baseline: `pnpm qa` — expect 98 OK, 0 WARN (Jun 2026)
+9. Never run `pnpm extract` without `--force` on hand-tuned data — it will abort; use `--force` only when intentionally re-parsing the PDF
